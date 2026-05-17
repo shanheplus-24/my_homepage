@@ -1,0 +1,40 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'research'>;
+  relatedTitles?: string[];
+}
+
+const { project } = Astro.props;
+const searchable = [
+  project.data.title,
+  project.data.summary,
+  project.data.collaborators.join(' '),
+  project.data.status,
+  project.data.period,
+].join(' ').toLowerCase();
+---
+
+<article
+  class="research-card interactive-card flex h-full flex-col gap-3 rounded-[28px] p-4 md:p-5"
+  data-research-card
+  data-project-id={project.id}
+  data-status={project.data.status}
+  data-search={searchable}
+>
+  <div class="research-card__media flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-[22px]">
+    <div class="research-card__image-panel">
+      <img
+        src={project.data.image.src}
+        alt={project.data.image.alt}
+        loading="lazy"
+        class="size-full object-contain"
+      />
+    </div>
+  </div>
+  <div class="flex flex-1 flex-col px-1 pb-1">
+    <h3 class="text-2xl font-bold leading-tight text-ink md:text-[1.7rem]">{project.data.title}</h3>
+    <p class="mt-2 text-base leading-[1.52] text-muted">{project.data.summary}</p>
+  </div>
+</article>

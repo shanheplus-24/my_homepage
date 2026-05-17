@@ -1,0 +1,107 @@
+---
+import { getCollection } from 'astro:content';
+import PublicationCard from '@components/PublicationCard.astro';
+import SectionHeading from '@components/SectionHeading.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { site } from '@data/site';
+
+const publications = (await getCollection('publications')).sort((a, b) => {
+  if (b.data.year !== a.data.year) return b.data.year - a.data.year;
+  return a.data.title.localeCompare(b.data.title);
+});
+
+const years = [...new Set(publications.map((publication) => publication.data.year))];
+const domainTags = ['Water', 'Energy', 'Food'];
+const methodTags = ['Models', 'Materials', 'Device', 'AI'];
+---
+
+<BaseLayout title={`Publications | ${site.name}`} description="Publications with title, authors, venue, year, type, status, and optional paper links.">
+  <section class="mx-auto max-w-7xl px-5 py-12">
+    <SectionHeading title="Publications" />
+    <div class="surface mb-8 rounded-[28px] p-5">
+      <div class="grid gap-5">
+        <div class="publication-filter-group" aria-label="Publication research area filters">
+          <p>Research Area</p>
+          <div class="publication-filter-tabs">
+            <button class="publication-filter-tabs__button is-active" type="button" data-publication-domain="all">All</button>
+            {domainTags.map((tag) => <button class="publication-filter-tabs__button publication-filter-tabs__button--domain" type="button" data-publication-domain={tag}>{tag}</button>)}
+          </div>
+        </div>
+        <div class="publication-filter-group" aria-label="Publication technical focus filters">
+          <p>Technical Focus</p>
+          <div class="publication-filter-tabs">
+            <button class="publication-filter-tabs__button is-active" type="button" data-publication-method="all">All</button>
+            {methodTags.map((tag) => <button class="publication-filter-tabs__button publication-filter-tabs__button--method" type="button" data-publication-method={tag}>{tag}</button>)}
+          </div>
+        </div>
+        <label class="text-sm font-bold text-ink" for="publication-search">Search publications</label>
+        <input
+          id="publication-search"
+          class="w-full rounded-full border border-line bg-white/5 px-4 py-3 text-sm text-ink md:w-96"
+          type="search"
+          placeholder="Title, author, venue, year..."
+          data-publication-search
+        />
+      </div>
+    </div>
+    <p class="mb-4 text-sm font-bold text-muted" aria-live="polite" data-publication-count>
+      Showing {publications.length} publications
+    </p>
+    <div class="space-y-7">
+      {
+        years.map((year) => (
+          <section class="publication-year" data-publication-year-section={year} aria-labelledby={`year-${year}`}>
+            <h2 id={`year-${year}`} class="py-3 text-2xl font-bold text-ink">{year}</h2>
+            <div class="grid gap-3">
+              {publications.filter((publication) => publication.data.year === year).map((publication) => <PublicationCard publication={publication} />)}
+            </div>
+          </section>
+        ))
+      }
+    </div>
+  </section>
+  <script is:inline>
+    const publicationCards = Array.from(document.querySelectorAll('[data-pub-card]'));
+    const searchInput = document.querySelector('[data-publication-search]');
+    const countLabel = document.querySelector('[data-publication-count]');
+    const yearSections = Array.from(document.querySelectorAll('[data-publication-year-section]'));
+    const domainButtons = Array.from(document.querySelectorAll('[data-publication-domain]'));
+    const methodButtons = Array.from(document.querySelectorAll('[data-publication-method]'));
+    let activeDomain = 'all';
+    let activeMethod = 'all';
+
+    function applyPublicationFilters() {
+      const query = searchInput?.value.trim().toLowerCase() ?? '';
+      let visible = 0;
+      for (const card of publicationCards) {
+        const searchMatch = !query || card.dataset.search.includes(query);
+        const domainMatch = activeDomain === 'all' || card.dataset.domain === activeDomain;
+        const methodMatch = activeMethod === 'all' || card.dataset.method === activeMethod;
+        const show = searchMatch && domainMatch && methodMatch;
+        card.hidden = !show;
+        if (show) visible += 1;
+      }
+      for (const section of yearSections) {
+        const visibleInYear = section.querySelectorAll('[data-pub-card]:not([hidden])').length;
+        section.hidden = visibleInYear === 0;
+      }
+      if (countLabel) countLabel.textContent = `Showing ${visible} publication${visible === 1 ? '' : 's'}`;
+    }
+
+    searchInput?.addEventListener('input', applyPublicationFilters);
+    domainButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        activeDomain = button.dataset.publicationDomain ?? 'all';
+        domainButtons.forEach((item) => item.classList.toggle('is-active', item === button));
+        applyPublicationFilters();
+      });
+    });
+    methodButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        activeMethod = button.dataset.publicationMethod ?? 'all';
+        methodButtons.forEach((item) => item.classList.toggle('is-active', item === button));
+        applyPublicationFilters();
+      });
+    });
+  </script>
+</BaseLayout>

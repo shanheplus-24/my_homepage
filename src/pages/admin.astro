@@ -1,0 +1,219 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { site } from '@data/site';
+---
+
+<BaseLayout title={`Content Studio | ${site.name}`} description="Local graphical content editor for the academic website.">
+  <section class="mx-auto max-w-6xl px-5 py-12">
+    <div class="mb-8 max-w-3xl">
+      <h1 class="text-3xl font-bold text-ink md:text-4xl">Content Studio</h1>
+      <p class="mt-3 text-base leading-7 text-muted">
+        Use this graphical helper to create publication, research, news, and CV entries without writing MDX by hand. It generates a content file that belongs in the corresponding `src/content` folder.
+      </p>
+    </div>
+
+    <div class="grid gap-6 lg:grid-cols-[320px_1fr]">
+      <aside class="surface rounded-md p-4">
+        <label class="text-sm font-bold text-ink" for="content-type">Content type</label>
+        <select id="content-type" class="mt-2 w-full rounded-md border border-line bg-white/5 px-3 py-2 text-sm text-ink">
+          <option value="publication">Publication</option>
+          <option value="research">Research project</option>
+          <option value="news">News</option>
+          <option value="academic">Awards / CV item</option>
+        </select>
+        <div class="mt-5 rounded-md bg-paper p-3 text-sm leading-6 text-muted">
+          <p class="font-bold text-ink">Workflow</p>
+          <p class="mt-2">Fill the form, check the preview, then download the `.mdx` file. Put it into the folder shown below and run `npm run validate`.</p>
+        </div>
+        <p class="mt-4 rounded-md bg-white/5 p-3 text-xs font-bold leading-5 text-accent" data-target-folder>
+          src/content/publications/
+        </p>
+      </aside>
+
+      <div class="grid gap-6 xl:grid-cols-[1fr_1fr]">
+        <form class="surface rounded-md p-5" data-content-form>
+          <div class="grid gap-4" data-fields></div>
+          <div class="mt-5 flex flex-wrap gap-3">
+            <button class="rounded-md bg-accent px-4 py-2 text-sm font-bold text-white hover:bg-accent-strong" type="button" data-generate>
+              Generate MDX
+            </button>
+            <button class="rounded-md border border-line bg-white/5 px-4 py-2 text-sm font-bold text-accent hover:border-accent" type="button" data-download>
+              Download file
+            </button>
+          </div>
+        </form>
+
+        <section class="surface rounded-md p-5">
+          <div class="flex items-center justify-between gap-3">
+            <h2 class="text-lg font-bold text-ink">Preview</h2>
+            <p class="text-xs font-bold text-muted" data-file-name>new-publication.mdx</p>
+          </div>
+          <textarea
+            class="mt-4 min-h-[520px] w-full rounded-md border border-line bg-paper p-3 font-mono text-xs leading-5 text-ink"
+            spellcheck="false"
+            data-output
+          ></textarea>
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+    const typeSelect = document.querySelector('[data-content-type], #content-type');
+    const fieldsTarget = document.querySelector('[data-fields]');
+    const folderTarget = document.querySelector('[data-target-folder]');
+    const output = document.querySelector('[data-output]');
+    const fileNameTarget = document.querySelector('[data-file-name]');
+
+    const schemas = {
+      publication: {
+        folder: 'src/content/publications/',
+        file: 'new-publication.mdx',
+        fields: [
+          ['slug', 'File slug', 'thermodynamic-boundaries-awh'],
+          ['image', 'Image path', '/assets/shanheplus/example.png'],
+          ['alt', 'Image alt text', 'Graphical abstract for the publication'],
+          ['title', 'Title', 'Paper title'],
+          ['authors', 'Authors, one per line', 'He Shan\nCo Author'],
+          ['venue', 'Venue', 'Journal Name'],
+          ['year', 'Year', '2026'],
+          ['type', 'Type', 'journal'],
+          ['status', 'Status', 'published'],
+          ['selected', 'Selected? true/false', 'false'],
+          ['paper', 'Paper link', ''],
+          ['doi', 'DOI link', ''],
+        ],
+      },
+      research: {
+        folder: 'src/content/research/',
+        file: 'new-research-project.mdx',
+        fields: [
+          ['slug', 'File slug', 'water-harvesting-from-air'],
+          ['image', 'Image path', '/assets/shanheplus/example.png'],
+          ['alt', 'Image alt text', 'Project image description'],
+          ['title', 'Title', 'Project title'],
+          ['summary', 'Summary', 'One or two sentence summary.'],
+          ['collaborators', 'Collaborators, one per line', 'Ruzhu Wang Group'],
+          ['status', 'Status', 'active'],
+          ['period', 'Period', '2026-present'],
+          ['highlight', 'Homepage highlight? true/false', 'false'],
+          ['related', 'Related publication slugs, one per line', 'thermodynamic-boundaries-awh'],
+          ['body', 'Body paragraphs', 'Longer project description.'],
+        ],
+      },
+      news: {
+        folder: 'src/content/news/',
+        file: '2026-05-new-update.mdx',
+        fields: [
+          ['slug', 'File slug', '2026-05-new-update'],
+          ['title', 'Title', 'Short update title'],
+          ['date', 'Date', '2026-05-01'],
+          ['summary', 'Summary', 'One sentence news summary.'],
+          ['link', 'Optional link', ''],
+        ],
+      },
+      academic: {
+        folder: 'src/content/academic-info/',
+        file: 'award-new-item.mdx',
+        fields: [
+          ['slug', 'File slug', 'award-new-item'],
+          ['category', 'Category', 'award'],
+          ['title', 'Title', 'Award or CV item title'],
+          ['titleZh', 'Chinese title', ''],
+          ['organization', 'Organization', 'Organization name'],
+          ['organizationZh', 'Chinese organization', ''],
+          ['date', 'Date', '2026'],
+          ['dateZh', 'Chinese date', ''],
+          ['location', 'Location', ''],
+          ['description', 'Description', ''],
+          ['descriptionZh', 'Chinese description', ''],
+          ['link', 'Optional link', ''],
+          ['order', 'Order', '1'],
+        ],
+      },
+    };
+
+    function yamlString(value) {
+      return JSON.stringify(String(value ?? '').trim());
+    }
+
+    function listBlock(values) {
+      return values
+        .split('\n')
+        .map((item) => item.trim())
+        .filter(Boolean)
+        .map((item) => `  - ${yamlString(item)}`)
+        .join('\n');
+    }
+
+    function optionalLine(key, value) {
+      const clean = String(value ?? '').trim();
+      return clean ? `${key}: ${yamlString(clean)}\n` : '';
+    }
+
+    function values() {
+      return Object.fromEntries([...fieldsTarget.querySelectorAll('[name]')].map((field) => [field.name, field.value]));
+    }
+
+    function renderFields() {
+      const schema = schemas[typeSelect.value];
+      folderTarget.textContent = schema.folder;
+      fileNameTarget.textContent = schema.file;
+      fieldsTarget.innerHTML = schema.fields
+        .map(([name, label, placeholder]) => {
+          const multiline = ['authors', 'collaborators', 'related', 'body', 'summary', 'description', 'descriptionZh'].includes(name);
+          const control = multiline
+            ? `<textarea name="${name}" class="mt-1 min-h-24 w-full rounded-md border border-line bg-white/5 px-3 py-2 text-sm text-ink" placeholder="${placeholder}"></textarea>`
+            : `<input name="${name}" class="mt-1 w-full rounded-md border border-line bg-white/5 px-3 py-2 text-sm text-ink" placeholder="${placeholder}" />`;
+          return `<label class="block text-sm font-bold text-ink">${label}${control}</label>`;
+        })
+        .join('');
+      fieldsTarget.querySelectorAll('[name]').forEach((field) => {
+        const match = schema.fields.find(([name]) => name === field.name);
+        field.value = match?.[2] ?? '';
+        field.addEventListener('input', generate);
+      });
+      generate();
+    }
+
+    function generate() {
+      const type = typeSelect.value;
+      const data = values();
+      const slug = (data.slug || schemas[type].file.replace(/\\.mdx$/, '')).trim().replace(/\\.mdx$/, '');
+      fileNameTarget.textContent = `${slug}.mdx`;
+
+      if (type === 'publication') {
+        const linkLines = `${data.paper ? `links:\n  paper: ${yamlString(data.paper)}\n` : ''}${data.doi ? `${data.paper ? '' : 'links:\n'}  doi: ${yamlString(data.doi)}\n` : ''}`;
+        output.value = `---\nimage:\n  src: ${yamlString(data.image)}\n  alt: ${yamlString(data.alt)}\ntitle: ${yamlString(data.title)}\nauthors:\n${listBlock(data.authors)}\nvenue: ${yamlString(data.venue)}\nyear: ${Number.parseInt(data.year, 10) || new Date().getFullYear()}\ntype: ${yamlString(data.type)}\nstatus: ${yamlString(data.status)}\nselected: ${String(data.selected).trim() === 'true'}\n${linkLines}---\n`;
+      }
+
+      if (type === 'research') {
+        output.value = `---\nimage:\n  src: ${yamlString(data.image)}\n  alt: ${yamlString(data.alt)}\ntitle: ${yamlString(data.title)}\nsummary: ${yamlString(data.summary)}\ncollaborators:\n${listBlock(data.collaborators)}\nstatus: ${yamlString(data.status)}\nperiod: ${yamlString(data.period)}\nhighlight: ${String(data.highlight).trim() === 'true'}\nrelatedPublications:\n${listBlock(data.related)}\n---\n\n${data.body || ''}\n`;
+      }
+
+      if (type === 'news') {
+        output.value = `---\ntitle: ${yamlString(data.title)}\ndate: ${data.date || new Date().toISOString().slice(0, 10)}\nsummary: ${yamlString(data.summary)}\n${optionalLine('link', data.link)}---\n`;
+      }
+
+      if (type === 'academic') {
+        output.value = `---\ncategory: ${yamlString(data.category)}\ntitle: ${yamlString(data.title)}\n${optionalLine('titleZh', data.titleZh)}organization: ${yamlString(data.organization)}\n${optionalLine('organizationZh', data.organizationZh)}date: ${yamlString(data.date)}\n${optionalLine('dateZh', data.dateZh)}${optionalLine('location', data.location)}${optionalLine('description', data.description)}${optionalLine('descriptionZh', data.descriptionZh)}${optionalLine('link', data.link)}order: ${Number.parseInt(data.order, 10) || 1}\n---\n`;
+      }
+    }
+
+    function downloadFile() {
+      generate();
+      const blob = new Blob([output.value], { type: 'text/markdown;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = fileNameTarget.textContent || 'content.mdx';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    typeSelect.addEventListener('change', renderFields);
+    document.querySelector('[data-generate]').addEventListener('click', generate);
+    document.querySelector('[data-download]').addEventListener('click', downloadFile);
+    renderFields();
+  </script>
+</BaseLayout>

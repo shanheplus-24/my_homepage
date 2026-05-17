@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" role="img" aria-label="Flat illustration of energy harvesting and management">
+  <rect width="900" height="620" fill="#f6f8fb"/>
+  <rect x="80" y="80" width="740" height="460" rx="24" fill="#ffffff" stroke="#d9e0e7" stroke-width="3"/>
+  <path d="M410 110h140l-76 165h104L366 520l58-178H320z" fill="#f59e0b"/>
+  <rect x="150" y="390" width="210" height="60" fill="#0f766e"/>
+  <rect x="540" y="390" width="210" height="60" fill="#1d4ed8"/>
+  <path d="M220 250h110M570 250h110" stroke="#17202a" stroke-width="18" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 620" role="img" aria-label="Flat illustration of machine learning for systems design">
+  <rect width="900" height="620" fill="#f6f8fb"/>
+  <rect x="80" y="80" width="740" height="460" rx="24" fill="#ffffff" stroke="#d9e0e7" stroke-width="3"/>
+  <rect x="180" y="175" width="180" height="120" rx="14" fill="#dff7f3"/>
+  <rect x="540" y="175" width="180" height="120" rx="14" fill="#e8edff"/>
+  <rect x="360" y="360" width="180" height="120" rx="14" fill="#fff4dc"/>
+  <path d="M360 235h180M450 295v65" stroke="#17202a" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="270" cy="235" r="26" fill="#0f766e"/>
+  <circle cx="630" cy="235" r="26" fill="#1d4ed8"/>
+  <circle cx="450" cy="420" r="26" fill="#f59e0b"/>
+</svg>

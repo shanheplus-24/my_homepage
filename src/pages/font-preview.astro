@@ -1,0 +1,66 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { site } from '@data/site';
+
+const options = [
+  {
+    id: 'A',
+    name: 'Inter',
+    className: 'font-option--inter',
+    note: 'Closest to the referenced GitHub portfolio baseline. Sharp, dense, and reliable for long academic content.',
+  },
+  {
+    id: 'B',
+    name: 'Manrope',
+    className: 'font-option--manrope',
+    note: 'Softer and more rounded. Modern but slightly less technical.',
+  },
+  {
+    id: 'C',
+    name: 'Plus Jakarta Sans',
+    className: 'font-option--jakarta',
+    note: 'Clean editorial proportion with strong headings and comfortable publication lists.',
+  },
+  {
+    id: 'D',
+    name: 'Space Grotesk',
+    className: 'font-option--space',
+    note: 'More futuristic and distinctive. Better for visual impact, weaker for dense CV sections.',
+  },
+];
+---
+
+<BaseLayout title={`Font Preview | ${site.name}`} description="Typography comparison for the academic website.">
+  <section class="mx-auto max-w-7xl px-5 py-12">
+    <div class="mb-10 max-w-5xl">
+      <h1 class="section-heading__title text-5xl leading-tight text-ink md:text-7xl">Choose One Font System</h1>
+      <p class="mt-5 max-w-3xl text-lg leading-8 text-muted">
+        Each option uses one font family across headings, navigation, publication titles, and body text. Headings are uppercase; paragraphs remain normal case.
+      </p>
+    </div>
+
+    <div class="grid gap-5 lg:grid-cols-2">
+      {
+        options.map((option) => (
+          <article class={`font-option-card interactive-card rounded-[30px] p-6 ${option.className}`}>
+            <div class="mb-5 flex items-center justify-between gap-4">
+              <p class="rounded-full bg-white/10 px-4 py-2 text-sm font-black text-accent">Version {option.id}</p>
+              <p class="text-sm font-bold text-muted">{option.name}</p>
+            </div>
+            <h2>Sustainable Nexus</h2>
+            <p class="font-option-card__lead">
+              Thermodynamics, materials science, and field systems for water-energy-food research.
+            </p>
+            <div class="mt-5 rounded-[22px] bg-white/[0.04] p-5">
+              <h3>Atmospheric Water Harvesting</h3>
+              <p>
+                Research on atmospheric water harvesting spans hygroscopic materials, system-level heat and mass transfer, solar-driven desorption, passive cooling, and field-tested devices.
+              </p>
+            </div>
+            <p class="mt-5 text-sm leading-6 text-muted">{option.note}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,133 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  publication: CollectionEntry<'publications'>;
+  compact?: boolean;
+}
+
+const { publication, compact = false } = Astro.props;
+const labels = {
+  paper: 'Paper',
+  code: 'Code',
+  project: 'Project',
+  doi: 'DOI',
+  slides: 'Slides',
+  bibtex: 'BibTeX',
+};
+
+const links = Object.entries(publication.data.links ?? {}).filter(([, href]) => Boolean(href)) as [
+  keyof typeof labels,
+  string,
+][];
+const visibleLinks = links.filter(([key]) => key !== 'doi');
+const titleHref = publication.data.links?.doi;
+const domainRules = [
+  ['Food', /food|agriculture|rooftop|urban/i],
+  ['Water', /water|atmospheric|hygroscopic|sorbent|humidity|freshwater|dehumidification|evaporation|distillation/i],
+  ['Energy', /energy|thermal|heat|cooling|refrigeration|radiative|temperature|photovoltaic|power|electricity/i],
+] as const;
+const methodRules = [
+  ['AI', /ai|neural|machine|pinn|prediction|state-of-charge/i],
+  ['Models', /model|thermodynamic|boundary|framework|physics-informed|prediction|estimation|pinch|evaluation|regulation/i],
+  ['Materials', /material|hydrogel|sponge|sorbent|salt|composite|fiber|membrane|poly|phase change|pcm/i],
+  ['Device', /device|harvester|generator|panel|system|backplate|battery|distillation|evaporator|refrigeration|air conditioning/i],
+] as const;
+const tagSource = `${publication.data.title} ${publication.data.venue}`;
+const domainTag = domainRules.find(([, pattern]) => pattern.test(tagSource))?.[0] ?? 'Energy';
+const methodTag = methodRules.find(([, pattern]) => pattern.test(tagSource))?.[0] ?? 'Device';
+const searchable = [
+  publication.data.title,
+  publication.data.authors.join(' '),
+  publication.data.venue,
+  publication.data.year,
+  publication.data.type,
+  publication.data.status,
+  domainTag,
+  methodTag,
+].join(' ').toLowerCase();
+---
+
+<article
+  class:list={[
+    compact
+      ? 'publication-card interactive-card flex h-full flex-col gap-3 rounded-[24px] p-3'
+      : 'publication-card interactive-card grid gap-5 rounded-[28px] p-3 md:grid-cols-[230px_1fr] md:items-center md:p-4',
+  ]}
+  data-pub-card
+  data-year={publication.data.year}
+  data-type={publication.data.type}
+  data-status={publication.data.status}
+  data-domain={domainTag}
+  data-method={methodTag}
+  data-tags={`${domainTag}|${methodTag}`}
+  data-search={searchable}
+>
+  <div class:list={[
+    'publication-card__media flex w-full items-center justify-center overflow-hidden rounded-[20px]',
+    compact ? 'aspect-[4/3]' : 'aspect-[4/3] md:min-h-40',
+  ]}>
+    <div class="publication-card__image-panel">
+      <img
+        src={publication.data.image.src}
+        alt={publication.data.image.alt}
+        loading="lazy"
+        class="size-full object-contain"
+      />
+    </div>
+  </div>
+  <div class="flex min-w-0 flex-1 flex-col">
+    <div class="mb-3 flex flex-wrap gap-2 text-xs font-bold">
+      <span class="publication-tag publication-tag--domain">{domainTag}</span>
+      <span class="publication-tag publication-tag--method">{methodTag}</span>
+    </div>
+    <h3 class:list={[compact ? 'text-base' : 'text-xl', 'font-bold leading-snug text-ink']}>
+      {
+        titleHref ? (
+          <a class="publication-title-link" href={titleHref} target="_blank" rel="noreferrer">
+            {publication.data.title}
+          </a>
+        ) : (
+          publication.data.title
+        )
+      }
+    </h3>
+    {!compact && (
+      <p class="mt-2 text-sm leading-6 text-muted" aria-label="Authors">
+        {publication.data.authors.join(', ')}
+      </p>
+    )}
+    <p class:list={[compact ? 'publication-venue publication-venue--compact' : 'publication-venue', 'mt-2 font-bold leading-6 text-ink']}>
+      {compact ? publication.data.venue : `${publication.data.venue} | ${publication.data.year}`}
+    </p>
+    {!compact && visibleLinks.length > 0 && (
+      <ul class="mt-3 flex flex-wrap gap-2" role="list" aria-label={`Links for ${publication.data.title}`}>
+        {
+          visibleLinks.map(([key, href]) => (
+            <li>
+              <a
+                class="rounded-full border border-line bg-white/5 px-3 py-2 text-sm font-bold text-accent transition hover:border-accent hover:bg-white/10"
+                href={href}
+              >
+                {labels[key]}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    )}
+    {!compact && publication.data.links?.bibtex && (
+      <details class="mt-3 rounded-[18px] border border-line bg-paper p-3">
+        <summary class="cursor-pointer text-sm font-bold text-ink">BibTeX</summary>
+        <pre class="mt-3 overflow-x-auto rounded-[14px] bg-black/20 p-3 text-xs leading-5 text-muted"><code>{publication.data.links.bibtex}</code></pre>
+        <button
+          class="mt-3 rounded-full bg-accent px-4 py-2 text-sm font-bold text-white transition hover:bg-accent-strong"
+          type="button"
+          data-copy-bibtex={publication.data.links.bibtex}
+        >
+          Copy BibTeX
+        </button>
+      </details>
+    )}
+  </div>
+</article>

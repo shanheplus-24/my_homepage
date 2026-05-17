@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100" role="img" aria-label="Flat water energy materials research illustration">
+  <rect width="900" height="1100" fill="#eef6f5"/>
+  <rect x="95" y="110" width="710" height="880" rx="28" fill="#ffffff" stroke="#d9e0e7" stroke-width="3"/>
+  <circle cx="450" cy="330" r="165" fill="#0f766e" opacity=".12"/>
+  <path d="M450 175c70 96 126 172 126 254 0 75-57 136-126 136s-126-61-126-136c0-82 56-158 126-254z" fill="#0f766e"/>
+  <path d="M290 710h320v62H290z" fill="#17202a"/>
+  <path d="M260 810h380v44H260z" fill="#f59e0b"/>
+  <path d="M340 895h220v38H340z" fill="#1d4ed8"/>
+  <circle cx="655" cy="260" r="48" fill="#f59e0b"/>
+  <path d="M170 602c74-46 145-46 214 0s140 46 214 0 118-44 132-37v70c-74 46-145 46-214 0s-140-46-214 0-118 44-132 37z" fill="#1d4ed8" opacity=".22"/>
+</svg>

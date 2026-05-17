@@ -1,0 +1,47 @@
+---
+import { navigation, site } from '@data/site';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const withBase = (href: string) => `${base}${href}`;
+const linkedIn = site.links.find((link) => link.label === 'LinkedIn')?.href ?? '#';
+---
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <section class="site-footer__profile" aria-label="Researcher profile">
+      <h2>{site.name}</h2>
+      <p>
+        Research Fellow at NUS<br />
+        Exploring the Potential of Moisture
+      </p>
+    </section>
+
+    <nav class="site-footer__links" aria-label="Footer navigation">
+      <h2>Quick Links</h2>
+      <ul role="list">
+        {navigation.map((item) => <li><a href={withBase(item.href)}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <section class="site-footer__connect" aria-label="Connect with me">
+      <h2>Connect with Me</h2>
+      <ul role="list">
+        <li>
+          <a href={linkedIn} aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7.2 10.2V19M11 19v-5.2c0-2.3 1.4-3.8 3.5-3.8 2 0 3.3 1.3 3.3 3.9V19M4.5 7.3a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4ZM3.2 10.2h2.6V19H3.2z" />
+            </svg>
+          </a>
+        </li>
+        <li>
+          <a href={`mailto:${site.email}`} aria-label="Email">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 6.5h16v11H4z" />
+              <path d="m4.6 7.2 7.4 6 7.4-6" />
+            </svg>
+          </a>
+        </li>
+      </ul>
+    </section>
+  </div>
+</footer>

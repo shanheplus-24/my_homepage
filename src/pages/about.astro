@@ -1,0 +1,119 @@
+﻿---
+import { getCollection } from 'astro:content';
+import AcademicInfoGroup from '@components/AcademicInfoGroup.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { site } from '@data/site';
+
+const items = (await getCollection('academicInfo')).sort((a, b) => {
+  if (a.data.order !== b.data.order) return a.data.order - b.data.order;
+  return b.data.date.localeCompare(a.data.date);
+});
+
+const groups = [
+  { category: 'education', title: 'Education', titleZh: '教育经历' },
+  { category: 'fellowship', title: 'Fellowships', titleZh: '研究奖助' },
+  { category: 'award', title: 'Awards', titleZh: '荣誉与奖励' },
+  { category: 'selected-publication', title: 'Selected Publications', titleZh: '代表性论文' },
+  { category: 'talk', title: 'Conference Participated', titleZh: '学术会议报告' },
+  { category: 'teaching', title: 'Teaching', titleZh: '教学' },
+  { category: 'service', title: 'Service', titleZh: '学术服务' },
+  { category: 'other', title: 'Other Academic Information', titleZh: '其他学术信息' },
+] as const;
+
+const linkedIn = site.links.find((link) => link.label === 'LinkedIn')?.href ?? '#';
+---
+
+<BaseLayout title={`About | ${site.name}`} description="Profile, education, awards, selected publications, talks, and contact information.">
+  <section class="mx-auto max-w-7xl px-5 py-12">
+    <div class="about-intro mb-10 grid gap-7 lg:grid-cols-[minmax(280px,460px)_1fr] lg:items-stretch">
+      <aside class="about-contact-card interactive-card overflow-hidden rounded-[28px]" aria-label="Contact information">
+        <img
+          src="/assets/generated/about-campus-greenery.png"
+          alt="Green campus avenue in Singapore with modern buildings"
+          loading="eager"
+          class="about-contact-card__image"
+        />
+        <div class="about-contact-card__body">
+          <ul class="space-y-3" role="list">
+            <li>
+              <a class="about-contact-link" href={`mailto:${site.email}`}>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M4 6.5h16v11H4z" />
+                  <path d="m4.6 7.2 7.4 6 7.4-6" />
+                </svg>
+                <span>{site.email}</span>
+              </a>
+            </li>
+            <li>
+              <a class="about-contact-link" href={linkedIn}>
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M7.2 10.2V19M11 19v-5.2c0-2.3 1.4-3.8 3.5-3.8 2 0 3.3 1.3 3.3 3.9V19M4.5 7.3a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4ZM3.2 10.2h2.6V19H3.2z" />
+                </svg>
+                <span>LinkedIn</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </aside>
+
+      <article class="about-copy-card interactive-card rounded-[30px] p-7 md:p-10">
+        <h1 class="text-5xl font-bold leading-tight text-ink md:text-6xl">
+          <span data-lang="en">He Shan</span>
+          <span data-lang="zh" hidden>何山</span>
+        </h1>
+        <div class="mt-7 space-y-5 text-lg leading-8 text-slate-300">
+          <p data-lang="en">
+            I am a Research Fellow in the Department of Electrical and Computer Engineering at the National University of Singapore, supervised by Vice Provost Professor Ghim Wei Ho. My work focuses on sustainable technologies at the air-water-energy-food nexus, including atmospheric water harvesting, electronics thermal management, urban agriculture, and building energy efficiency.
+          </p>
+          <p data-lang="en">
+            I specialize in thermodynamic modeling and physics-based simulation, with a particular focus on understanding heat and mass transfer in hydrogel systems. I welcome collaborations on atmospheric water harvesting, sustainable soft materials, energy systems, and machine-learning applications.
+          </p>
+          <p data-lang="zh" hidden>
+            我现为新加坡国立大学电气与计算机工程系 Research Fellow，师从副教务长 Prof. Ghim Wei Ho。我的研究聚焦空气-水-能源-食物交叉系统中的可持续技术，包括大气集水、电子热管理、城市农业和建筑节能。
+          </p>
+          <p data-lang="zh" hidden>
+            我擅长热力学建模和物理模型仿真，尤其关注水凝胶体系中的传热传质机理理解。欢迎围绕大气集水、可持续软材料、能源系统和机器学习应用开展合作。
+          </p>
+        </div>
+      </article>
+    </div>
+
+    <div class="about-language-switch mb-3">
+      <p class="hidden">
+        <span data-lang="en">Language for this page only</span>
+        <span data-lang="zh" hidden>仅切换本页面语言</span>
+      </p>
+      <div class="flex gap-2" aria-label="Language switcher">
+        <button class="chip-button" type="button" data-language-switch="en" aria-pressed="true">English</button>
+        <button class="chip-button" type="button" data-language-switch="zh" aria-pressed="false">中文</button>
+      </div>
+    </div>
+
+    <div class="grid gap-6">
+      {
+        groups.map((group) => {
+          const groupItems = items.filter((item) => item.data.category === group.category);
+          return groupItems.length > 0 ? <AcademicInfoGroup title={group.title} titleZh={group.titleZh} items={groupItems} /> : null;
+        })
+      }
+    </div>
+  </section>
+  <script is:inline>
+    const languageButtons = Array.from(document.querySelectorAll('[data-language-switch]'));
+
+    function setLanguage(language) {
+      document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en';
+      document.querySelectorAll('[data-lang]').forEach((node) => {
+        node.hidden = node.dataset.lang !== language;
+      });
+      languageButtons.forEach((button) => {
+        button.setAttribute('aria-pressed', String(button.dataset.languageSwitch === language));
+      });
+    }
+
+    languageButtons.forEach((button) => {
+      button.addEventListener('click', () => setLanguage(button.dataset.languageSwitch));
+    });
+  </script>
+</BaseLayout>
+

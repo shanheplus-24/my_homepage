@@ -1,0 +1,88 @@
+---
+import { navigation, site } from '@data/site';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const withBase = (href: string) => `${base}${href}`;
+const currentPath = Astro.url.pathname.replace(base, '') || '/';
+---
+
+<header class="site-header">
+  <nav class="site-header__shell mx-auto" aria-label="Primary" data-header-shell>
+    <div class="site-header__row">
+      <a href={withBase('/')} class="site-brand group">
+        <span class="site-brand__mark" aria-hidden="true">
+          <img src={withBase('/assets/generated/site-logo-nexus-flat-v2.svg')} alt="" loading="eager" decoding="async" />
+        </span>
+        <span class="site-brand__name">{site.name}</span>
+      </a>
+
+      <ul class="site-nav site-nav--desktop" role="list">
+        {
+          navigation.map((item) => {
+            const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
+            return (
+              <li>
+                <a
+                  href={withBase(item.href)}
+                  aria-current={isActive ? 'page' : undefined}
+                  class:list={['site-nav__link', isActive && 'is-active']}
+                >
+                  {item.label}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+
+      <button class="site-menu-button" type="button" aria-label="Open navigation menu" aria-expanded="false" data-menu-button>
+        <span class="site-menu-button__line"></span>
+        <span class="site-menu-button__line"></span>
+      </button>
+    </div>
+
+    <div class="site-nav-mobile" data-mobile-menu>
+      <ul class="site-nav site-nav--mobile" role="list">
+        {
+          navigation.map((item) => {
+            const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
+            return (
+              <li>
+                <a
+                  href={withBase(item.href)}
+                  aria-current={isActive ? 'page' : undefined}
+                  class:list={['site-nav__link site-nav__link--mobile', isActive && 'is-active']}
+                  data-mobile-nav-link
+                >
+                  {item.label}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </nav>
+  <script is:inline>
+    const headerShell = document.querySelector('[data-header-shell]');
+    const menuButton = document.querySelector('[data-menu-button]');
+    const mobileLinks = document.querySelectorAll('[data-mobile-nav-link]');
+    let headerFloating = false;
+    const syncHeaderState = () => {
+      const y = window.scrollY;
+      if (!headerFloating && y > 44) headerFloating = true;
+      if (headerFloating && y < 8) headerFloating = false;
+      headerShell?.classList.toggle('is-floating', headerFloating);
+    };
+    const setMenuOpen = (open) => {
+      headerShell?.classList.toggle('is-open', open);
+      menuButton?.setAttribute('aria-expanded', String(open));
+    };
+    syncHeaderState();
+    window.addEventListener('scroll', syncHeaderState, { passive: true });
+    menuButton?.addEventListener('click', () => {
+      setMenuOpen(menuButton.getAttribute('aria-expanded') !== 'true');
+    });
+    mobileLinks.forEach((link) => link.addEventListener('click', () => setMenuOpen(false)));
+  </script>
+</header>

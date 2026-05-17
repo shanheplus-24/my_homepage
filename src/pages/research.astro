@@ -1,0 +1,120 @@
+---
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import ResearchCard from '@components/ResearchCard.astro';
+import BaseLayout from '@layouts/BaseLayout.astro';
+import { site } from '@data/site';
+
+const publications = await getCollection('publications');
+const publicationById = new Map(publications.map((publication) => [publication.id, publication]));
+const projectById = new Map((await getCollection('research')).map((project) => [project.id, project]));
+const overviewIds = [
+  'water-harvesting-from-air',
+  'energy-harvesting-management',
+  'sustainable-water-energy-food-nexus',
+];
+const overviewProjects = overviewIds
+  .map((id) => projectById.get(id))
+  .filter((project): project is CollectionEntry<'research'> => Boolean(project));
+const narrativeIds = [
+  'thermodynamics-materials-design',
+  'heat-mass-transfer-system-design',
+  'machine-learning-systems-design',
+];
+const narrativeProjects = await Promise.all(
+  narrativeIds.map(async (id) => {
+    const project = projectById.get(id);
+    if (!project) return null;
+    const { Content } = await render(project);
+    return { project, Content };
+  }),
+);
+---
+
+<BaseLayout title={`Research | ${site.name}`} description="Research on sustainable water-energy-food nexus.">
+  <section class="mx-auto max-w-7xl px-5 py-12">
+    <div class="research-hero mb-9">
+      <h1 class="research-page-title">
+        Research on Sustainable
+        <span class="research-title-term research-title-term--water">Water</span><span class="research-title-separator">-</span><span class="research-title-term research-title-term--energy">Energy</span><span class="research-title-separator">-</span><span class="research-title-term research-title-term--food">Food</span>
+        Nexus
+      </h1>
+      <div class="research-intro-copy">
+        <p>
+          Water and energy are the lifeblood of human civilization, yet today's imbalanced, carbon-intensive, and inefficient systems threaten their availability. I develop sustainable technologies, especially approaches that draw both water and energy directly from air, to mitigate energy-water impacts and expand decentralized, equitable access.
+        </p>
+        <p>
+          My work sits at the intersection of materials science and thermal engineering, designing tailored materials and systems for atmospheric water harvesting, electronics thermal management, urban agriculture, and building energy efficiency.
+        </p>
+      </div>
+    </div>
+    <div class="grid gap-5 lg:grid-cols-3" aria-label="Research topics">
+      {
+        overviewProjects.map((project) => (
+          <ResearchCard
+            project={project}
+          />
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="mx-auto max-w-7xl px-5 pb-14">
+    <div class="grid gap-7">
+      {
+        narrativeProjects.map((item) => {
+          if (!item) return null;
+          const { project, Content } = item;
+          const relatedPublications = project.data.relatedPublications
+            .map((reference) => publicationById.get(reference.id))
+            .filter((publication): publication is CollectionEntry<'publications'> => Boolean(publication));
+          return (
+            <article class="research-card interactive-card rounded-[30px] p-4 md:p-6" data-research-card data-status={project.data.status} data-search={`${project.data.title} ${project.data.summary}`.toLowerCase()}>
+              <div class="grid gap-6 lg:grid-cols-[minmax(520px,610px)_1fr] lg:items-stretch">
+                <div class="research-detail-figure flex aspect-[4/3] min-h-60 items-center justify-center overflow-hidden rounded-[24px] lg:aspect-auto lg:h-full lg:min-h-full">
+                  <div class="research-detail-figure__image-panel">
+                    <img
+                      src={project.data.image.src}
+                      alt={project.data.image.alt}
+                      loading="lazy"
+                      class="size-full object-contain"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <h2 class="text-4xl font-bold leading-tight text-ink">{project.data.title}</h2>
+                  <div class="content-prose mt-3 text-justify">
+                    <Content />
+                  </div>
+                  {relatedPublications.length > 0 && (
+                    <div class="mt-5 text-sm leading-6 text-muted">
+                      <p class="font-bold text-ink">Related publications</p>
+                      <ul class="mt-2 flex flex-wrap gap-2" role="list">
+                        {
+                          relatedPublications.map((publication) => {
+                            const href = publication.data.links?.paper || publication.data.links?.doi || publication.data.links?.project;
+                            return (
+                              <li>
+                                {href ? (
+                                  <a class="rounded-full border border-line bg-white/5 px-3 py-2 text-xs font-bold text-accent hover:border-accent hover:bg-white/10" href={href}>
+                                    {publication.data.venue}
+                                  </a>
+                                ) : (
+                                  <span class="rounded-md bg-paper px-3 py-2 text-xs font-bold text-muted">{publication.data.venue}</span>
+                                )}
+                              </li>
+                            );
+                          })
+                        }
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </article>
+          );
+        })
+      }
+    </div>
+  </section>
+</BaseLayout>
