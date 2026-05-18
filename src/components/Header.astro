@@ -6,12 +6,12 @@ const withBase = (href: string) => `${base}${href}`;
 const currentPath = Astro.url.pathname.replace(base, '') || '/';
 ---
 
-<header class="site-header">
+<header class="site-header" data-site-header>
   <nav class="site-header__shell mx-auto" aria-label="Primary" data-header-shell>
     <div class="site-header__row">
       <a href={withBase('/')} class="site-brand group">
         <span class="site-brand__mark" aria-hidden="true">
-          <img src={withBase('/assets/generated/site-logo-nexus-flat-v2.svg')} alt="" loading="eager" decoding="async" />
+          <img src={withBase('/assets/generated/site-logo-nexus-white-512.png')} alt="" loading="eager" decoding="async" />
         </span>
         <span class="site-brand__name">{site.name}</span>
       </a>
@@ -65,13 +65,12 @@ const currentPath = Astro.url.pathname.replace(base, '') || '/';
   </nav>
   <script is:inline>
     const headerShell = document.querySelector('[data-header-shell]');
+    const siteHeader = document.querySelector('[data-site-header]');
     const menuButton = document.querySelector('[data-menu-button]');
     const mobileLinks = document.querySelectorAll('[data-mobile-nav-link]');
-    let headerFloating = false;
     const syncHeaderState = () => {
-      const y = window.scrollY;
-      if (!headerFloating && y > 44) headerFloating = true;
-      if (headerFloating && y < 8) headerFloating = false;
+      const headerFloating = window.scrollY > 20;
+      siteHeader?.classList.toggle('is-floating', headerFloating);
       headerShell?.classList.toggle('is-floating', headerFloating);
     };
     const setMenuOpen = (open) => {

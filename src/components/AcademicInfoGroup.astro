@@ -70,25 +70,21 @@ const splitAdvisor = (description?: string) => {
             isEducation ? (
               <>
                 <span class="education-node" aria-hidden="true"></span>
-                <p class="education-date">
-                  <span data-lang="en">{item.data.date}</span>
-                  <span data-lang="zh" hidden>{item.data.dateZh ?? item.data.date}</span>
-                </p>
                 <div class="education-body">
-                  <div class="education-main">
-                    <div class="min-w-0">
-                      <h3 class="education-title">
-                        <span data-lang="en">{item.data.title}, {item.data.organization}</span>
-                        <span data-lang="zh" hidden>{item.data.titleZh ?? item.data.title}, {item.data.organizationZh ?? item.data.organization}</span>
-                      </h3>
-                      {item.data.location && (
-                        <p class="education-venue">
-                          <span data-lang="en">{item.data.location}</span>
-                          <span data-lang="zh" hidden>{item.data.locationZh ?? item.data.location}</span>
-                        </p>
-                      )}
-                    </div>
-                  </div>
+                  <p class="education-date">
+                    <span data-lang="en">{item.data.date}</span>
+                    <span data-lang="zh" hidden>{item.data.dateZh ?? item.data.date}</span>
+                  </p>
+                  <h3 class="education-title">
+                    <span data-lang="en">{item.data.title}, {item.data.organization}</span>
+                    <span data-lang="zh" hidden>{item.data.titleZh ?? item.data.title}, {item.data.organizationZh ?? item.data.organization}</span>
+                  </h3>
+                  {item.data.location && (
+                    <p class="education-venue">
+                      <span data-lang="en">{item.data.location}</span>
+                      <span data-lang="zh" hidden>{item.data.locationZh ?? item.data.location}</span>
+                    </p>
+                  )}
                   {
                     item.data.description && (
                       <div class="education-description">
@@ -117,18 +113,21 @@ const splitAdvisor = (description?: string) => {
                       </ul>
                     </div>
                   )}
-                  {item.data.logos.length > 0 && (
-                    <div class="education-logo-stack" aria-label={`${item.data.organization} logo`}>
-                      {
-                        item.data.logos.map((logo) => (
-                          <span class="education-logo">
-                            <img src={logo.src} alt={logo.alt} loading="lazy" />
-                          </span>
-                        ))
-                      }
-                    </div>
-                  )}
                 </div>
+                {item.data.logos.length > 0 && (
+                  <div class="education-logo-stack" aria-label={`${item.data.organization} logo`}>
+                    {
+                      item.data.logos.map((logo) => (
+                        <span class:list={[
+                          'education-logo',
+                          logo.src.endsWith('national-university-of-singapore.svg') && 'education-logo--nus',
+                        ]}>
+                          <img src={logo.src} alt={logo.alt} loading="lazy" />
+                        </span>
+                      ))
+                    }
+                  </div>
+                )}
               </>
             ) : isConference ? (
               <>
