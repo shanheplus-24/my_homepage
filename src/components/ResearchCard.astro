@@ -8,6 +8,8 @@ interface Props {
 }
 
 const { project, showSummary = true } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const withBase = (src?: string) => src && src.startsWith('/') ? `${base}${src}` : src;
 const searchable = [
   project.data.title,
   project.data.summary,
@@ -27,7 +29,7 @@ const searchable = [
   <div class="research-card__media flex aspect-[4/3] w-full items-center justify-center overflow-hidden rounded-[22px]">
     <div class="research-card__image-panel">
       <img
-        src={project.data.image.src}
+        src={withBase(project.data.image.src)}
         alt={project.data.image.alt}
         loading="lazy"
         class="size-full object-contain"

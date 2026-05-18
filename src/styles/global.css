@@ -1263,8 +1263,13 @@ body::after {
   grid-template-columns: minmax(0, 1fr);
   gap: 0;
   align-items: start;
+  min-height: 17rem;
   padding: 1.75rem 0;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.education-timeline__item:has(.education-logo-stack--multiple) {
+  min-height: 22rem;
 }
 
 .education-timeline__item:first-child {
@@ -1291,7 +1296,7 @@ body::after {
 
 .education-logo-stack {
   position: absolute;
-  top: 9.6rem;
+  top: 12.2rem;
   right: 0;
   z-index: 1;
   display: flex;
@@ -1352,7 +1357,7 @@ body::after {
 
 .education-venue,
 .education-description {
-  max-width: calc(100% - clamp(7rem, 8vw, 8.6rem));
+  max-width: calc(100% - clamp(8.6rem, 10vw, 10.8rem));
 }
 
 .education-date {
@@ -1390,9 +1395,9 @@ body::after {
   margin-top: 0.75rem;
   display: flex;
   align-items: center;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   gap: 0.5rem;
-  max-width: 100%;
+  max-width: calc(100% - clamp(8.6rem, 10vw, 10.8rem));
   min-width: 0;
 }
 
@@ -1412,7 +1417,7 @@ body::after {
 
 .education-links {
   display: flex;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   gap: 0.5rem;
   min-width: 0;
 }
@@ -1522,8 +1527,17 @@ body::after {
   text-transform: uppercase;
 }
 
-.about-info-grid > .academic-section:not(.academic-section--education):not(.academic-section--awards) {
+.about-info-grid > .academic-section:not(.academic-section--education):not(.academic-section--awards):not(.academic-section--fellowships) {
   grid-column: 1 / -1;
+}
+
+.academic-section--fellowships .academic-info-item {
+  padding: 1rem 1.1rem;
+}
+
+.academic-section--fellowships .academic-info-item h3 {
+  max-width: 24rem;
+  line-height: 1.25;
 }
 
 .selected-awards-list {
@@ -2044,6 +2058,7 @@ body::after {
   .conference-timeline__item {
     grid-template-columns: 1fr;
     gap: 0.9rem;
+    min-height: auto;
   }
 
   .education-date {

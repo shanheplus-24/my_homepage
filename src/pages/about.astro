@@ -21,6 +21,8 @@ const groups = [
 ] as const;
 
 const linkedIn = site.links.find((link) => link.label === 'LinkedIn')?.href ?? '#';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const withBase = (src: string) => src.startsWith('/') ? `${base}${src}` : src;
 ---
 
 <BaseLayout title={`About | ${site.name}`} description="Profile, education, awards, selected publications, talks, and contact information.">
@@ -28,7 +30,7 @@ const linkedIn = site.links.find((link) => link.label === 'LinkedIn')?.href ?? '
     <div class="about-intro mb-10 grid gap-7 lg:grid-cols-[minmax(280px,460px)_1fr] lg:items-stretch">
       <aside class="about-contact-card interactive-card overflow-hidden rounded-[28px]" aria-label="Contact information">
         <img
-          src="/assets/generated/about-campus-greenery.png"
+          src={withBase('/assets/generated/about-campus-greenery.png')}
           alt="Green campus avenue in Singapore with modern buildings"
           loading="eager"
           class="about-contact-card__image"

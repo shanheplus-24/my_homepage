@@ -6,6 +6,8 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import { site } from '@data/site';
 
 const publications = await getCollection('publications');
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const withBase = (src?: string) => src && src.startsWith('/') ? `${base}${src}` : src;
 const publicationById = new Map(publications.map((publication) => [publication.id, publication]));
 const projectById = new Map((await getCollection('research')).map((project) => [project.id, project]));
 const overviewIds = [
@@ -75,7 +77,7 @@ const narrativeProjects = await Promise.all(
                 <div class="research-detail-figure flex aspect-[4/3] min-h-60 items-center justify-center overflow-hidden rounded-[24px] lg:aspect-auto lg:h-full lg:min-h-full">
                   <div class="research-detail-figure__image-panel">
                     <img
-                      src={project.data.image.src}
+                      src={withBase(project.data.image.src)}
                       alt={project.data.image.alt}
                       loading="lazy"
                       class="size-full object-contain"
