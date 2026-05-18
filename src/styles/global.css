@@ -1308,6 +1308,7 @@ body::after {
   right: 0;
   z-index: 1;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   gap: 0.65rem;
@@ -2065,6 +2066,8 @@ body::after {
 
   .education-logo-stack {
     position: static;
+    flex-direction: row;
+    flex-wrap: wrap;
     grid-column: 1;
     grid-row: auto;
     justify-content: flex-start;
