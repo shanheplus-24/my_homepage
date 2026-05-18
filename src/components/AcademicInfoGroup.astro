@@ -12,19 +12,15 @@ const sectionId = title.toLowerCase().replaceAll(' ', '-');
 const isEducation = title === 'Education';
 const isConference = title === 'Conference Participated';
 const isSelectedPublication = title === 'Selected Publications';
-const usesInlineDescription = title === 'Awards' || title === 'Fellowships';
+const isAwards = title === 'Awards' || title === 'Selected Awards and Honors';
+const isFellowships = title === 'Fellowships';
+const usesInlineDescription = isAwards || isFellowships;
 const formatMetaLine = (organization: string, location?: string, description?: string) => {
   const place = `${organization}${location ? `, ${location}` : ''}`.trim();
   return [place, description].filter(Boolean).join(' | ');
 };
-const displayOrganization = (item: CollectionEntry<'academicInfo'>) =>
-  item.id === 'award-xia-anshi-scholarship' || item.id === 'award-university-level-scholarships'
-    ? ''
-    : item.data.organization;
-const displayOrganizationZh = (item: CollectionEntry<'academicInfo'>) =>
-  item.id === 'award-xia-anshi-scholarship' || item.id === 'award-university-level-scholarships'
-    ? ''
-    : item.data.organizationZh ?? item.data.organization;
+const displayOrganization = (item: CollectionEntry<'academicInfo'>) => item.data.organization;
+const displayOrganizationZh = (item: CollectionEntry<'academicInfo'>) => item.data.organizationZh ?? item.data.organization;
 const shouldShowDate = (item: CollectionEntry<'academicInfo'>) => item.id !== 'award-university-level-scholarships';
 const splitAdvisor = (description?: string) => {
   if (!description) return { detail: '', advisor: '' };
@@ -37,8 +33,12 @@ const splitAdvisor = (description?: string) => {
 };
 ---
 
-<section class="interactive-card rounded-[30px] p-5 md:p-7" aria-labelledby={sectionId}>
-  <h2 id={sectionId} class="text-3xl font-bold text-ink">
+<section class:list={[
+  'interactive-card academic-section rounded-[30px] p-5 md:p-7',
+  isEducation && 'academic-section--education',
+  isAwards && 'academic-section--awards',
+]} aria-labelledby={sectionId}>
+  <h2 id={sectionId} class="academic-section-title text-3xl font-bold text-ink">
     <span data-lang="en">{title}</span>
     <span data-lang="zh" hidden>{titleZh ?? title}</span>
   </h2>
@@ -49,7 +49,9 @@ const splitAdvisor = (description?: string) => {
         ? 'conference-timeline mt-6'
         : isSelectedPublication
           ? 'about-selected-publications mt-6'
-          : 'mt-6 grid gap-4 md:grid-cols-2',
+          : isAwards
+            ? 'selected-awards-list mt-6'
+            : 'mt-6 grid gap-4 md:grid-cols-2',
   ]} role="list">
     {
       items.map((item) => (
@@ -60,7 +62,9 @@ const splitAdvisor = (description?: string) => {
               ? 'conference-timeline__item'
               : isSelectedPublication
                 ? 'about-selected-publication-card'
-                : 'academic-info-item rounded-[22px] p-4',
+                : isAwards
+                  ? 'selected-award-item'
+                  : 'academic-info-item rounded-[22px] p-4',
         ]}>
           {
             isEducation ? (

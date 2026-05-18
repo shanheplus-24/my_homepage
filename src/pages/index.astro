@@ -22,7 +22,17 @@ const homeActivities = ['2023-03-cna-interview', '2022-09-water-harvesting-inter
   .map((id) => newsById.get(id))
   .filter((item): item is CollectionEntry<'news'> => Boolean(item));
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const collaborationTopics = ['Water', 'Carbon', 'Hydrogels', 'Systems', 'ML Modeling', 'Translation'];
+const collaborationTopics = [
+  'Water',
+  'Energy',
+  'Carbon',
+  'Hydrogel',
+  'Device',
+  'Machine Learning',
+  'Commercialization',
+  'Thermodynamics',
+  'Transport',
+];
 ---
 
 <BaseLayout title={`${site.name} | Academic Website`} description={site.bio}>
@@ -89,16 +99,18 @@ const collaborationTopics = ['Water', 'Carbon', 'Hydrogels', 'Systems', 'ML Mode
           <circle cx="600" cy="396" r="42" />
         </g>
       </svg>
-      <h1 class="hero-title" aria-label="Sustainable Nexus">
+      <h1 class="hero-title" aria-label="Sustainable Water-Energy-Food Nexus">
         <span class="hero-title__line hero-title__line--white">Sustainable</span>
-        <span class="hero-title__line hero-title__line--accent">Nexus</span>
         <span class="hero-title__line hero-title__line--nexus">Water-Energy-Food</span>
+        <span class="hero-title__line hero-title__line--accent">Nexus</span>
       </h1>
       <p class="hero-subtitle">
-        <span class="hero-subtitle__chips">
-          <span class="hero-subtitle__chip"><span></span>Thermodynamics</span>
-          <span class="hero-subtitle__chip"><span></span>Soft Materials</span>
-          <span class="hero-subtitle__chip"><span></span>Water-Energy Systems</span>
+        <span class="hero-subtitle__chips hero-topic-flow">
+          {collaborationTopics.map((topic, index) => (
+            <span class="hero-subtitle__chip" style={`--topic-index: ${index}`}>
+              <span></span>{topic}
+            </span>
+          ))}
         </span>
       </p>
       <div class="hero-actions">
@@ -148,7 +160,7 @@ const collaborationTopics = ['Water', 'Carbon', 'Hydrogels', 'Systems', 'ML Mode
           Open to collaborations on atmospheric water harvesting, sustainable soft materials, energy systems, and machine-learning applications.
         </p>
         <div class="collaboration-topics mt-6" aria-label="Collaboration directions">
-          {collaborationTopics.map((topic) => <span>{topic}</span>)}
+          {collaborationTopics.map((topic, index) => <span style={`--topic-index: ${index}`}>{topic}</span>)}
         </div>
       </div>
       <a class="github-primary-button" href={`mailto:${site.email}`}>

@@ -1,5 +1,5 @@
 export const site = {
-  name: 'He Shan',
+  name: "He Shan's Personal Page",
   title: 'Research Fellow in Sustainable Water-Energy-Food Systems',
   affiliation: 'Department of Electrical and Computer Engineering, National University of Singapore',
   location: 'Singapore',
@@ -29,7 +29,7 @@ export const site = {
     title: '可持续水-能源-食物系统研究员',
     affiliation: '新加坡国立大学电气与计算机工程系',
     bio:
-      '何山博士关注空气-水-能源-食物交叉系统中的可持续技术，研究方向包括大气集水、电子热管理、城市农业、建筑能效，以及从材料到系统的热力学与传输建模。',
+      '何山关注空气-水-能源-食物交叉系统中的可持续技术，研究方向包括大气集水、电子热管理、城市农业、建筑能效，以及从材料到系统的热力学与传输建模。',
   },
 };
 

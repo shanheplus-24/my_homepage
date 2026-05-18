@@ -10,14 +10,13 @@ const items = (await getCollection('academicInfo')).sort((a, b) => {
 });
 
 const groups = [
-  { category: 'education', title: 'Education', titleZh: '教育经历' },
-  { category: 'fellowship', title: 'Fellowships', titleZh: '研究奖助' },
-  { category: 'award', title: 'Awards', titleZh: '荣誉与奖励' },
-  { category: 'selected-publication', title: 'Selected Publications', titleZh: '代表性论文' },
-  { category: 'talk', title: 'Conference Participated', titleZh: '学术会议报告' },
-  { category: 'teaching', title: 'Teaching', titleZh: '教学' },
-  { category: 'service', title: 'Service', titleZh: '学术服务' },
-  { category: 'other', title: 'Other Academic Information', titleZh: '其他学术信息' },
+  { categories: ['education'], title: 'Education', titleZh: '教育经历' },
+  { categories: ['fellowship', 'award'], title: 'Selected Awards and Honors', titleZh: '代表性荣誉与奖励' },
+  { categories: ['selected-publication'], title: 'Selected Publications', titleZh: '代表性论文' },
+  { categories: ['talk'], title: 'Conference Participated', titleZh: '学术会议报告' },
+  { categories: ['teaching'], title: 'Teaching', titleZh: '教学' },
+  { categories: ['service'], title: 'Service', titleZh: '学术服务' },
+  { categories: ['other'], title: 'Other Academic Information', titleZh: '其他学术信息' },
 ] as const;
 
 const linkedIn = site.links.find((link) => link.label === 'LinkedIn')?.href ?? '#';
@@ -89,10 +88,11 @@ const linkedIn = site.links.find((link) => link.label === 'LinkedIn')?.href ?? '
       </div>
     </div>
 
-    <div class="grid gap-6">
+    <div class="about-info-grid grid gap-6 lg:grid-cols-2">
       {
         groups.map((group) => {
-          const groupItems = items.filter((item) => item.data.category === group.category);
+          const categories = group.categories as readonly string[];
+          const groupItems = items.filter((item) => categories.includes(item.data.category));
           return groupItems.length > 0 ? <AcademicInfoGroup title={group.title} titleZh={group.titleZh} items={groupItems} /> : null;
         })
       }

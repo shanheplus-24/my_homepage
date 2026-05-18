@@ -18,20 +18,22 @@ const methodTags = ['Models', 'Materials', 'Device', 'AI'];
 <BaseLayout title={`Publications | ${site.name}`} description="Publications with title, authors, venue, year, type, status, and optional paper links.">
   <section class="mx-auto max-w-7xl px-5 py-12">
     <SectionHeading title="Publications" />
-    <div class="surface mb-8 rounded-[28px] p-5">
+    <div class="surface publication-filter-panel mb-8 rounded-[28px] p-5">
       <div class="grid gap-5">
-        <div class="publication-filter-group" aria-label="Publication research area filters">
-          <p>Research Area</p>
-          <div class="publication-filter-tabs">
-            <button class="publication-filter-tabs__button is-active" type="button" data-publication-domain="all">All</button>
-            {domainTags.map((tag) => <button class="publication-filter-tabs__button publication-filter-tabs__button--domain" type="button" data-publication-domain={tag}>{tag}</button>)}
+        <div class="publication-filter-row">
+          <div class="publication-filter-group" aria-label="Publication research area filters">
+            <p>Research Area</p>
+            <div class="publication-filter-tabs">
+              <button class="publication-filter-tabs__button is-active" type="button" data-publication-domain="all">All</button>
+              {domainTags.map((tag) => <button class="publication-filter-tabs__button publication-filter-tabs__button--domain" type="button" data-publication-domain={tag}>{tag}</button>)}
+            </div>
           </div>
-        </div>
-        <div class="publication-filter-group" aria-label="Publication technical focus filters">
-          <p>Technical Focus</p>
-          <div class="publication-filter-tabs">
-            <button class="publication-filter-tabs__button is-active" type="button" data-publication-method="all">All</button>
-            {methodTags.map((tag) => <button class="publication-filter-tabs__button publication-filter-tabs__button--method" type="button" data-publication-method={tag}>{tag}</button>)}
+          <div class="publication-filter-group" aria-label="Publication technical focus filters">
+            <p>Technical Focus</p>
+            <div class="publication-filter-tabs">
+              <button class="publication-filter-tabs__button is-active" type="button" data-publication-method="all">All</button>
+              {methodTags.map((tag) => <button class="publication-filter-tabs__button publication-filter-tabs__button--method" type="button" data-publication-method={tag}>{tag}</button>)}
+            </div>
           </div>
         </div>
         <label class="text-sm font-bold text-ink" for="publication-search">Search publications</label>
