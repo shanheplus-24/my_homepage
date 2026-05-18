@@ -1359,8 +1359,7 @@ body::after {
 }
 
 .education-venue,
-.education-description,
-.education-link-group {
+.education-description {
   max-width: calc(100% - clamp(7rem, 8vw, 8.6rem));
 }
 
@@ -1399,8 +1398,10 @@ body::after {
   margin-top: 0.75rem;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 0.5rem;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .education-link-label {
@@ -1419,13 +1420,15 @@ body::after {
 
 .education-links {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 0.5rem;
+  min-width: 0;
 }
 
 .education-links a {
   display: inline-flex;
   align-items: center;
+  white-space: nowrap;
   min-height: 2.18rem;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.1);
@@ -2071,6 +2074,11 @@ body::after {
   .education-description,
   .education-link-group {
     max-width: 100%;
+  }
+
+  .education-link-group,
+  .education-links {
+    flex-wrap: wrap;
   }
 
   .education-logo {
