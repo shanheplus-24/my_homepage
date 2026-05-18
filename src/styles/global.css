@@ -1273,8 +1273,8 @@ body::after {
 .education-timeline__item {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: clamp(1rem, 2.6vw, 2.2rem);
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
   align-items: start;
   padding: 1.75rem 0;
   border-top: 1px solid rgba(255, 255, 255, 0.08);
@@ -1303,10 +1303,10 @@ body::after {
 }
 
 .education-logo-stack {
-  position: static;
-  grid-column: 2;
-  grid-row: 1;
-  align-self: start;
+  position: absolute;
+  top: 7.1rem;
+  right: 0;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -1355,7 +1355,13 @@ body::after {
   font-size: clamp(1.12rem, 1.55vw, 1.35rem);
   font-weight: 850;
   line-height: 1.35;
-  max-width: 54rem;
+  max-width: 100%;
+}
+
+.education-venue,
+.education-description,
+.education-link-group {
+  max-width: calc(100% - clamp(7rem, 8vw, 8.6rem));
 }
 
 .education-date {
@@ -2055,9 +2061,16 @@ body::after {
   }
 
   .education-logo-stack {
+    position: static;
     grid-column: 1;
     grid-row: auto;
     justify-content: flex-start;
+  }
+
+  .education-venue,
+  .education-description,
+  .education-link-group {
+    max-width: 100%;
   }
 
   .education-logo {
