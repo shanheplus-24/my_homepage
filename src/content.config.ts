@@ -37,6 +37,7 @@ const publications = defineCollection({
     authors: z.array(z.string().min(1)).min(1),
     venue: z.string().min(1),
     year: z.number().int().min(1900).max(2100),
+    sortOrder: z.number().int().optional(),
     type: z.enum(['journal', 'conference', 'preprint', 'workshop', 'book-chapter', 'thesis']),
     status: z.enum(['published', 'accepted', 'in-review', 'working-paper', 'forthcoming']),
     selected: z.boolean().default(false),

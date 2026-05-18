@@ -7,6 +7,9 @@ import { site } from '@data/site';
 
 const publications = (await getCollection('publications')).sort((a, b) => {
   if (b.data.year !== a.data.year) return b.data.year - a.data.year;
+  if ((a.data.sortOrder ?? 999) !== (b.data.sortOrder ?? 999)) {
+    return (a.data.sortOrder ?? 999) - (b.data.sortOrder ?? 999);
+  }
   return a.data.title.localeCompare(b.data.title);
 });
 

@@ -94,7 +94,14 @@ const searchable = [
     </h3>
     {!compact && (
       <p class="mt-2 text-sm leading-6 text-muted" aria-label="Authors">
-        {publication.data.authors.join(', ')}
+        {publication.data.authors.map((author, index) => (
+          <>
+            {index > 0 && ', '}
+            <span class:list={['publication-author', author.replace(/[†*]/g, '').trim() === 'He Shan' && 'publication-author--primary']}>
+              {author}
+            </span>
+          </>
+        ))}
       </p>
     )}
     <p class:list={[compact ? 'publication-venue publication-venue--compact' : 'publication-venue', 'mt-2 font-bold leading-6 text-ink']}>

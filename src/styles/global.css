@@ -278,6 +278,10 @@ body::after {
 .site-brand__name {
   font-size: clamp(1rem, 1.55vw, 1.28rem);
   font-weight: 800;
+  line-height: 1.05;
+}
+
+.site-brand__nowrap {
   white-space: nowrap;
 }
 
@@ -967,6 +971,11 @@ body::after {
 
 .publication-title-link:hover {
   color: #93c5fd;
+}
+
+.publication-author--primary {
+  color: #60a5fa;
+  font-weight: 900;
 }
 
 .publication-card .publication-card__media {
@@ -1718,6 +1727,20 @@ body::after {
   font-size: clamp(1.05rem, 1.35vw, 1.35rem);
   font-weight: 600;
   line-height: 1.65;
+}
+
+.site-footer__role {
+  color: #d7e7ff;
+  font-weight: 850;
+}
+
+.site-footer__moisture {
+  display: inline-block;
+  margin-top: 0.2rem;
+  color: #ffffff;
+  font-size: clamp(1.25rem, 1.8vw, 1.9rem);
+  font-weight: 900;
+  line-height: 1.15;
 }
 
 .site-footer__links h2,
