@@ -53,6 +53,7 @@ const narrativeProjects = await Promise.all(
         overviewProjects.map((project) => (
           <ResearchCard
             project={project}
+            showSummary={false}
           />
         ))
       }
@@ -82,7 +83,7 @@ const narrativeProjects = await Promise.all(
                   </div>
                 </div>
                 <div>
-                  <h2 class="text-4xl font-bold leading-tight text-ink">{project.data.title}</h2>
+                  <h2 class="research-detail-title font-bold leading-tight text-ink">{project.data.title}</h2>
                   <div class="content-prose mt-3 text-justify">
                     <Content />
                   </div>

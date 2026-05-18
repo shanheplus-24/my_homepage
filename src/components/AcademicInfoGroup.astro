@@ -115,7 +115,7 @@ const splitAdvisor = (description?: string) => {
                   )}
                 </div>
                 {item.data.logos.length > 0 && (
-                  <div class="education-logo-stack" aria-label={`${item.data.organization} logo`}>
+                  <div class:list={['education-logo-stack', item.data.logos.length > 1 && 'education-logo-stack--multiple']} aria-label={`${item.data.organization} logo`}>
                     {
                       item.data.logos.map((logo) => (
                         <span class:list={[

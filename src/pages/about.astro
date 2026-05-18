@@ -78,17 +78,6 @@ const linkedIn = site.links.find((link) => link.label === 'LinkedIn')?.href ?? '
       </article>
     </div>
 
-    <div class="about-language-switch mb-3">
-      <p class="hidden">
-        <span data-lang="en">Language for this page only</span>
-        <span data-lang="zh" hidden>仅切换本页面语言</span>
-      </p>
-      <div class="flex gap-2" aria-label="Language switcher">
-        <button class="chip-button" type="button" data-language-switch="en" aria-pressed="true">English</button>
-        <button class="chip-button" type="button" data-language-switch="zh" aria-pressed="false">中文</button>
-      </div>
-    </div>
-
     <div class="about-info-grid grid gap-6 lg:grid-cols-2">
       {
         groups.map((group) => {
@@ -99,22 +88,5 @@ const linkedIn = site.links.find((link) => link.label === 'LinkedIn')?.href ?? '
       }
     </div>
   </section>
-  <script is:inline>
-    const languageButtons = Array.from(document.querySelectorAll('[data-language-switch]'));
-
-    function setLanguage(language) {
-      document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en';
-      document.querySelectorAll('[data-lang]').forEach((node) => {
-        node.hidden = node.dataset.lang !== language;
-      });
-      languageButtons.forEach((button) => {
-        button.setAttribute('aria-pressed', String(button.dataset.languageSwitch === language));
-      });
-    }
-
-    languageButtons.forEach((button) => {
-      button.addEventListener('click', () => setLanguage(button.dataset.languageSwitch));
-    });
-  </script>
 </BaseLayout>
 
