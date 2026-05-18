@@ -11,7 +11,8 @@ const items = (await getCollection('academicInfo')).sort((a, b) => {
 
 const groups = [
   { categories: ['education'], title: 'Education', titleZh: '教育经历' },
-  { categories: ['fellowship', 'award'], title: 'Selected Awards and Honors', titleZh: '代表性荣誉与奖励' },
+  { categories: ['fellowship'], title: 'Fellowships', titleZh: '奖学金与资助' },
+  { categories: ['award'], title: 'Selected Awards and Honors', titleZh: '代表性荣誉与奖励' },
   { categories: ['selected-publication'], title: 'Selected Publications', titleZh: '代表性论文' },
   { categories: ['talk'], title: 'Conference Participated', titleZh: '学术会议报告' },
   { categories: ['teaching'], title: 'Teaching', titleZh: '教学' },
