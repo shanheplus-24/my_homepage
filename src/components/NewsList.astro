@@ -9,6 +9,12 @@ interface Props {
 const { items, editableItemsProp } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const withBase = (src?: string) => src && src.startsWith('/') ? `${base}${src}` : src;
+const isVideoFile = (src: string) => /\.(mp4|webm|ogg)(?:[?#].*)?$/i.test(src);
+const getVideoMimeType = (src: string) => {
+  if (/\.webm(?:[?#].*)?$/i.test(src)) return 'video/webm';
+  if (/\.ogg(?:[?#].*)?$/i.test(src)) return 'video/ogg';
+  return 'video/mp4';
+};
 const formatDate = new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', year: 'numeric' });
 ---
 
@@ -33,15 +39,27 @@ const formatDate = new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric
             <div class="grid gap-3">
               {
                 item.data.embeds.map((embed) => (
-                  <div class="news-media news-media--video">
-                    <iframe
-                      src={embed.src}
-                      title={embed.title}
-                      loading="lazy"
-                      allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
-                      allowfullscreen
-                      class="news-media__iframe"
-                    />
+                  <div class={`news-media ${isVideoFile(embed.src) ? 'news-media--video-file' : 'news-media--video-embed'}`}>
+                    {isVideoFile(embed.src) ? (
+                      <video
+                        class="news-media__video"
+                        controls
+                        preload="metadata"
+                        playsinline
+                        aria-label={embed.title}
+                      >
+                        <source src={withBase(embed.src)} type={getVideoMimeType(embed.src)} />
+                      </video>
+                    ) : (
+                      <iframe
+                        src={embed.src}
+                        title={embed.title}
+                        loading="lazy"
+                        allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+                        allowfullscreen
+                        class="news-media__iframe"
+                      />
+                    )}
                   </div>
                 ))
               }

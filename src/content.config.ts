@@ -25,8 +25,8 @@ const namedLinkSchema = z.object({
 
 const embedSchema = z.object({
   title: z.string().min(1),
-  src: urlSchema,
-  type: z.enum(['google-drive', 'youtube', 'external-video']).default('external-video'),
+  src: z.string().min(1),
+  type: z.enum(['local-video', 'google-drive', 'youtube', 'external-video']).default('external-video'),
 });
 
 const ctaSchema = z.object({
