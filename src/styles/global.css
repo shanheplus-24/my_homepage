@@ -341,7 +341,7 @@ body::after {
   border-radius: 0.5rem;
   border: 0;
   background: rgba(255, 255, 255, 0.1);
-  padding: 0.5rem;
+  padding: 0.45rem;
   box-shadow: none;
   color: #ffffff;
   transition:
@@ -361,33 +361,20 @@ body::after {
   content: none;
 }
 
-.site-brand__mark svg {
+.site-brand__mark img {
   display: block;
-  width: 1.75rem;
-  height: 1.75rem;
-  fill: none;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
+  width: 2.15rem;
+  height: 2.15rem;
+  object-fit: contain;
 }
 
 .site-brand__icon-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem;
+  padding: 0.35rem;
   cursor: pointer;
   user-select: none;
-}
-
-.site-brand__clapper-top {
-  transform-box: fill-box;
-  transform-origin: 8% 84%;
-  transition: transform 300ms cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.site-brand:hover .site-brand__clapper-top {
-  animation: clapperboard-snap 520ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .site-brand:hover .site-brand__mark {
@@ -426,8 +413,8 @@ body::after {
   border-radius: 999px;
   padding: 0.5rem 1rem;
   color: #9ca3af;
-  font-size: 0.875rem;
-  font-weight: 500;
+  font-size: 1rem;
+  font-weight: 600;
   text-decoration: none;
   transition:
     color 300ms ease,
@@ -1136,13 +1123,35 @@ body::after {
   line-height: 1.28;
 }
 
+.selected-publications-cta {
+  grid-column: 1;
+  justify-self: start;
+}
+
+.selected-publications-heading-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.selected-publications-heading-row .section-heading {
+  margin-bottom: 0;
+}
+
+.selected-publications-heading-row .github-secondary-button {
+  min-height: 3.1rem;
+  white-space: nowrap;
+}
+
 .publication-venue {
   color: #dfe7f5;
   font-size: 0.9rem;
 }
 
 .publication-venue--compact {
-  color: #ffffff;
+  color: #3b82f6;
   font-size: 0.92rem;
   font-weight: 900;
 }
@@ -1330,12 +1339,18 @@ body::after {
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
 }
 
-.news-card__copy {
-  min-height: 8.8rem;
+.news-card {
+  align-self: stretch;
+  height: 100%;
+  min-height: 400px;
 }
 
 .news-card__media-stack {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+
+.news-card__copy {
+  padding-top: 0.35rem;
 }
 
 .news-media__iframe {
@@ -1423,12 +1438,12 @@ body::after {
   gap: 0.85rem;
   min-width: 0;
   min-height: 8rem;
-  padding-right: 0;
+  padding-right: clamp(7.5rem, 8vw, 8.75rem);
 }
 
 .education-logo-stack {
   position: absolute;
-  top: 12.2rem;
+  top: 7rem;
   right: 0;
   z-index: 1;
   display: flex;
@@ -1442,7 +1457,7 @@ body::after {
 }
 
 .education-logo-stack--multiple {
-  top: 7.1rem;
+  top: 5.6rem;
 }
 
 .education-logo {
@@ -1663,13 +1678,37 @@ body::after {
   grid-column: 1 / -1;
 }
 
-.academic-section--fellowships .academic-info-item {
-  padding: 1rem 1.1rem;
+.academic-section--awards {
+  grid-column: 2;
 }
 
-.academic-section--fellowships .academic-info-item h3 {
-  max-width: 24rem;
+.fellowship-list {
+  display: grid;
+  gap: 1.05rem;
+}
+
+.fellowship-item {
+  border-bottom: 1px solid rgba(148, 163, 184, 0.18);
+  padding: 0 0 1rem;
+}
+
+.fellowship-item:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.fellowship-item h3 {
+  min-width: 0;
+  max-width: min(24rem, calc(100% - 6rem));
   line-height: 1.25;
+}
+
+.fellowship-subheading {
+  padding: 1.4rem 0 0.15rem;
+}
+
+.fellowship-subheading .academic-section-title {
+  display: block;
 }
 
 .selected-awards-list {
@@ -1728,12 +1767,14 @@ body::after {
 .collaboration-topics {
   display: flex;
   flex-wrap: wrap;
-  max-width: 42rem;
-  gap: 0.75rem;
+  width: min(100%, 50rem);
+  gap: 0.65rem;
 }
 
 .collaboration-topics span {
   display: inline-flex;
+  justify-self: start;
+  width: max-content;
   align-items: center;
   min-height: 2.7rem;
   border: 1px solid rgba(255, 255, 255, 0.11);
@@ -1750,6 +1791,10 @@ body::after {
     color 260ms ease;
   animation: topic-float 5.8s ease-in-out infinite;
   animation-delay: 0s;
+}
+
+.research-related-publications {
+  row-gap: 0.85rem;
 }
 
 .collaboration-topics span:hover {
@@ -1826,7 +1871,9 @@ body::after {
 .about-contact-card__image {
   display: block;
   width: 100%;
-  height: clamp(17rem, 31vw, 23rem);
+  height: 550px;
+  margin: 50px 0 0;
+  border-radius: 24px;
   object-fit: cover;
 }
 
@@ -1896,6 +1943,7 @@ body::after {
   position: relative;
   z-index: 1;
   display: grid;
+  align-items: start;
   max-width: 92rem;
   margin: 0 auto;
   gap: 4rem;
@@ -1929,13 +1977,16 @@ body::after {
   color: #c4cad6;
   font-size: 1.1rem;
   font-weight: 900;
+  line-height: 1.2;
 }
 
 .site-footer__links ul {
   display: grid;
   grid-template-columns: repeat(2, minmax(8rem, 1fr));
-  gap: 1.55rem 3rem;
-  margin-top: 2.5rem;
+  align-content: center;
+  gap: 0.65rem 2.25rem;
+  min-height: 4.6rem;
+  margin-top: 0.9rem;
   padding: 0;
   list-style: none;
 }
@@ -1943,7 +1994,7 @@ body::after {
 .site-footer__links a {
   display: inline-block;
   color: #9ca3af;
-  font-size: clamp(1.05rem, 1.35vw, 1.35rem);
+  font-size: 15px;
   font-weight: 800;
   text-decoration: none;
   transition:
@@ -1959,7 +2010,7 @@ body::after {
 .site-footer__connect ul {
   display: flex;
   gap: 1.5rem;
-  margin: 2.45rem 0 0;
+  margin: 0.9rem 0 0;
   padding: 0;
   list-style: none;
 }
@@ -2065,6 +2116,10 @@ body::after {
 }
 
 @media (max-width: 1023px) {
+  .academic-section--awards {
+    grid-column: auto;
+  }
+
   .about-selected-publications {
     grid-template-columns: 1fr;
   }
@@ -2089,7 +2144,7 @@ body::after {
     border-radius: 0.5rem;
   }
 
-  .site-brand__mark svg {
+  .site-brand__mark img {
     width: 1.75rem;
     height: 1.75rem;
   }
@@ -2190,6 +2245,11 @@ body::after {
     max-width: 22rem;
   }
 
+  .selected-publications-heading-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
   .publication-filter-row {
     grid-template-columns: 1fr;
   }
@@ -2201,7 +2261,12 @@ body::after {
 
   .site-footer__links ul {
     grid-template-columns: 1fr;
-    gap: 1.1rem;
+    gap: 0.65rem;
+  }
+
+  .collaboration-topics {
+    display: flex;
+    flex-wrap: wrap;
   }
 
   .site-footer__connect ul {
@@ -2226,6 +2291,7 @@ body::after {
 
   .education-body {
     min-height: auto;
+    padding-right: 0;
   }
 
   .education-logo-stack {

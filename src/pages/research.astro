@@ -43,10 +43,10 @@ const narrativeProjects = await Promise.all(
       </h1>
       <div class="research-intro-copy">
         <p>
-          Water and energy are the lifeblood of human civilization, yet today's imbalanced, carbon-intensive, and inefficient systems threaten their availability. I develop sustainable technologies, especially approaches that draw both water and energy directly from ambient air, to mitigate energy-water impacts and expand decentralized, equitable access.
+          Water and energy underpin human civilization, yet today's carbon-intensive and inefficient systems are straining their security, affordability, and accessibility. My research develops sustainable materials and thermal systems that use the ambient environment as a resource, especially technologies for harvesting water from air and managing low-grade heat, to reduce energy-water burdens and enable decentralized, equitable access.
         </p>
         <p>
-          My work sits at the intersection of materials science and thermal engineering, designing tailored materials and systems for water-energy-food nexus applications, including atmospheric water harvesting, thermal management, urban agriculture, catalysis, and energy efficiency.
+          My work sits at the intersection of materials science, thermal engineering, and transport phenomena. I design tailored materials and integrated systems for water-energy-food nexus applications, including atmospheric water harvesting, thermal management, controlled-environment agriculture, catalysis, and energy efficiency.
         </p>
       </div>
     </div>
@@ -72,7 +72,7 @@ const narrativeProjects = await Promise.all(
             .map((reference) => publicationById.get(reference.id))
             .filter((publication): publication is CollectionEntry<'publications'> => Boolean(publication));
           return (
-            <article class="research-card interactive-card rounded-[30px] p-4 md:p-6" data-research-card data-status={project.data.status} data-search={`${project.data.title} ${project.data.summary}`.toLowerCase()}>
+            <article class="research-card interactive-card rounded-[30px] p-4 md:p-6" data-research-card data-search={`${project.data.title} ${project.data.summary}`.toLowerCase()}>
               <div class="grid gap-6 lg:grid-cols-[minmax(520px,610px)_1fr] lg:items-stretch">
                 <div class="research-detail-figure flex aspect-[4/3] min-h-60 items-center justify-center overflow-hidden rounded-[24px] lg:aspect-auto lg:h-full lg:min-h-full">
                   <div class="research-detail-figure__image-panel">
@@ -92,10 +92,10 @@ const narrativeProjects = await Promise.all(
                   {relatedPublications.length > 0 && (
                     <div class="mt-5 text-sm leading-6 text-muted">
                       <p class="font-bold text-ink">Related publications</p>
-                      <ul class="mt-2 flex flex-wrap gap-2" role="list">
+                      <ul class="research-related-publications mt-2 flex flex-wrap gap-2" role="list">
                         {
                           relatedPublications.map((publication) => {
-                            const href = publication.data.links?.paper || publication.data.links?.doi || publication.data.links?.project;
+                            const href = publication.data.links?.paper || publication.data.links?.doi;
                             return (
                               <li>
                                 {href ? (

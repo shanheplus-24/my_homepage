@@ -12,7 +12,7 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
-const favicon = `${import.meta.env.BASE_URL}favicon.svg`;
+const favicon = `${import.meta.env.BASE_URL}assets/generated/site-logo-nexus-white-512.png`;
 const maintenanceMode = import.meta.env.PUBLIC_MAINTENANCE_MODE === 'true';
 const pageTitle = maintenanceMode ? `Website maintenance | ${site.name}` : title;
 const pageDescription = maintenanceMode
@@ -28,7 +28,7 @@ const pageDescription = maintenanceMode
     <meta name="description" content={pageDescription} />
     {maintenanceMode && <meta name="robots" content="noindex, nofollow" />}
     <meta name="generator" content={Astro.generator} />
-    <link rel="icon" href={favicon} type="image/svg+xml" />
+    <link rel="icon" href={favicon} type="image/png" />
     <title>{pageTitle}</title>
     <style is:global set:html={globalStyles}></style>
   </head>
@@ -91,11 +91,6 @@ const pageDescription = maintenanceMode
           </script>
           <script>
             import '@scripts/liquid-interactions';
-          </script>
-          <script>
-            if (window.CloudCannon || window.location.search.includes('cloudcannon') || window.location.hostname.includes('cloudcannon')) {
-              import('@scripts/register-cloudcannon-components');
-            }
           </script>
         </>
       )

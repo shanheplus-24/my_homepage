@@ -3,10 +3,9 @@ import type { CollectionEntry } from 'astro:content';
 
 interface Props {
   items: CollectionEntry<'news'>[];
-  editableItemsProp?: string;
 }
 
-const { items, editableItemsProp } = Astro.props;
+const { items } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const withBase = (src?: string) => src && src.startsWith('/') ? `${base}${src}` : src;
 const isVideoFile = (src: string) => /\.(mp4|webm|ogg)(?:[?#].*)?$/i.test(src);
@@ -18,10 +17,10 @@ const getVideoMimeType = (src: string) => {
 const formatDate = new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', year: 'numeric' });
 ---
 
-<ol class="grid gap-5 lg:grid-cols-3" role="list" data-editable={editableItemsProp ? 'array' : undefined} data-prop={editableItemsProp}>
+<ol class="grid gap-5 lg:grid-cols-3" role="list">
   {
     items.map((item) => (
-      <li class="news-card interactive-card flex h-full flex-col rounded-[24px] p-4 transition" data-editable={editableItemsProp ? 'array-item' : undefined} data-id={item.id}>
+      <li class="news-card interactive-card flex flex-col rounded-[24px] p-4 transition">
         <div class="news-card__media-stack">
           {item.data.image && (
             <div class="news-media news-media--image">
@@ -71,9 +70,9 @@ const formatDate = new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric
             {formatDate.format(item.data.date)}
           </time>
           <h3 class="mt-1 text-base font-bold text-ink">
-            {item.data.link ? <a class="hover:text-accent" href={item.data.link}>{item.data.title}</a> : item.data.title}
+            {item.data.title}
           </h3>
-          <p class="mt-1 text-sm leading-6 text-muted">{item.data.summary}</p>
+          {item.data.summary && <p class="mt-1 text-sm leading-6 text-muted">{item.data.summary}</p>}
         </div>
       </li>
     ))

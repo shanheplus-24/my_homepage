@@ -11,13 +11,9 @@ const items = (await getCollection('academicInfo')).sort((a, b) => {
 
 const groups = [
   { categories: ['education'], title: 'Education', titleZh: '教育经历' },
-  { categories: ['fellowship'], title: 'Fellowships', titleZh: '奖学金与资助' },
-  { categories: ['award'], title: 'Selected Awards and Honors', titleZh: '代表性荣誉与奖励' },
+  { categories: ['fellowship', 'award'], title: 'Fellowships', titleZh: '奖学金与资助' },
   { categories: ['selected-publication'], title: 'Selected Publications', titleZh: '代表性论文' },
   { categories: ['talk'], title: 'Conference Participated', titleZh: '学术会议报告' },
-  { categories: ['teaching'], title: 'Teaching', titleZh: '教学' },
-  { categories: ['service'], title: 'Service', titleZh: '学术服务' },
-  { categories: ['other'], title: 'Other Academic Information', titleZh: '其他学术信息' },
 ] as const;
 
 const linkedIn = site.links.find((link) => link.id === 'linkedin')?.href ?? '#';
@@ -65,10 +61,10 @@ const withBase = (src: string) => src.startsWith('/') ? `${base}${src}` : src;
         </h1>
         <div class="mt-7 space-y-5 text-lg leading-8 text-slate-300">
           <p data-lang="en">
-            I am a Research Fellow in the Department of Electrical and Computer Engineering at the National University of Singapore, supervised by Vice Provost Professor Ghim Wei Ho. My work focuses on sustainable technologies at the air-water-energy-food nexus, including atmospheric water harvesting, electronics thermal management, urban agriculture, and building energy efficiency.
+            Hi, I am He Shan, a Research Fellow in the Department of Electrical and Computer Engineering at the National University of Singapore, working with Professor Ghim Wei Ho, Vice Provost of NUS. I received my joint PhD from Shanghai Jiao Tong University and the National University of Singapore. My research lies at the intersection of materials science, thermal engineering, and transport phenomena. I develop tailored materials and integrated systems for water-energy-food nexus applications, including atmospheric water harvesting, thermal management, controlled-environment agriculture, catalysis, and energy efficiency.
           </p>
           <p data-lang="en">
-            I specialize in thermodynamic modeling and physics-based simulation, with a particular focus on understanding heat and mass transfer in hydrogel systems. I welcome collaborations on atmospheric water harvesting, sustainable soft materials, energy systems, and machine-learning applications.
+            My work combines thermodynamic modeling, physics-based simulation, and heat and mass transfer analysis to understand hydrogel materials and related thermal systems. I am also expanding into physics-guided machine learning for accelerated materials discovery, device optimization, and performance prediction. I welcome collaborations in water harvesting, sustainable soft materials, thermal energy systems, and AI for materials and systems.
           </p>
           <p data-lang="zh" hidden>
             我现为新加坡国立大学电气与计算机工程系 Research Fellow，师从副教务长 Prof. Ghim Wei Ho。我的研究聚焦空气-水-能源-食物交叉系统中的可持续技术，包括大气集水、电子热管理、城市农业和建筑节能。
@@ -84,7 +80,13 @@ const withBase = (src: string) => src.startsWith('/') ? `${base}${src}` : src;
       {
         groups.map((group) => {
           const categories = group.categories as readonly string[];
-          const groupItems = items.filter((item) => categories.includes(item.data.category));
+          const groupItems = items
+            .filter((item) => categories.includes(item.data.category) && item.id !== 'education-stanford-energy-fellow')
+            .sort((a, b) => {
+              if (group.title !== 'Fellowships') return 0;
+              const categoryRank = (category: string) => category === 'fellowship' ? 0 : 1;
+              return categoryRank(a.data.category) - categoryRank(b.data.category);
+            });
           return groupItems.length > 0 ? <AcademicInfoGroup title={group.title} titleZh={group.titleZh} items={groupItems} /> : null;
         })
       }

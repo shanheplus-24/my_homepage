@@ -5,7 +5,7 @@
 ## 常用命令
 
 ```powershell
-Set-Location -LiteralPath "D:\Personal_Webpage\[Program]\academic-website"
+Set-Location -LiteralPath "D:\Personal_Webpage\[Program]\academic-website-v3"
 npm run dev
 npm run validate
 npm run build
@@ -20,10 +20,10 @@ npm run build
 编辑：
 
 ```text
-src/data/site.ts
+src/data/site.json
 ```
 
-这里管理姓名、职位、单位、邮箱、头像、研究兴趣、Scholar、LinkedIn、Email、CV 链接，以及首页简介文字。
+这里仅保留当前页面实际使用的站点名称、姓名、页脚角色、邮箱、SEO 简介、页脚签名、LinkedIn 和导航。中英文资料字段保留。
 
 CV 文件放在：
 
@@ -65,7 +65,7 @@ src/content/publications/
 D:\Personal_Webpage\[Input]\content-templates\publication.mdx
 ```
 
-论文必须拆开写 `title` 和 `authors`，页面会分别显示。可选链接包括 `paper`、`code`、`project`、`doi`、`slides`、`bibtex`。新增后出版物页会自动进入搜索和筛选系统。
+论文必须拆开写 `title` 和 `authors`，页面会分别显示。后台只保留当前页面实际使用的 `doi` 和 `paper` 链接。新增后出版物页会自动进入搜索和筛选系统。
 
 ## 增加研究项目
 
@@ -102,7 +102,7 @@ src/content/news/
 2026-05-new-paper-accepted.mdx
 ```
 
-## 增加奖项、报告、教学、服务等 CV 项
+## 增加教育、奖项、代表性论文、报告等 CV 项
 
 在这里新建一个 `.mdx` 文件：
 
@@ -115,12 +115,8 @@ src/content/academic-info/
 - `award`
 - `fellowship`
 - `talk`
-- `teaching`
-- `service`
 - `education`
-- `contact`
 - `selected-publication`
-- `other`
 
 如果需要在最后一个页面显示中文，也填写 `titleZh`、`organizationZh`、`dateZh`、`locationZh`、`descriptionZh`。
 

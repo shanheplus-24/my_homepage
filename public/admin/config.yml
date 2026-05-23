@@ -11,113 +11,253 @@ public_folder: /assets/cms
 site_url: /
 display_url: /
 logo_url: /assets/generated/site-logo-nexus-flat-v2.svg
+locale: zh_Hans
 
 collections:
   - name: settings
-    label: Site Settings
+    label: 站点设置
     files:
-      - label: Profile, Links, and Navigation
+      - label: 可见站点设置
         name: site
         file: src/data/site.json
         format: json
         fields:
-          - label: Site profile
+          - label: 站点资料
             name: site
             widget: object
             collapsed: false
             fields:
-              - label: Site name
+              - label: 网站名称
                 name: name
                 widget: string
-              - label: Person name
+              - label: 姓名
                 name: personName
                 widget: string
-              - label: Title / Role
-                name: title
-                widget: string
-              - label: Short footer role
+              - label: 页脚身份
                 name: shortRole
                 widget: string
-              - label: Affiliation
-                name: affiliation
-                widget: string
-              - label: Location
-                name: location
-                widget: string
-              - label: Email
+              - label: 邮箱
                 name: email
                 widget: string
-              - label: Profile image
-                name: profileImage
-                widget: image
-              - label: Profile image alt text
-                name: profileImageAlt
-                widget: string
-              - label: Biography
+              - label: SEO 简介
                 name: bio
                 widget: text
-              - label: Footer signature
+              - label: 页脚标语
                 name: footerSignature
                 widget: string
-              - label: Profile statements
-                name: profileStatements
-                widget: list
-                field:
-                  label: Statement
-                  name: statement
-                  widget: text
-              - label: Research interests
-                name: interests
-                widget: list
-                field:
-                  label: Interest
-                  name: interest
-                  widget: string
-              - label: Links
+              - label: LinkedIn 链接
                 name: links
                 widget: list
+                min: 1
+                max: 1
                 fields:
-                  - label: Stable ID
+                  - label: 固定 ID
                     name: id
-                    widget: string
-                    hint: "Use stable IDs such as google-scholar, linkedin, email, or cv. Do not change linkedin unless updating the code too."
-                  - label: Label
+                    widget: hidden
+                    default: linkedin
+                  - label: 显示名称
                     name: label
-                    widget: string
-                  - label: URL
+                    widget: hidden
+                    default: LinkedIn
+                  - label: LinkedIn URL
                     name: href
                     widget: string
-              - label: Chinese profile
+              - label: 中文资料
                 name: zh
                 widget: object
                 collapsed: true
                 fields:
-                  - label: Chinese title
+                  - label: 中文身份
                     name: title
                     widget: string
                     required: false
-                  - label: Chinese affiliation
+                  - label: 中文单位
                     name: affiliation
                     widget: string
                     required: false
-                  - label: Chinese biography
+                  - label: 中文简介
                     name: bio
                     widget: text
                     required: false
-          - label: Navigation
+          - label: 导航菜单
             name: navigation
             widget: list
             fields:
-              - label: Label
+              - label: 显示名称
                 name: label
                 widget: string
-              - label: URL
+              - label: 链接
                 name: href
                 widget: string
 
+  - name: pages
+    label: 页面
+    files:
+      - label: 首页
+        name: home
+        file: src/content/pages/home.mdx
+        format: frontmatter
+        fields:
+          - label: SEO 标题
+            name: title
+            widget: string
+          - label: SEO 描述
+            name: description
+            widget: text
+          - label: 首页可见模块
+            name: sections
+            widget: list
+            typeKey: type
+            types:
+              - label: 首屏
+                name: hero
+                widget: object
+                fields:
+                  - label: 固定模块 ID
+                    name: id
+                    widget: string
+                  - label: 无障碍标签
+                    name: ariaLabel
+                    widget: string
+                  - label: 标题行
+                    name: headingLines
+                    widget: list
+                    field:
+                      label: 行文本
+                      name: line
+                      widget: string
+                  - label: 主题标签
+                    name: topics
+                    widget: list
+                    field:
+                      label: 主题
+                      name: topic
+                      widget: string
+                  - label: 主按钮
+                    name: primaryCta
+                    widget: object
+                    fields:
+                      - label: 显示文字
+                        name: label
+                        widget: string
+                      - label: 链接
+                        name: href
+                        widget: string
+                  - label: 次按钮
+                    name: secondaryCta
+                    widget: object
+                    fields:
+                      - label: 显示文字
+                        name: label
+                        widget: string
+                      - label: 链接
+                        name: href
+                        widget: string
+                  - label: 滚动提示文字
+                    name: scrollLabel
+                    widget: string
+              - label: 首页研究方向
+                name: research_highlights
+                widget: object
+                fields:
+                  - label: 固定模块 ID
+                    name: id
+                    widget: string
+                  - label: 标题
+                    name: heading
+                    widget: string
+                  - label: 研究卡片
+                    name: items
+                    widget: relation
+                    collection: research
+                    multiple: true
+                    search_fields: [title, summary]
+                    value_field: "{{slug}}"
+                    display_fields: [title]
+              - label: 首页精选论文
+                name: selected_publications
+                widget: object
+                fields:
+                  - label: 固定模块 ID
+                    name: id
+                    widget: string
+                  - label: 标题
+                    name: heading
+                    widget: string
+                  - label: 论文卡片
+                    name: items
+                    widget: relation
+                    collection: publications
+                    multiple: true
+                    search_fields: [title, venue, year]
+                    value_field: "{{slug}}"
+                    display_fields: [title, year]
+                  - label: 查看全部按钮
+                    name: allItemsCta
+                    widget: object
+                    fields:
+                      - label: 显示文字
+                        name: label
+                        widget: string
+                      - label: 链接
+                        name: href
+                        widget: string
+              - label: 首页动态
+                name: news
+                widget: object
+                fields:
+                  - label: 固定模块 ID
+                    name: id
+                    widget: string
+                  - label: 标题
+                    name: heading
+                    widget: string
+                  - label: 动态卡片
+                    name: items
+                    widget: relation
+                    collection: news
+                    multiple: true
+                    search_fields: [title, summary, date]
+                    value_field: "{{slug}}"
+                    display_fields: [title, date]
+              - label: 合作联系模块
+                name: collaboration_cta
+                widget: object
+                fields:
+                  - label: 固定模块 ID
+                    name: id
+                    widget: string
+                  - label: 标题
+                    name: heading
+                    widget: string
+                  - label: 标题高亮
+                    name: headingHighlight
+                    widget: string
+                    required: false
+                  - label: 正文
+                    name: body
+                    widget: text
+                  - label: 主题标签
+                    name: topics
+                    widget: list
+                    field:
+                      label: 主题
+                      name: topic
+                      widget: string
+                  - label: 按钮
+                    name: cta
+                    widget: object
+                    fields:
+                      - label: 显示文字
+                        name: label
+                        widget: string
+                      - label: 链接
+                        name: href
+                        widget: string
+
   - name: publications
-    label: Publications
-    label_singular: Publication
+    label: 论文
+    label_singular: 论文
     folder: src/content/publications
     create: true
     extension: mdx
@@ -125,105 +265,63 @@ collections:
     slug: "{{slug}}"
     identifier_field: title
     summary: "{{year}} - {{title}}"
-    sortable_fields: [year, title, venue, status]
-    view_filters:
-      - label: Selected
-        field: selected
-        pattern: true
-      - label: Published
-        field: status
-        pattern: published
+    sortable_fields: [year, sortOrder, title, venue]
     fields:
-      - label: Title
+      - label: 标题
         name: title
         widget: string
-      - label: Publication image
+      - label: 论文图片
         name: image
         widget: object
         collapsed: false
         fields:
-          - label: Image
+          - label: 图片
             name: src
             widget: image
-          - label: Alt text
+          - label: 替代文本
             name: alt
             widget: string
-      - label: Authors
+      - label: 作者
         name: authors
         widget: list
         field:
-          label: Author
+          label: 作者
           name: author
           widget: string
-      - label: Venue
+      - label: 期刊 / 会议
         name: venue
         widget: string
-      - label: Year
+      - label: 年份
         name: year
         widget: number
         value_type: int
         min: 1900
         max: 2100
-      - label: Manual sort order
+      - label: 手动排序
         name: sortOrder
         widget: number
         value_type: int
         required: false
-      - label: Type
-        name: type
-        widget: select
-        options: [journal, conference, preprint, workshop, book-chapter, thesis]
-      - label: Status
-        name: status
-        widget: select
-        options: [published, accepted, in-review, working-paper, forthcoming]
-      - label: Selected publication
-        name: selected
-        widget: boolean
-        default: false
-      - label: Links
+      - label: 可见链接
         name: links
         widget: object
         required: false
         collapsed: true
         fields:
-          - label: Paper
-            name: paper
-            widget: string
-            required: false
-            pattern: ['^https?://.+', 'Use a full URL starting with http:// or https://']
-          - label: Code
-            name: code
-            widget: string
-            required: false
-            pattern: ['^https?://.+', 'Use a full URL starting with http:// or https://']
-          - label: Project
-            name: project
-            widget: string
-            required: false
-            pattern: ['^https?://.+', 'Use a full URL starting with http:// or https://']
-          - label: DOI
+          - label: DOI 链接
             name: doi
             widget: string
             required: false
             pattern: ['^https?://.+', 'Use a full DOI URL such as https://doi.org/...']
-          - label: Slides
-            name: slides
+          - label: 论文链接
+            name: paper
             widget: string
             required: false
             pattern: ['^https?://.+', 'Use a full URL starting with http:// or https://']
-          - label: BibTeX
-            name: bibtex
-            widget: text
-            required: false
-      - label: Body
-        name: body
-        widget: markdown
-        required: false
 
   - name: research
-    label: Research Projects
-    label_singular: Research Project
+    label: 研究项目
+    label_singular: 研究项目
     folder: src/content/research
     create: true
     extension: mdx
@@ -231,64 +329,42 @@ collections:
     slug: "{{slug}}"
     identifier_field: title
     summary: "{{title}}"
-    sortable_fields: [title, status, period]
+    sortable_fields: [title]
     fields:
-      - label: Title
+      - label: 标题
         name: title
         widget: string
-      - label: Project image
+      - label: 项目图片
         name: image
         widget: object
         collapsed: false
         fields:
-          - label: Image
+          - label: 图片
             name: src
             widget: image
-          - label: Alt text
+          - label: 替代文本
             name: alt
             widget: string
-      - label: Summary
+      - label: 摘要
         name: summary
         widget: text
-      - label: Collaborators
-        name: collaborators
-        widget: list
-        required: false
-        field:
-          label: Collaborator
-          name: collaborator
-          widget: string
-      - label: Status
-        name: status
-        widget: select
-        options: [active, completed, paused, exploratory]
-      - label: Period
-        name: period
-        widget: string
-      - label: Homepage highlight
-        name: highlight
-        widget: boolean
-        default: false
-      - label: Related publications
+      - label: 相关论文
         name: relatedPublications
-        widget: list
+        widget: relation
+        collection: publications
+        multiple: true
         required: false
-        field:
-          label: Publication file slug
-          name: slug
-          widget: relation
-          collection: publications
-          search_fields: [title, venue, year]
-          value_field: "{{slug}}"
-          display_fields: [title, year]
-      - label: Body
+        search_fields: [title, venue, year]
+        value_field: "{{slug}}"
+        display_fields: [title, year]
+      - label: 正文
         name: body
         widget: markdown
         required: false
 
   - name: news
-    label: News
-    label_singular: News Item
+    label: 动态
+    label_singular: 动态
     folder: src/content/news
     create: true
     extension: mdx
@@ -298,60 +374,46 @@ collections:
     summary: "{{date}} - {{title}}"
     sortable_fields: [date, title]
     fields:
-      - label: Title
+      - label: 标题
         name: title
         widget: string
-      - label: Date
+      - label: 日期
         name: date
         widget: datetime
         date_format: YYYY-MM-DD
         time_format: false
         format: YYYY-MM-DD
-      - label: Summary
+      - label: 摘要
         name: summary
         widget: text
-      - label: Image
+      - label: 图片
         name: image
         widget: object
         required: false
         collapsed: true
         fields:
-          - label: Image
+          - label: 图片
             name: src
             widget: image
-          - label: Alt text
+          - label: 替代文本
             name: alt
             widget: string
-      - label: Embedded media
+      - label: 嵌入视频
         name: embeds
         widget: list
         required: false
         fields:
-          - label: Title
+          - label: 标题
             name: title
             widget: string
-          - label: Source URL
+          - label: 视频链接
             name: src
             widget: string
             pattern: ['^https?://.+', 'Use a full URL starting with http:// or https://']
-          - label: Type
-            name: type
-            widget: select
-            options: [google-drive, youtube, external-video]
-            default: external-video
-      - label: Link
-        name: link
-        widget: string
-        required: false
-        pattern: ['^https?://.+', 'Use a full URL starting with http:// or https://']
-      - label: Body
-        name: body
-        widget: markdown
-        required: false
 
   - name: academic-info
-    label: About / CV Items
-    label_singular: About / CV Item
+    label: 关于 / 简历条目
+    label_singular: 关于 / 简历条目
     folder: src/content/academic-info
     create: true
     extension: mdx
@@ -361,79 +423,79 @@ collections:
     summary: "{{category}} - {{date}} - {{title}}"
     sortable_fields: [category, date, order, title]
     view_groups:
-      - label: Category
+      - label: 分类
         field: category
     fields:
       - label: Category
         name: category
         widget: select
-        options: [award, fellowship, talk, teaching, service, education, contact, selected-publication, other]
-      - label: Title
+        options: [education, fellowship, award, selected-publication, talk]
+      - label: 英文标题
         name: title
         widget: string
-      - label: Chinese title
+      - label: 中文标题
         name: titleZh
         widget: string
         required: false
-      - label: Organization
+      - label: 英文机构
         name: organization
         widget: string
-      - label: Chinese organization
+      - label: 中文机构
         name: organizationZh
         widget: string
         required: false
-      - label: Date
+      - label: 英文日期
         name: date
         widget: string
-      - label: Chinese date
+      - label: 中文日期
         name: dateZh
         widget: string
         required: false
-      - label: Location
+      - label: 英文地点
         name: location
         widget: string
         required: false
-      - label: Chinese location
+      - label: 中文地点
         name: locationZh
         widget: string
         required: false
-      - label: Description
+      - label: 英文描述
         name: description
         widget: text
         required: false
-      - label: Chinese description
+      - label: 中文描述
         name: descriptionZh
         widget: text
         required: false
-      - label: Points
+      - label: 英文要点
         name: points
         widget: list
         required: false
         field:
-          label: Point
+          label: 要点
           name: point
           widget: string
-      - label: Chinese points
+      - label: 中文要点
         name: pointsZh
         widget: list
         required: false
         field:
-          label: Chinese point
+          label: 中文要点
           name: point
           widget: string
-      - label: Image
+      - label: 图片
         name: image
         widget: object
         required: false
         collapsed: true
         fields:
-          - label: Image
+          - label: 图片
             name: src
             widget: image
-          - label: Alt text
+          - label: 替代文本
             name: alt
             widget: string
-      - label: Logos
+      - label: Logo
         name: logos
         widget: list
         required: false
@@ -441,32 +503,23 @@ collections:
           - label: Logo
             name: src
             widget: image
-          - label: Alt text
+          - label: 替代文本
             name: alt
             widget: string
-      - label: Named links
+      - label: 命名链接
         name: links
         widget: list
         required: false
         fields:
-          - label: Label
+          - label: 显示文字
             name: label
             widget: string
-          - label: URL
+          - label: 链接
             name: href
             widget: string
             pattern: ['^https?://.+', 'Use a full URL starting with http:// or https://']
-      - label: Link
-        name: link
-        widget: string
-        required: false
-        pattern: ['^https?://.+', 'Use a full URL starting with http:// or https://']
-      - label: Order
+      - label: 排序
         name: order
         widget: number
         value_type: int
         default: 0
-      - label: Body
-        name: body
-        widget: markdown
-        required: false

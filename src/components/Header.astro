@@ -4,6 +4,7 @@ import { navigation, site } from '@data/site';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const withBase = (href: string) => `${base}${href}`;
 const currentPath = Astro.url.pathname.replace(base, '') || '/';
+const brandLogo = withBase('/assets/generated/site-logo-nexus-white-512.png');
 ---
 
 <header class="site-header" data-site-header>
@@ -12,25 +13,7 @@ const currentPath = Astro.url.pathname.replace(base, '') || '/';
       <a href={withBase('/')} class="site-brand group">
         <span class="site-brand__mark" aria-hidden="true">
           <span class="site-brand__icon-wrap">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-            >
-              <g class="site-brand__clapper-top">
-                <path d="M20.2 6 3 11l-.9-2.4c-.3-1.1.3-2.2 1.3-2.5l13.5-4c1.1-.3 2.2.3 2.5 1.3Z" />
-                <path d="m6.2 5.3 3.1 3.9" />
-                <path d="m12.4 3.4 3.1 4" />
-              </g>
-              <path d="M3 11h18v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z" />
-            </svg>
+            <img src={brandLogo} alt="" loading="eager" decoding="async" />
           </span>
         </span>
         <span class="site-brand__name">{site.name}</span>

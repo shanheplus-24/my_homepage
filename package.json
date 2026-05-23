@@ -9,13 +9,14 @@
     "build": "astro build",
     "build:site": "node ./scripts/build-mode.mjs site",
     "build:maintenance": "node ./scripts/build-mode.mjs maintenance",
+    "deploy:site": "node ./scripts/build-mode.mjs site --deploy",
+    "deploy:maintenance": "node ./scripts/build-mode.mjs maintenance --deploy",
     "preview": "astro preview --host 127.0.0.1",
     "check": "astro check",
     "validate": "node ../../[Validation]/validate-content.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^5.0.6",
-    "@cloudcannon/editable-regions": "^0.0.15",
     "@tailwindcss/vite": "^4.3.0",
     "astro": "^6.3.3",
     "lenis": "^1.3.23",
@@ -24,7 +25,8 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
     "decap-server": "^3.7.0",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "wrangler": "^4.94.0"
   },
   "overrides": {
     "vite": "^7"

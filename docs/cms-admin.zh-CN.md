@@ -28,12 +28,16 @@ npm run cms:server
 
 ## 可编辑内容
 
-后台已经配置四类内容：
+后台已经配置当前页面实际展示的内容：
 
+- `Pages / Home Page`：对应 `src/content/pages/home.mdx`
+- `Site Settings`：对应 `src/data/site.json`
 - `Publications`：对应 `src/content/publications/*.mdx`
 - `Research Projects`：对应 `src/content/research/*.mdx`
 - `News`：对应 `src/content/news/*.mdx`
 - `About / CV Items`：对应 `src/content/academic-info/*.mdx`
+
+后台字段已经按当前站点展示范围清洗：不再显示未使用的 publication 类型/状态、research 高亮/状态/周期、news 外链/body、未显示的 CV 分类等。中英文 About/CV 字段保留。
 
 图片默认上传到：
 

@@ -38,33 +38,15 @@ Chinese CMS guide:
 docs/cms-admin.zh-CN.md
 ```
 
-## Visual Drag-and-Drop Editing
-
-CloudCannon visual editing support is configured alongside Decap. The homepage content source is now `src/content/pages/home.mdx`, where homepage sections and featured item order are stored as structured frontmatter instead of hard-coded arrays in `src/pages/index.astro`.
-
-Key files:
-
-```text
-cloudcannon.config.yml
-src/content/pages/home.mdx
-.cloudcannon/schemas/
-src/scripts/register-cloudcannon-components.ts
-```
-
-Chinese visual editing guide:
-
-```text
-docs/cloudcannon-visual-editing.zh-CN.md
-```
-
 ## Content Model
 
 Structured content lives in `src/content/` and is validated by `src/content.config.ts`.
 
+- Home page sections: `src/content/pages/home.mdx`
 - Publications: `src/content/publications/*.mdx`
 - Research projects: `src/content/research/*.mdx`
 - News: `src/content/news/*.mdx`
-- Awards, fellowships, talks, teaching, service, and other information: `src/content/academic-info/*.mdx`
+- Education, fellowships, awards, selected publications, and talks: `src/content/academic-info/*.mdx`
 
 Chinese maintenance guide:
 
@@ -93,16 +75,9 @@ authors:
   - "Second Author"
 venue: "Conference or Journal Name"
 year: 2026
-type: "conference"
-status: "published"
-selected: true
 links:
   paper: "https://example.com/paper.pdf"
-  code: "https://github.com/example/repo"
-  project: "https://example.com/project"
   doi: "https://doi.org/10.xxxx/example"
-  slides: "https://example.com/slides.pdf"
-  bibtex: "@inproceedings{key,title={Paper Title},year={2026}}"
 ---
 ```
 
@@ -119,11 +94,6 @@ image:
   alt: "Accessible project image description"
 title: "Project Title"
 summary: "One or two sentence project summary."
-collaborators:
-  - "Lab or collaborator name"
-status: "active"
-period: "2026-present"
-highlight: true
 relatedPublications:
   - "publication-file-id-without-extension"
 ---
@@ -140,11 +110,10 @@ Create a new file in `src/content/news/`:
 title: "Short update title"
 date: 2026-05-01
 summary: "One sentence news summary."
-link: "https://example.com/optional-link"
 ---
 ```
 
-## Add Awards, Talks, Teaching, Service, or Other CV Items
+## Add Education, Awards, Talks, Fellowships, or Selected Publications
 
 Create a new file in `src/content/academic-info/`:
 
@@ -156,16 +125,15 @@ organization: "Organization"
 date: "2026"
 location: "Optional location"
 description: "Optional short description."
-link: "https://example.com/optional-link"
 order: 1
 ---
 ```
 
-Allowed categories are `award`, `fellowship`, `talk`, `teaching`, `service`, and `other`.
+Allowed categories are `education`, `fellowship`, `award`, `selected-publication`, and `talk`.
 
 ## Update Profile and CV
 
-- Edit name, affiliation, email, interests, links, and profile image in `src/data/site.ts`.
+- Edit visible site settings in `src/data/site.json` or through `/admin/`.
 - Store site images locally under `public/assets/shanheplus/`, then reference them as `/assets/shanheplus/file-name.png` in content files.
 - Replace `public/cv.pdf` with the latest CV PDF.
 - If deploying under GitHub Pages, set `SITE_URL` and `BASE_PATH` as shown in `.github/workflows/deploy.yml`.
@@ -196,6 +164,30 @@ npm run validate
 `npm run validate` runs Astro type/content checks and a production build.
 
 ## Deploy
+
+### Cloudflare Pages
+
+Use this when serving the site from the apex domain `shanheplus.com`.
+
+Cloudflare Pages project settings:
+
+```text
+Project name: shanheplus-personal-page
+Production branch: main
+Framework preset: Astro
+Build command: npm run build
+Build output directory: dist
+Root directory: /
+Environment variable: SITE_URL=https://shanheplus.com
+```
+
+After the first successful Pages deployment, add `shanheplus.com` in the Pages project under **Custom domains**. Because the domain is already managed by Cloudflare nameservers, Cloudflare should create the required apex CNAME record automatically. Add `www.shanheplus.com` only if you also want the `www` hostname, then redirect it to the apex domain using a Cloudflare Bulk Redirect.
+
+Detailed Chinese steps:
+
+```text
+docs/cloudflare-pages-domain.zh-CN.md
+```
 
 ### GitHub Pages
 

@@ -27,16 +27,13 @@ const sections = home.data.sections;
 ---
 
 <BaseLayout title={home.data.title || `${site.name} | Academic Website`} description={home.data.description || site.bio}>
-  <div data-editable="array" data-prop="sections" data-id-key="id" data-component-key="type">
+  <div>
     {
-      sections.map((section, sectionIndex) => {
+      sections.map((section) => {
         if (section.type === 'hero') {
           return (
             <section
               class="home-hero relative -mt-20 overflow-hidden pt-20"
-              data-editable="array-item"
-              data-id={section.id}
-              data-component={section.type}
             >
               <div class="home-hero__inner mx-auto flex min-h-[calc(100vh-1px)] max-w-7xl flex-col items-center justify-center px-5 text-center">
                 <svg class="hero-nexus-diagram" viewBox="0 0 1200 700" aria-hidden="true">
@@ -104,30 +101,30 @@ const sections = home.data.sections;
                   {
                     section.headingLines.map((line, lineIndex) => (
                       <span class:list={['hero-title__line', heroLineModifiers[lineIndex] ?? 'hero-title__line--white']}>
-                        <editable-text data-prop={`sections[${sectionIndex}].headingLines[${lineIndex}]`}>{line}</editable-text>
+                        {line}
                       </span>
                     ))
                   }
                 </h1>
                 <p class="hero-subtitle">
-                  <span class="hero-subtitle__chips hero-topic-flow" data-editable="array" data-prop={`sections[${sectionIndex}].topics`}>
+                  <span class="hero-subtitle__chips hero-topic-flow">
                     {section.topics.map((topic, topicIndex) => (
-                      <span class="hero-subtitle__chip" style={`--topic-index: ${topicIndex}`} data-editable="array-item" data-id={topic}>
-                        <span></span><editable-text data-prop={`sections[${sectionIndex}].topics[${topicIndex}]`}>{topic}</editable-text>
+                      <span class="hero-subtitle__chip" style={`--topic-index: ${topicIndex}`}>
+                        <span></span>{topic}
                       </span>
                     ))}
                   </span>
                 </p>
                 <div class="hero-actions">
                   <a class="github-primary-button" href={withBase(section.primaryCta.href)}>
-                    <editable-text data-prop={`sections[${sectionIndex}].primaryCta.label`}>{section.primaryCta.label}</editable-text>
+                    {section.primaryCta.label}
                   </a>
                   <a class="github-secondary-button" href={withBase(section.secondaryCta.href)}>
-                    <editable-text data-prop={`sections[${sectionIndex}].secondaryCta.label`}>{section.secondaryCta.label}</editable-text>
+                    {section.secondaryCta.label}
                   </a>
                 </div>
                 <a class="hero-scroll" href="#research-highlights" aria-label="Scroll to research highlights">
-                  <span><editable-text data-prop={`sections[${sectionIndex}].scrollLabel`}>{section.scrollLabel}</editable-text></span>
+                  <span>{section.scrollLabel}</span>
                   <svg viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M12 5v14M6 13l6 6 6-6" />
                   </svg>
@@ -143,14 +140,11 @@ const sections = home.data.sections;
             <section
               id="research-highlights"
               class="mx-auto max-w-7xl px-5 py-16"
-              data-editable="array-item"
-              data-id={section.id}
-              data-component={section.type}
             >
-              <SectionHeading title={section.heading} editableTitleProp={`sections[${sectionIndex}].heading`} />
-              <div class="grid gap-5 lg:grid-cols-3" data-editable="array" data-prop={`sections[${sectionIndex}].items`}>
+              <SectionHeading title={section.heading} />
+              <div class="grid gap-5 lg:grid-cols-3">
                 {projects.map((project) => (
-                  <div data-editable="array-item" data-id={project.id}>
+                  <div>
                     <ResearchCard project={project} />
                   </div>
                 ))}
@@ -164,21 +158,20 @@ const sections = home.data.sections;
           return (
             <section
               class="mx-auto max-w-7xl px-5 py-16"
-              data-editable="array-item"
-              data-id={section.id}
-              data-component={section.type}
             >
-              <SectionHeading title={section.heading} editableTitleProp={`sections[${sectionIndex}].heading`} />
-              <div class="grid gap-5 lg:grid-cols-3" data-editable="array" data-prop={`sections[${sectionIndex}].items`}>
+              <div class="selected-publications-heading-row">
+                <SectionHeading title={section.heading} />
+                <a class="github-secondary-button" href={withBase(section.allItemsCta.href)}>
+                  {section.allItemsCta.label}
+                </a>
+              </div>
+              <div class="selected-publications-grid grid gap-5 lg:grid-cols-3">
                 {selectedPublications.map((publication) => (
-                  <div data-editable="array-item" data-id={publication.id}>
+                  <div class="h-full">
                     <PublicationCard publication={publication} compact />
                   </div>
                 ))}
               </div>
-              <a class="github-secondary-button mt-6" href={withBase(section.allItemsCta.href)}>
-                <editable-text data-prop={`sections[${sectionIndex}].allItemsCta.label`}>{section.allItemsCta.label}</editable-text>
-              </a>
             </section>
           );
         }
@@ -188,12 +181,9 @@ const sections = home.data.sections;
           return (
             <section
               class="mx-auto max-w-7xl px-5 py-16"
-              data-editable="array-item"
-              data-id={section.id}
-              data-component={section.type}
             >
-              <SectionHeading title={section.heading} editableTitleProp={`sections[${sectionIndex}].heading`} />
-              <NewsList items={homeActivities} editableItemsProp={`sections[${sectionIndex}].items`} />
+              <SectionHeading title={section.heading} />
+              <NewsList items={homeActivities} />
             </section>
           );
         }
@@ -202,33 +192,30 @@ const sections = home.data.sections;
           return (
             <section
               class="mx-auto max-w-7xl px-5 py-16"
-              data-editable="array-item"
-              data-id={section.id}
-              data-component={section.type}
             >
               <div class="surface grid gap-7 rounded-[34px] p-8 md:grid-cols-[1fr_auto] md:items-center md:p-10">
                 <div>
                   <h2 class="cta-title">
-                    <editable-text data-prop={`sections[${sectionIndex}].heading`}>{section.heading}</editable-text>{' '}
+                    {section.heading}{' '}
                     {section.headingHighlight && (
                       <span class="cta-title__highlight">
-                        <editable-text data-prop={`sections[${sectionIndex}].headingHighlight`}>{section.headingHighlight}</editable-text>
+                        {section.headingHighlight}
                       </span>
                     )}
                   </h2>
-                  <p class="mt-4 max-w-3xl text-base leading-8 text-muted">
-                    <editable-text data-prop={`sections[${sectionIndex}].body`}>{section.body}</editable-text>
+                  <p class="mt-4 max-w-3xl text-xl leading-8 text-muted">
+                    {section.body}
                   </p>
-                  <div class="collaboration-topics mt-6" aria-label="Collaboration directions" data-editable="array" data-prop={`sections[${sectionIndex}].topics`}>
+                  <div class="collaboration-topics mt-6" aria-label="Collaboration directions">
                     {section.topics.map((topic, topicIndex) => (
-                      <span style={`--topic-index: ${topicIndex}`} data-editable="array-item" data-id={topic}>
-                        <editable-text data-prop={`sections[${sectionIndex}].topics[${topicIndex}]`}>{topic}</editable-text>
+                      <span style={`--topic-index: ${topicIndex}`}>
+                        {topic}
                       </span>
                     ))}
                   </div>
                 </div>
                 <a class="github-primary-button" href={withBase(section.cta.href)}>
-                  <editable-text data-prop={`sections[${sectionIndex}].cta.label`}>{section.cta.label}</editable-text>
+                  {section.cta.label}
                 </a>
               </div>
             </section>
