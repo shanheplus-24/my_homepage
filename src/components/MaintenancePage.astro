@@ -1,0 +1,26 @@
+---
+import { site } from '@data/site';
+
+const contactHref = `mailto:${site.email}`;
+---
+
+<section class="maintenance-page" aria-labelledby="maintenance-title">
+  <div class="maintenance-page__shell">
+    <img
+      class="maintenance-page__logo"
+      src="/assets/generated/site-logo-nexus-white-512.png"
+      alt={site.name}
+      loading="eager"
+    />
+    <p class="maintenance-page__eyebrow">Scheduled update</p>
+    <h1 id="maintenance-title">Website under maintenance</h1>
+    <p class="maintenance-page__summary">
+      This academic website is temporarily offline while new content and layout updates are being deployed.
+    </p>
+    <p class="maintenance-page__note">
+      Please check back later. For urgent academic or collaboration inquiries, contact
+      <a href={contactHref}>{site.email}</a>.
+    </p>
+  </div>
+</section>
+

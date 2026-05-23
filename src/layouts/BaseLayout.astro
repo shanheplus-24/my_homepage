@@ -2,6 +2,8 @@
 import Footer from '@components/Footer.astro';
 import Header from '@components/Header.astro';
 import AnalyticsFooter from '@components/AnalyticsFooter.astro';
+import MaintenancePage from '@components/MaintenancePage.astro';
+import { site } from '@data/site';
 import globalStyles from '@styles/global.css?inline';
 
 interface Props {
@@ -11,6 +13,11 @@ interface Props {
 
 const { title, description } = Astro.props;
 const favicon = `${import.meta.env.BASE_URL}favicon.svg`;
+const maintenanceMode = import.meta.env.PUBLIC_MAINTENANCE_MODE === 'true';
+const pageTitle = maintenanceMode ? `Website maintenance | ${site.name}` : title;
+const pageDescription = maintenanceMode
+  ? 'This academic website is temporarily offline for scheduled updates.'
+  : description;
 ---
 
 <!doctype html>
@@ -18,71 +25,80 @@ const favicon = `${import.meta.env.BASE_URL}favicon.svg`;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={description} />
+    <meta name="description" content={pageDescription} />
+    {maintenanceMode && <meta name="robots" content="noindex, nofollow" />}
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" href={favicon} type="image/svg+xml" />
-    <title>{title}</title>
+    <title>{pageTitle}</title>
     <style is:global set:html={globalStyles}></style>
   </head>
   <body>
-    <div class="mouse-glow" aria-hidden="true">
-      <div class="mouse-glow__base"></div>
-      <div class="mouse-glow__layer mouse-glow__layer--primary" data-mouse-glow="primary"></div>
-      <div class="mouse-glow__layer mouse-glow__layer--secondary" data-mouse-glow="secondary"></div>
-    </div>
-    <a
-      href="#main-content"
-      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-accent focus:shadow"
-    >
-      Skip to content
-    </a>
-    <Header />
-    <main id="main-content" class="pt-20">
-      <slot />
-    </main>
-    <AnalyticsFooter />
-    <Footer />
-    <script is:inline>
-      const revealItems = document.querySelectorAll('.reveal');
-      if ('IntersectionObserver' in window && revealItems.length > 0) {
-        const observer = new IntersectionObserver(
-          (entries) => {
-            for (const entry of entries) {
-              if (entry.isIntersecting) {
-                entry.target.classList.add('is-visible');
-                observer.unobserve(entry.target);
-              }
+    {
+      maintenanceMode ? (
+        <MaintenancePage />
+      ) : (
+        <>
+          <div class="mouse-glow" aria-hidden="true">
+            <div class="mouse-glow__base"></div>
+            <div class="mouse-glow__layer mouse-glow__layer--primary" data-mouse-glow="primary"></div>
+            <div class="mouse-glow__layer mouse-glow__layer--secondary" data-mouse-glow="secondary"></div>
+          </div>
+          <a
+            href="#main-content"
+            class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-accent focus:shadow"
+          >
+            Skip to content
+          </a>
+          <Header />
+          <main id="main-content" class="pt-20">
+            <slot />
+          </main>
+          <AnalyticsFooter />
+          <Footer />
+          <script is:inline>
+            const revealItems = document.querySelectorAll('.reveal');
+            if ('IntersectionObserver' in window && revealItems.length > 0) {
+              const observer = new IntersectionObserver(
+                (entries) => {
+                  for (const entry of entries) {
+                    if (entry.isIntersecting) {
+                      entry.target.classList.add('is-visible');
+                      observer.unobserve(entry.target);
+                    }
+                  }
+                },
+                { rootMargin: '0px 0px -10% 0px' },
+              );
+              revealItems.forEach((item) => observer.observe(item));
+            } else {
+              revealItems.forEach((item) => item.classList.add('is-visible'));
             }
-          },
-          { rootMargin: '0px 0px -10% 0px' },
-        );
-        revealItems.forEach((item) => observer.observe(item));
-      } else {
-        revealItems.forEach((item) => item.classList.add('is-visible'));
-      }
 
-      document.addEventListener('click', async (event) => {
-        const button = event.target.closest('[data-copy-bibtex]');
-        if (!button) return;
-        try {
-          await navigator.clipboard.writeText(button.dataset.copyBibtex);
-          const original = button.textContent;
-          button.textContent = 'Copied';
-          window.setTimeout(() => {
-            button.textContent = original;
-          }, 1400);
-        } catch {
-          button.textContent = 'Copy unavailable';
-        }
-      });
-    </script>
-    <script>
-      import '@scripts/liquid-interactions';
-    </script>
-    <script>
-      if (window.CloudCannon || window.location.search.includes('cloudcannon') || window.location.hostname.includes('cloudcannon')) {
-        import('@scripts/register-cloudcannon-components');
-      }
-    </script>
+            document.addEventListener('click', async (event) => {
+              const button = event.target.closest('[data-copy-bibtex]');
+              if (!button) return;
+              try {
+                await navigator.clipboard.writeText(button.dataset.copyBibtex);
+                const original = button.textContent;
+                button.textContent = 'Copied';
+                window.setTimeout(() => {
+                  button.textContent = original;
+                }, 1400);
+              } catch {
+                button.textContent = 'Copy unavailable';
+              }
+            });
+          </script>
+          <script>
+            import '@scripts/liquid-interactions';
+          </script>
+          <script>
+            if (window.CloudCannon || window.location.search.includes('cloudcannon') || window.location.hostname.includes('cloudcannon')) {
+              import('@scripts/register-cloudcannon-components');
+            }
+          </script>
+        </>
+      )
+    }
   </body>
 </html>
