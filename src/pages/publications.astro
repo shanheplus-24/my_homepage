@@ -15,7 +15,7 @@ const publications = (await getCollection('publications')).sort((a, b) => {
 
 const years = [...new Set(publications.map((publication) => publication.data.year))];
 const domainTags = ['Water', 'Energy', 'Food'];
-const methodTags = ['Models', 'Materials', 'Device', 'AI'];
+const methodTags = ['Models', 'Materials', 'Devices', 'AI'];
 ---
 
 <BaseLayout title={`Publications | ${site.name}`} description="Publications with title, authors, venue, year, type, status, and optional paper links.">

@@ -29,6 +29,51 @@ const embedSchema = z.object({
   type: z.enum(['google-drive', 'youtube', 'external-video']).default('external-video'),
 });
 
+const ctaSchema = z.object({
+  label: z.string().min(1),
+  href: z.string().min(1),
+});
+
+const homeSectionBaseSchema = z.object({
+  id: z.string().min(1),
+});
+
+const homeSectionsSchema = z.discriminatedUnion('type', [
+  homeSectionBaseSchema.extend({
+    type: z.literal('hero'),
+    ariaLabel: z.string().min(1),
+    headingLines: z.array(z.string().min(1)).min(1),
+    topics: z.array(z.string().min(1)).default([]),
+    primaryCta: ctaSchema,
+    secondaryCta: ctaSchema,
+    scrollLabel: z.string().min(1).default('Scroll'),
+  }),
+  homeSectionBaseSchema.extend({
+    type: z.literal('research_highlights'),
+    heading: z.string().min(1),
+    items: z.array(reference('research')).default([]),
+  }),
+  homeSectionBaseSchema.extend({
+    type: z.literal('selected_publications'),
+    heading: z.string().min(1),
+    items: z.array(reference('publications')).default([]),
+    allItemsCta: ctaSchema,
+  }),
+  homeSectionBaseSchema.extend({
+    type: z.literal('news'),
+    heading: z.string().min(1),
+    items: z.array(reference('news')).default([]),
+  }),
+  homeSectionBaseSchema.extend({
+    type: z.literal('collaboration_cta'),
+    heading: z.string().min(1),
+    headingHighlight: z.string().optional(),
+    body: z.string().min(1),
+    topics: z.array(z.string().min(1)).default([]),
+    cta: ctaSchema,
+  }),
+]);
+
 const publications = defineCollection({
   loader: glob({ base: './src/content/publications', pattern: '**/*.{md,mdx}' }),
   schema: z.object({
@@ -95,9 +140,19 @@ const academicInfo = defineCollection({
   }),
 });
 
+const pages = defineCollection({
+  loader: glob({ base: './src/content/pages', pattern: '**/*.{md,mdx}' }),
+  schema: z.object({
+    title: z.string().min(1),
+    description: z.string().min(1),
+    sections: z.array(homeSectionsSchema).default([]),
+  }),
+});
+
 export const collections = {
   publications,
   research,
   news,
   academicInfo,
+  pages,
 };

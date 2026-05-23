@@ -20,7 +20,7 @@ const groups = [
   { categories: ['other'], title: 'Other Academic Information', titleZh: '其他学术信息' },
 ] as const;
 
-const linkedIn = site.links.find((link) => link.label === 'LinkedIn')?.href ?? '#';
+const linkedIn = site.links.find((link) => link.id === 'linkedin')?.href ?? '#';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const withBase = (src: string) => src.startsWith('/') ? `${base}${src}` : src;
 ---

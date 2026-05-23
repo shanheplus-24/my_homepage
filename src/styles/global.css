@@ -1850,17 +1850,6 @@ body::after {
   font-weight: 850;
 }
 
-.site-footer__moisture {
-  display: inline-block;
-  margin-top: 0.35rem;
-  color: #dbeafe;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(1.05rem, 1.18vw, 1.32rem);
-  font-style: italic;
-  font-weight: 600;
-  line-height: 1.35;
-}
-
 .site-footer__links h2,
 .site-footer__connect h2 {
   color: #c4cad6;
@@ -1931,6 +1920,36 @@ body::after {
   width: 1.75rem;
   height: 1.75rem;
   stroke-width: 1.7;
+}
+
+.site-footer__signature {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  max-width: 92rem;
+  margin: -3rem auto 0;
+  align-items: center;
+  gap: 1.35rem;
+  padding: 0 clamp(1.5rem, 4vw, 4rem) 3.5rem;
+  color: #dbeafe;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.05rem, 1.18vw, 1.32rem);
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.site-footer__signature::before,
+.site-footer__signature::after {
+  content: "";
+  flex: 1 1 5rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(219, 234, 254, 0.58));
+}
+
+.site-footer__signature::after {
+  background: linear-gradient(90deg, rgba(219, 234, 254, 0.58), transparent);
 }
 
 .js-enabled main .enter-expand {

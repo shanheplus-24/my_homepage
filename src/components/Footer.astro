@@ -3,16 +3,15 @@ import { navigation, site } from '@data/site';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const withBase = (href: string) => `${base}${href}`;
-const linkedIn = site.links.find((link) => link.label === 'LinkedIn')?.href ?? '#';
+const linkedIn = site.links.find((link) => link.id === 'linkedin')?.href ?? '#';
 ---
 
 <footer class="site-footer">
   <div class="site-footer__inner">
     <section class="site-footer__profile" aria-label="Researcher profile">
-      <h2>He Shan</h2>
+      <h2>{site.personName}</h2>
       <p>
-        <span class="site-footer__role">Research Fellow at NUS</span><br />
-        <span class="site-footer__moisture">Exploring the Potential of Moisture</span>
+        <span class="site-footer__role">{site.shortRole}</span>
       </p>
     </section>
 
@@ -43,5 +42,8 @@ const linkedIn = site.links.find((link) => link.label === 'LinkedIn')?.href ?? '
         </li>
       </ul>
     </section>
+  </div>
+  <div class="site-footer__signature" aria-label="Footer signature">
+    <span>{site.footerSignature}</span>
   </div>
 </footer>

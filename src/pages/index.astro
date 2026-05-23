@@ -1,171 +1,242 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import NewsList from '@components/NewsList.astro';
 import PublicationCard from '@components/PublicationCard.astro';
 import ResearchCard from '@components/ResearchCard.astro';
 import SectionHeading from '@components/SectionHeading.astro';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import { site } from '@data/site';
-import type { CollectionEntry } from 'astro:content';
+
+const home = await getEntry('pages', 'home');
+if (!home) {
+  throw new Error('Missing required src/content/pages/home.mdx page content.');
+}
 
 const publications = (await getCollection('publications')).sort((a, b) => b.data.year - a.data.year);
-const selectedPublicationIds = ['thermodynamic-boundaries-awh', 'water-electricity-cogeneration', 'hygroscopic-salt-composite-review'];
-const selectedPublications = selectedPublicationIds
-  .map((id) => publications.find((publication) => publication.id === id))
-  .filter((publication): publication is CollectionEntry<'publications'> => Boolean(publication));
+const publicationsById = new Map(publications.map((publication) => [publication.id, publication]));
 const researchById = new Map((await getCollection('research')).map((project) => [project.id, project]));
-const researchHighlights = ['water-harvesting-from-air', 'energy-harvesting-management', 'sustainable-water-energy-food-nexus']
-  .map((id) => researchById.get(id))
-  .filter((project): project is CollectionEntry<'research'> => Boolean(project));
 const newsById = new Map((await getCollection('news')).map((item) => [item.id, item]));
-const homeActivities = ['2023-03-cna-interview', '2022-09-water-harvesting-interview', '2024-07-chinese-materials-conference']
-  .map((id) => newsById.get(id))
-  .filter((item): item is CollectionEntry<'news'> => Boolean(item));
+
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const collaborationTopics = [
-  'Water',
-  'Energy',
-  'Carbon',
-  'Hydrogel',
-  'Device',
-  'Machine Learning',
-  'Commercialization',
-  'Thermodynamics',
-  'Transport',
-];
+const withBase = (href: string) => href.startsWith('/') ? `${base}${href}` : href;
+const referenceId = (reference: string | { id: string }) => typeof reference === 'string' ? reference : reference.id;
+const resolveItems = <T,>(references: Array<string | { id: string }>, itemMap: Map<string, T>) =>
+  references.map((reference) => itemMap.get(referenceId(reference))).filter((item): item is T => Boolean(item));
+const heroLineModifiers = ['hero-title__line--white', 'hero-title__line--nexus', 'hero-title__line--accent'];
+const sections = home.data.sections;
 ---
 
-<BaseLayout title={`${site.name} | Academic Website`} description={site.bio}>
-  <section class="home-hero relative -mt-20 overflow-hidden pt-20">
-    <div class="home-hero__inner mx-auto flex min-h-[calc(100vh-1px)] max-w-7xl flex-col items-center justify-center px-5 text-center">
-      <svg class="hero-nexus-diagram" viewBox="0 0 1200 700" aria-hidden="true">
-        <defs>
-          <filter id="hero-nexus-glow" x="-20%" y="-20%" width="140%" height="140%">
-            <feGaussianBlur stdDeviation="7" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-          <linearGradient id="hero-nexus-cycle" x1="180" x2="1020" y1="110" y2="590" gradientUnits="userSpaceOnUse">
-            <stop offset="0" stop-color="#38bdf8" />
-            <stop offset="0.5" stop-color="#ffffff" />
-            <stop offset="1" stop-color="#86efac" />
-          </linearGradient>
-        </defs>
-        <g fill="none" stroke="rgba(255,255,255,0.42)" stroke-linecap="round" stroke-linejoin="round">
-          <path class="hero-nexus-orbit" d="M274 352C318 176 526 93 706 128c200 39 322 205 275 372-44 156-225 223-392 186-183-41-353-169-315-334Z" />
-          <path class="hero-nexus-orbit hero-nexus-orbit--thin" d="M341 442C281 289 399 151 555 109c178-48 357 35 418 181 57 137-12 284-170 355-174 77-395-31-462-203Z" />
-          <path class="hero-nexus-arrow" d="M340 214c91-98 240-137 372-92" stroke="url(#hero-nexus-cycle)" />
-          <path class="hero-nexus-arrow" d="M856 164c107 70 163 198 135 322" stroke="url(#hero-nexus-cycle)" />
-          <path class="hero-nexus-arrow" d="M854 577c-112 84-267 104-395 44" stroke="url(#hero-nexus-cycle)" />
-          <path class="hero-nexus-arrow" d="M306 532c-82-96-99-229-42-339" stroke="url(#hero-nexus-cycle)" />
-        </g>
-        <g class="hero-nexus-node hero-nexus-node--water" filter="url(#hero-nexus-glow)">
-          <circle cx="600" cy="122" r="88" />
-          <path d="M600 48c29 44 56 79 56 121 0 35-25 62-56 62s-56-27-56-62c0-42 27-77 56-121Z" />
-          <path d="M540 194c40 24 80 24 120 0" />
-          <path d="M560 220c27 13 53 13 80 0" />
-        </g>
-        <g class="hero-nexus-node hero-nexus-node--air" filter="url(#hero-nexus-glow)">
-          <circle cx="294" cy="356" r="96" />
-          <path d="M217 358h142" />
-          <path d="M247 326h116c32 0 32-45-3-45-15 0-25 8-31 19" />
-          <path d="M250 390h112c26 0 25 38-2 38-12 0-20-6-25-15" />
-          <path d="M196 328c18-32 74-28 84 12" />
-        </g>
-        <g class="hero-nexus-node hero-nexus-node--energy" filter="url(#hero-nexus-glow)">
-          <circle cx="906" cy="360" r="100" />
-          <path d="M829 392h145" />
-          <path d="M846 331h74l-20 61h-76l22-61Z" />
-          <path d="M922 331h70l-20 61h-72l22-61Z" />
-          <path d="M874 331l-20 61M910 331l-20 61M955 331l-19 61" />
-          <path d="M824 290c34-29 79-44 135-43" />
-          <path d="M982 268l26-22M989 309l36-5" />
-        </g>
-        <g class="hero-nexus-node hero-nexus-node--food" filter="url(#hero-nexus-glow)">
-          <circle cx="604" cy="580" r="94" />
-          <path d="M604 655V507" />
-          <path d="M604 588c-57-3-98-31-121-83 63-5 108 22 121 83Z" />
-          <path d="M604 560c53-1 91-26 113-73-56-7-100 16-113 73Z" />
-          <path d="M605 625c42-2 73-21 91-57-44-5-79 13-91 57Z" />
-          <path d="M527 532c24 23 49 42 77 56M674 520c-22 18-45 31-70 40" />
-        </g>
-        <g class="hero-nexus-core">
-          <circle cx="600" cy="356" r="76" />
-          <circle cx="568" cy="356" r="42" />
-          <circle cx="600" cy="316" r="42" />
-          <circle cx="632" cy="356" r="42" />
-          <circle cx="600" cy="396" r="42" />
-        </g>
-      </svg>
-      <h1 class="hero-title" aria-label="Sustainable Water-Energy-Food Nexus">
-        <span class="hero-title__line hero-title__line--white">Sustainable</span>
-        <span class="hero-title__line hero-title__line--nexus">Water-Energy-Food</span>
-        <span class="hero-title__line hero-title__line--accent">Nexus</span>
-      </h1>
-      <p class="hero-subtitle">
-        <span class="hero-subtitle__chips hero-topic-flow">
-          {collaborationTopics.map((topic, index) => (
-            <span class="hero-subtitle__chip" style={`--topic-index: ${index}`}>
-              <span></span>{topic}
-            </span>
-          ))}
-        </span>
-      </p>
-      <div class="hero-actions">
-        <a class="github-primary-button" href={`${base}/research/`}>
-          View Research
-        </a>
-        <a class="github-secondary-button" href={`${base}/about/`}>
-          About He Shan
-        </a>
-      </div>
-      <a class="hero-scroll" href="#research-highlights" aria-label="Scroll to research highlights">
-        <span>Scroll</span>
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M12 5v14M6 13l6 6 6-6" />
-        </svg>
-      </a>
-    </div>
-  </section>
+<BaseLayout title={home.data.title || `${site.name} | Academic Website`} description={home.data.description || site.bio}>
+  <div data-editable="array" data-prop="sections" data-id-key="id" data-component-key="type">
+    {
+      sections.map((section, sectionIndex) => {
+        if (section.type === 'hero') {
+          return (
+            <section
+              class="home-hero relative -mt-20 overflow-hidden pt-20"
+              data-editable="array-item"
+              data-id={section.id}
+              data-component={section.type}
+            >
+              <div class="home-hero__inner mx-auto flex min-h-[calc(100vh-1px)] max-w-7xl flex-col items-center justify-center px-5 text-center">
+                <svg class="hero-nexus-diagram" viewBox="0 0 1200 700" aria-hidden="true">
+                  <defs>
+                    <filter id="hero-nexus-glow" x="-20%" y="-20%" width="140%" height="140%">
+                      <feGaussianBlur stdDeviation="7" result="blur" />
+                      <feMerge>
+                        <feMergeNode in="blur" />
+                        <feMergeNode in="SourceGraphic" />
+                      </feMerge>
+                    </filter>
+                    <linearGradient id="hero-nexus-cycle" x1="180" x2="1020" y1="110" y2="590" gradientUnits="userSpaceOnUse">
+                      <stop offset="0" stop-color="#38bdf8" />
+                      <stop offset="0.5" stop-color="#ffffff" />
+                      <stop offset="1" stop-color="#86efac" />
+                    </linearGradient>
+                  </defs>
+                  <g fill="none" stroke="rgba(255,255,255,0.42)" stroke-linecap="round" stroke-linejoin="round">
+                    <path class="hero-nexus-orbit" d="M274 352C318 176 526 93 706 128c200 39 322 205 275 372-44 156-225 223-392 186-183-41-353-169-315-334Z" />
+                    <path class="hero-nexus-orbit hero-nexus-orbit--thin" d="M341 442C281 289 399 151 555 109c178-48 357 35 418 181 57 137-12 284-170 355-174 77-395-31-462-203Z" />
+                    <path class="hero-nexus-arrow" d="M340 214c91-98 240-137 372-92" stroke="url(#hero-nexus-cycle)" />
+                    <path class="hero-nexus-arrow" d="M856 164c107 70 163 198 135 322" stroke="url(#hero-nexus-cycle)" />
+                    <path class="hero-nexus-arrow" d="M854 577c-112 84-267 104-395 44" stroke="url(#hero-nexus-cycle)" />
+                    <path class="hero-nexus-arrow" d="M306 532c-82-96-99-229-42-339" stroke="url(#hero-nexus-cycle)" />
+                  </g>
+                  <g class="hero-nexus-node hero-nexus-node--water" filter="url(#hero-nexus-glow)">
+                    <circle cx="600" cy="122" r="88" />
+                    <path d="M600 48c29 44 56 79 56 121 0 35-25 62-56 62s-56-27-56-62c0-42 27-77 56-121Z" />
+                    <path d="M540 194c40 24 80 24 120 0" />
+                    <path d="M560 220c27 13 53 13 80 0" />
+                  </g>
+                  <g class="hero-nexus-node hero-nexus-node--air" filter="url(#hero-nexus-glow)">
+                    <circle cx="294" cy="356" r="96" />
+                    <path d="M217 358h142" />
+                    <path d="M247 326h116c32 0 32-45-3-45-15 0-25 8-31 19" />
+                    <path d="M250 390h112c26 0 25 38-2 38-12 0-20-6-25-15" />
+                    <path d="M196 328c18-32 74-28 84 12" />
+                  </g>
+                  <g class="hero-nexus-node hero-nexus-node--energy" filter="url(#hero-nexus-glow)">
+                    <circle cx="906" cy="360" r="100" />
+                    <path d="M829 392h145" />
+                    <path d="M846 331h74l-20 61h-76l22-61Z" />
+                    <path d="M922 331h70l-20 61h-72l22-61Z" />
+                    <path d="M874 331l-20 61M910 331l-20 61M955 331l-19 61" />
+                    <path d="M824 290c34-29 79-44 135-43" />
+                    <path d="M982 268l26-22M989 309l36-5" />
+                  </g>
+                  <g class="hero-nexus-node hero-nexus-node--food" filter="url(#hero-nexus-glow)">
+                    <circle cx="604" cy="580" r="94" />
+                    <path d="M604 655V507" />
+                    <path d="M604 588c-57-3-98-31-121-83 63-5 108 22 121 83Z" />
+                    <path d="M604 560c53-1 91-26 113-73-56-7-100 16-113 73Z" />
+                    <path d="M605 625c42-2 73-21 91-57-44-5-79 13-91 57Z" />
+                    <path d="M527 532c24 23 49 42 77 56M674 520c-22 18-45 31-70 40" />
+                  </g>
+                  <g class="hero-nexus-core">
+                    <circle cx="600" cy="356" r="76" />
+                    <circle cx="568" cy="356" r="42" />
+                    <circle cx="600" cy="316" r="42" />
+                    <circle cx="632" cy="356" r="42" />
+                    <circle cx="600" cy="396" r="42" />
+                  </g>
+                </svg>
+                <h1 class="hero-title" aria-label={section.ariaLabel}>
+                  {
+                    section.headingLines.map((line, lineIndex) => (
+                      <span class:list={['hero-title__line', heroLineModifiers[lineIndex] ?? 'hero-title__line--white']}>
+                        <editable-text data-prop={`sections[${sectionIndex}].headingLines[${lineIndex}]`}>{line}</editable-text>
+                      </span>
+                    ))
+                  }
+                </h1>
+                <p class="hero-subtitle">
+                  <span class="hero-subtitle__chips hero-topic-flow" data-editable="array" data-prop={`sections[${sectionIndex}].topics`}>
+                    {section.topics.map((topic, topicIndex) => (
+                      <span class="hero-subtitle__chip" style={`--topic-index: ${topicIndex}`} data-editable="array-item" data-id={topic}>
+                        <span></span><editable-text data-prop={`sections[${sectionIndex}].topics[${topicIndex}]`}>{topic}</editable-text>
+                      </span>
+                    ))}
+                  </span>
+                </p>
+                <div class="hero-actions">
+                  <a class="github-primary-button" href={withBase(section.primaryCta.href)}>
+                    <editable-text data-prop={`sections[${sectionIndex}].primaryCta.label`}>{section.primaryCta.label}</editable-text>
+                  </a>
+                  <a class="github-secondary-button" href={withBase(section.secondaryCta.href)}>
+                    <editable-text data-prop={`sections[${sectionIndex}].secondaryCta.label`}>{section.secondaryCta.label}</editable-text>
+                  </a>
+                </div>
+                <a class="hero-scroll" href="#research-highlights" aria-label="Scroll to research highlights">
+                  <span><editable-text data-prop={`sections[${sectionIndex}].scrollLabel`}>{section.scrollLabel}</editable-text></span>
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 5v14M6 13l6 6 6-6" />
+                  </svg>
+                </a>
+              </div>
+            </section>
+          );
+        }
 
-  <section id="research-highlights" class="mx-auto max-w-7xl px-5 py-16">
-    <SectionHeading title="Research Directions" />
-    <div class="grid gap-5 lg:grid-cols-3">
-      {researchHighlights.map((project) => <ResearchCard project={project} />)}
-    </div>
-  </section>
+        if (section.type === 'research_highlights') {
+          const projects = resolveItems(section.items, researchById);
+          return (
+            <section
+              id="research-highlights"
+              class="mx-auto max-w-7xl px-5 py-16"
+              data-editable="array-item"
+              data-id={section.id}
+              data-component={section.type}
+            >
+              <SectionHeading title={section.heading} editableTitleProp={`sections[${sectionIndex}].heading`} />
+              <div class="grid gap-5 lg:grid-cols-3" data-editable="array" data-prop={`sections[${sectionIndex}].items`}>
+                {projects.map((project) => (
+                  <div data-editable="array-item" data-id={project.id}>
+                    <ResearchCard project={project} />
+                  </div>
+                ))}
+              </div>
+            </section>
+          );
+        }
 
-  <section class="mx-auto max-w-7xl px-5 py-16">
-    <SectionHeading title="Selected Recent Work" />
-    <div class="grid gap-5 lg:grid-cols-3">
-        {selectedPublications.map((publication) => <PublicationCard publication={publication} compact />)}
-    </div>
-    <a class="github-secondary-button mt-6" href={`${base}/publications/`}>
-      View all publications
-    </a>
-  </section>
+        if (section.type === 'selected_publications') {
+          const selectedPublications = resolveItems(section.items, publicationsById);
+          return (
+            <section
+              class="mx-auto max-w-7xl px-5 py-16"
+              data-editable="array-item"
+              data-id={section.id}
+              data-component={section.type}
+            >
+              <SectionHeading title={section.heading} editableTitleProp={`sections[${sectionIndex}].heading`} />
+              <div class="grid gap-5 lg:grid-cols-3" data-editable="array" data-prop={`sections[${sectionIndex}].items`}>
+                {selectedPublications.map((publication) => (
+                  <div data-editable="array-item" data-id={publication.id}>
+                    <PublicationCard publication={publication} compact />
+                  </div>
+                ))}
+              </div>
+              <a class="github-secondary-button mt-6" href={withBase(section.allItemsCta.href)}>
+                <editable-text data-prop={`sections[${sectionIndex}].allItemsCta.label`}>{section.allItemsCta.label}</editable-text>
+              </a>
+            </section>
+          );
+        }
 
-  <section class="mx-auto max-w-7xl px-5 py-16">
-    <SectionHeading title="Recent Activities" />
-    <NewsList items={homeActivities} />
-  </section>
+        if (section.type === 'news') {
+          const homeActivities = resolveItems(section.items, newsById);
+          return (
+            <section
+              class="mx-auto max-w-7xl px-5 py-16"
+              data-editable="array-item"
+              data-id={section.id}
+              data-component={section.type}
+            >
+              <SectionHeading title={section.heading} editableTitleProp={`sections[${sectionIndex}].heading`} />
+              <NewsList items={homeActivities} editableItemsProp={`sections[${sectionIndex}].items`} />
+            </section>
+          );
+        }
 
-  <section class="mx-auto max-w-7xl px-5 py-16">
-    <div class="surface grid gap-7 rounded-[34px] p-8 md:grid-cols-[1fr_auto] md:items-center md:p-10">
-      <div>
-        <h2 class="cta-title">Let's build sustainable water-energy systems <span class="cta-title__highlight">together</span>.</h2>
-        <p class="mt-4 max-w-3xl text-base leading-8 text-muted">
-          Open to collaborations on atmospheric water harvesting, sustainable soft materials, energy systems, and machine-learning applications.
-        </p>
-        <div class="collaboration-topics mt-6" aria-label="Collaboration directions">
-          {collaborationTopics.map((topic, index) => <span style={`--topic-index: ${index}`}>{topic}</span>)}
-        </div>
-      </div>
-      <a class="github-primary-button" href={`mailto:${site.email}`}>
-        Contact
-      </a>
-    </div>
-  </section>
+        if (section.type === 'collaboration_cta') {
+          return (
+            <section
+              class="mx-auto max-w-7xl px-5 py-16"
+              data-editable="array-item"
+              data-id={section.id}
+              data-component={section.type}
+            >
+              <div class="surface grid gap-7 rounded-[34px] p-8 md:grid-cols-[1fr_auto] md:items-center md:p-10">
+                <div>
+                  <h2 class="cta-title">
+                    <editable-text data-prop={`sections[${sectionIndex}].heading`}>{section.heading}</editable-text>{' '}
+                    {section.headingHighlight && (
+                      <span class="cta-title__highlight">
+                        <editable-text data-prop={`sections[${sectionIndex}].headingHighlight`}>{section.headingHighlight}</editable-text>
+                      </span>
+                    )}
+                  </h2>
+                  <p class="mt-4 max-w-3xl text-base leading-8 text-muted">
+                    <editable-text data-prop={`sections[${sectionIndex}].body`}>{section.body}</editable-text>
+                  </p>
+                  <div class="collaboration-topics mt-6" aria-label="Collaboration directions" data-editable="array" data-prop={`sections[${sectionIndex}].topics`}>
+                    {section.topics.map((topic, topicIndex) => (
+                      <span style={`--topic-index: ${topicIndex}`} data-editable="array-item" data-id={topic}>
+                        <editable-text data-prop={`sections[${sectionIndex}].topics[${topicIndex}]`}>{topic}</editable-text>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <a class="github-primary-button" href={withBase(section.cta.href)}>
+                  <editable-text data-prop={`sections[${sectionIndex}].cta.label`}>{section.cta.label}</editable-text>
+                </a>
+              </div>
+            </section>
+          );
+        }
+
+        return null;
+      })
+    }
+  </div>
 </BaseLayout>

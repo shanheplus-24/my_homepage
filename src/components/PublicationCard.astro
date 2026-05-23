@@ -17,12 +17,27 @@ const labels = {
   slides: 'Slides',
   bibtex: 'BibTeX',
 };
+const methodOverrides = {
+  'macroporous-zwitterionic-hydrogel-sponge': 'Models',
+  'fewer-temperature-ties': 'Models',
+  'pinn-latent-heat-storage': 'Devices',
+  'water-electricity-cogeneration': 'Devices',
+  'solar-membrane-distillation-waste-heat': 'Devices',
+  'multistage-solar-membrane-distillation': 'Devices',
+  'pv-passive-cooling-backplate': 'Devices',
+  'sorption-thermal-battery-gel': 'Devices',
+  'airflow-restructuring-3d-vapor-generator': 'Devices',
+  'urban-microenvironment-sustainability': 'Models',
+  'solid-sorbent-dehumidification': 'Materials',
+  'grand-challenges-continuous-awh': 'Models',
+  'vapor-compression-adsorption-ev-thermal': 'Devices',
+} as const;
 
 const links = Object.entries(publication.data.links ?? {}).filter(([, href]) => Boolean(href)) as [
   keyof typeof labels,
   string,
 ][];
-const visibleLinks = links.filter(([key]) => key !== 'doi');
+const visibleLinks = links.filter(([key]) => key !== 'doi' && key !== 'paper');
 const titleHref = publication.data.links?.doi;
 const domainRules = [
   ['Food', /food|agriculture|rooftop|urban/i],
@@ -30,14 +45,16 @@ const domainRules = [
   ['Energy', /energy|thermal|heat|cooling|refrigeration|radiative|temperature|photovoltaic|power|electricity/i],
 ] as const;
 const methodRules = [
-  ['AI', /ai|neural|machine|pinn|prediction|state-of-charge/i],
+  ['AI', /\bAI\b|machine learning/i],
   ['Models', /model|thermodynamic|boundary|framework|physics-informed|prediction|estimation|pinch|evaluation|regulation/i],
   ['Materials', /material|hydrogel|sponge|sorbent|salt|composite|fiber|membrane|poly|phase change|pcm/i],
-  ['Device', /device|harvester|generator|panel|system|backplate|battery|distillation|evaporator|refrigeration|air conditioning/i],
+  ['Devices', /device|harvester|generator|panel|system|backplate|battery|distillation|evaporator|refrigeration|air conditioning/i],
 ] as const;
 const tagSource = `${publication.data.title} ${publication.data.venue}`;
 const domainTag = domainRules.find(([, pattern]) => pattern.test(tagSource))?.[0] ?? 'Energy';
-const methodTag = methodRules.find(([, pattern]) => pattern.test(tagSource))?.[0] ?? 'Device';
+const methodTag = methodOverrides[publication.id as keyof typeof methodOverrides]
+  ?? methodRules.find(([, pattern]) => pattern.test(tagSource))?.[0]
+  ?? 'Devices';
 const searchable = [
   publication.data.title,
   publication.data.authors.join(' '),

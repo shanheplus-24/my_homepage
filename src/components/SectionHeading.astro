@@ -2,12 +2,20 @@
 interface Props {
   title: string;
   description?: string;
+  editableTitleProp?: string;
+  editableDescriptionProp?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, editableTitleProp, editableDescriptionProp } = Astro.props;
 ---
 
 <div class="section-heading mb-8 max-w-5xl">
-  <h2 class="section-heading__title text-4xl font-bold leading-tight text-ink md:text-5xl">{title}</h2>
-  {description && <p class="mt-4 max-w-4xl text-lg leading-8 text-muted">{description}</p>}
+  <h2 class="section-heading__title text-4xl font-bold leading-tight text-ink md:text-5xl">
+    {editableTitleProp ? <editable-text data-prop={editableTitleProp}>{title}</editable-text> : title}
+  </h2>
+  {description && (
+    <p class="mt-4 max-w-4xl text-lg leading-8 text-muted">
+      {editableDescriptionProp ? <editable-text data-prop={editableDescriptionProp}>{description}</editable-text> : description}
+    </p>
+  )}
 </div>

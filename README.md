@@ -5,9 +5,56 @@ Maintainable personal academic website built with Astro, TypeScript, MDX, and Ta
 ## Run Locally
 
 ```powershell
-cd "D:\Personal_Webpage\[Program]\academic-website"
+Set-Location -LiteralPath "D:\Personal_Webpage\[Program]\academic-website-v3"
 npm install
 npm run dev
+```
+
+## Graphical Content Admin
+
+The site now has a Git-based CMS at `/admin/`. It edits the structured content collections through forms, so routine changes do not require hand-editing MDX files.
+
+Local workflow:
+
+```powershell
+Set-Location -LiteralPath "D:\Personal_Webpage\[Program]\academic-website-v3"
+npm run dev
+```
+
+Open `http://127.0.0.1:4321/admin/`.
+
+To enable local write-back through Decap's proxy server, run this in a second terminal:
+
+```powershell
+Set-Location -LiteralPath "D:\Personal_Webpage\[Program]\academic-website-v3"
+npm run cms:server
+```
+
+CMS configuration lives in `public/admin/config.yml`. Update `backend.repo` there if the deployed GitHub repository is not `shanheplus-24/my_homepage`.
+
+Chinese CMS guide:
+
+```text
+docs/cms-admin.zh-CN.md
+```
+
+## Visual Drag-and-Drop Editing
+
+CloudCannon visual editing support is configured alongside Decap. The homepage content source is now `src/content/pages/home.mdx`, where homepage sections and featured item order are stored as structured frontmatter instead of hard-coded arrays in `src/pages/index.astro`.
+
+Key files:
+
+```text
+cloudcannon.config.yml
+src/content/pages/home.mdx
+.cloudcannon/schemas/
+src/scripts/register-cloudcannon-components.ts
+```
+
+Chinese visual editing guide:
+
+```text
+docs/cloudcannon-visual-editing.zh-CN.md
 ```
 
 ## Content Model
@@ -156,4 +203,4 @@ Commit the project and push to `main`. The workflow in `.github/workflows/deploy
 
 ### Vercel
 
-Set the Vercel project root to `[Program]/academic-website`. The included `vercel.json` uses `npm run build` and outputs `dist`.
+Set the Vercel project root to `[Program]/academic-website-v3`. The included `vercel.json` uses `npm run build` and outputs `dist`.

@@ -3,18 +3,19 @@ import type { CollectionEntry } from 'astro:content';
 
 interface Props {
   items: CollectionEntry<'news'>[];
+  editableItemsProp?: string;
 }
 
-const { items } = Astro.props;
+const { items, editableItemsProp } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const withBase = (src?: string) => src && src.startsWith('/') ? `${base}${src}` : src;
 const formatDate = new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', year: 'numeric' });
 ---
 
-<ol class="grid gap-5 lg:grid-cols-3" role="list">
+<ol class="grid gap-5 lg:grid-cols-3" role="list" data-editable={editableItemsProp ? 'array' : undefined} data-prop={editableItemsProp}>
   {
     items.map((item) => (
-      <li class="news-card interactive-card flex h-full flex-col rounded-[24px] p-4 transition">
+      <li class="news-card interactive-card flex h-full flex-col rounded-[24px] p-4 transition" data-editable={editableItemsProp ? 'array-item' : undefined} data-id={item.id}>
         <div class="news-card__media-stack">
           {item.data.image && (
             <div class="news-media news-media--image">

@@ -1,0 +1,472 @@
+backend:
+  name: github
+  repo: shanheplus-24/my_homepage
+  branch: main
+
+local_backend: true
+
+media_folder: public/assets/cms
+public_folder: /assets/cms
+
+site_url: /
+display_url: /
+logo_url: /assets/generated/site-logo-nexus-flat-v2.svg
+
+collections:
+  - name: settings
+    label: Site Settings
+    files:
+      - label: Profile, Links, and Navigation
+        name: site
+        file: src/data/site.json
+        format: json
+        fields:
+          - label: Site profile
+            name: site
+            widget: object
+            collapsed: false
+            fields:
+              - label: Site name
+                name: name
+                widget: string
+              - label: Person name
+                name: personName
+                widget: string
+              - label: Title / Role
+                name: title
+                widget: string
+              - label: Short footer role
+                name: shortRole
+                widget: string
+              - label: Affiliation
+                name: affiliation
+                widget: string
+              - label: Location
+                name: location
+                widget: string
+              - label: Email
+                name: email
+                widget: string
+              - label: Profile image
+                name: profileImage
+                widget: image
+              - label: Profile image alt text
+                name: profileImageAlt
+                widget: string
+              - label: Biography
+                name: bio
+                widget: text
+              - label: Footer signature
+                name: footerSignature
+                widget: string
+              - label: Profile statements
+                name: profileStatements
+                widget: list
+                field:
+                  label: Statement
+                  name: statement
+                  widget: text
+              - label: Research interests
+                name: interests
+                widget: list
+                field:
+                  label: Interest
+                  name: interest
+                  widget: string
+              - label: Links
+                name: links
+                widget: list
+                fields:
+                  - label: Stable ID
+                    name: id
+                    widget: string
+                    hint: "Use stable IDs such as google-scholar, linkedin, email, or cv. Do not change linkedin unless updating the code too."
+                  - label: Label
+                    name: label
+                    widget: string
+                  - label: URL
+                    name: href
+                    widget: string
+              - label: Chinese profile
+                name: zh
+                widget: object
+                collapsed: true
+                fields:
+                  - label: Chinese title
+                    name: title
+                    widget: string
+                    required: false
+                  - label: Chinese affiliation
+                    name: affiliation
+                    widget: string
+                    required: false
+                  - label: Chinese biography
+                    name: bio
+                    widget: text
+                    required: false
+          - label: Navigation
+            name: navigation
+            widget: list
+            fields:
+              - label: Label
+                name: label
+                widget: string
+              - label: URL
+                name: href
+                widget: string
+
+  - name: publications
+    label: Publications
+    label_singular: Publication
+    folder: src/content/publications
+    create: true
+    extension: mdx
+    format: frontmatter
+    slug: "{{slug}}"
+    identifier_field: title
+    summary: "{{year}} - {{title}}"
+    sortable_fields: [year, title, venue, status]
+    view_filters:
+      - label: Selected
+        field: selected
+        pattern: true
+      - label: Published
+        field: status
+        pattern: published
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Publication image
+        name: image
+        widget: object
+        collapsed: false
+        fields:
+          - label: Image
+            name: src
+            widget: image
+          - label: Alt text
+            name: alt
+            widget: string
+      - label: Authors
+        name: authors
+        widget: list
+        field:
+          label: Author
+          name: author
+          widget: string
+      - label: Venue
+        name: venue
+        widget: string
+      - label: Year
+        name: year
+        widget: number
+        value_type: int
+        min: 1900
+        max: 2100
+      - label: Manual sort order
+        name: sortOrder
+        widget: number
+        value_type: int
+        required: false
+      - label: Type
+        name: type
+        widget: select
+        options: [journal, conference, preprint, workshop, book-chapter, thesis]
+      - label: Status
+        name: status
+        widget: select
+        options: [published, accepted, in-review, working-paper, forthcoming]
+      - label: Selected publication
+        name: selected
+        widget: boolean
+        default: false
+      - label: Links
+        name: links
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - label: Paper
+            name: paper
+            widget: string
+            required: false
+            pattern: ['^https?://.+', 'Use a full URL starting with http:// or https://']
+          - label: Code
+            name: code
+            widget: string
+            required: false
+            pattern: ['^https?://.+', 'Use a full URL starting with http:// or https://']
+          - label: Project
+            name: project
+            widget: string
+            required: false
+            pattern: ['^https?://.+', 'Use a full URL starting with http:// or https://']
+          - label: DOI
+            name: doi
+            widget: string
+            required: false
+            pattern: ['^https?://.+', 'Use a full DOI URL such as https://doi.org/...']
+          - label: Slides
+            name: slides
+            widget: string
+            required: false
+            pattern: ['^https?://.+', 'Use a full URL starting with http:// or https://']
+          - label: BibTeX
+            name: bibtex
+            widget: text
+            required: false
+      - label: Body
+        name: body
+        widget: markdown
+        required: false
+
+  - name: research
+    label: Research Projects
+    label_singular: Research Project
+    folder: src/content/research
+    create: true
+    extension: mdx
+    format: frontmatter
+    slug: "{{slug}}"
+    identifier_field: title
+    summary: "{{title}}"
+    sortable_fields: [title, status, period]
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Project image
+        name: image
+        widget: object
+        collapsed: false
+        fields:
+          - label: Image
+            name: src
+            widget: image
+          - label: Alt text
+            name: alt
+            widget: string
+      - label: Summary
+        name: summary
+        widget: text
+      - label: Collaborators
+        name: collaborators
+        widget: list
+        required: false
+        field:
+          label: Collaborator
+          name: collaborator
+          widget: string
+      - label: Status
+        name: status
+        widget: select
+        options: [active, completed, paused, exploratory]
+      - label: Period
+        name: period
+        widget: string
+      - label: Homepage highlight
+        name: highlight
+        widget: boolean
+        default: false
+      - label: Related publications
+        name: relatedPublications
+        widget: list
+        required: false
+        field:
+          label: Publication file slug
+          name: slug
+          widget: relation
+          collection: publications
+          search_fields: [title, venue, year]
+          value_field: "{{slug}}"
+          display_fields: [title, year]
+      - label: Body
+        name: body
+        widget: markdown
+        required: false
+
+  - name: news
+    label: News
+    label_singular: News Item
+    folder: src/content/news
+    create: true
+    extension: mdx
+    format: frontmatter
+    slug: "{{year}}-{{month}}-{{slug}}"
+    identifier_field: title
+    summary: "{{date}} - {{title}}"
+    sortable_fields: [date, title]
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Date
+        name: date
+        widget: datetime
+        date_format: YYYY-MM-DD
+        time_format: false
+        format: YYYY-MM-DD
+      - label: Summary
+        name: summary
+        widget: text
+      - label: Image
+        name: image
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - label: Image
+            name: src
+            widget: image
+          - label: Alt text
+            name: alt
+            widget: string
+      - label: Embedded media
+        name: embeds
+        widget: list
+        required: false
+        fields:
+          - label: Title
+            name: title
+            widget: string
+          - label: Source URL
+            name: src
+            widget: string
+            pattern: ['^https?://.+', 'Use a full URL starting with http:// or https://']
+          - label: Type
+            name: type
+            widget: select
+            options: [google-drive, youtube, external-video]
+            default: external-video
+      - label: Link
+        name: link
+        widget: string
+        required: false
+        pattern: ['^https?://.+', 'Use a full URL starting with http:// or https://']
+      - label: Body
+        name: body
+        widget: markdown
+        required: false
+
+  - name: academic-info
+    label: About / CV Items
+    label_singular: About / CV Item
+    folder: src/content/academic-info
+    create: true
+    extension: mdx
+    format: frontmatter
+    slug: "{{slug}}"
+    identifier_field: title
+    summary: "{{category}} - {{date}} - {{title}}"
+    sortable_fields: [category, date, order, title]
+    view_groups:
+      - label: Category
+        field: category
+    fields:
+      - label: Category
+        name: category
+        widget: select
+        options: [award, fellowship, talk, teaching, service, education, contact, selected-publication, other]
+      - label: Title
+        name: title
+        widget: string
+      - label: Chinese title
+        name: titleZh
+        widget: string
+        required: false
+      - label: Organization
+        name: organization
+        widget: string
+      - label: Chinese organization
+        name: organizationZh
+        widget: string
+        required: false
+      - label: Date
+        name: date
+        widget: string
+      - label: Chinese date
+        name: dateZh
+        widget: string
+        required: false
+      - label: Location
+        name: location
+        widget: string
+        required: false
+      - label: Chinese location
+        name: locationZh
+        widget: string
+        required: false
+      - label: Description
+        name: description
+        widget: text
+        required: false
+      - label: Chinese description
+        name: descriptionZh
+        widget: text
+        required: false
+      - label: Points
+        name: points
+        widget: list
+        required: false
+        field:
+          label: Point
+          name: point
+          widget: string
+      - label: Chinese points
+        name: pointsZh
+        widget: list
+        required: false
+        field:
+          label: Chinese point
+          name: point
+          widget: string
+      - label: Image
+        name: image
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - label: Image
+            name: src
+            widget: image
+          - label: Alt text
+            name: alt
+            widget: string
+      - label: Logos
+        name: logos
+        widget: list
+        required: false
+        fields:
+          - label: Logo
+            name: src
+            widget: image
+          - label: Alt text
+            name: alt
+            widget: string
+      - label: Named links
+        name: links
+        widget: list
+        required: false
+        fields:
+          - label: Label
+            name: label
+            widget: string
+          - label: URL
+            name: href
+            widget: string
+            pattern: ['^https?://.+', 'Use a full URL starting with http:// or https://']
+      - label: Link
+        name: link
+        widget: string
+        required: false
+        pattern: ['^https?://.+', 'Use a full URL starting with http:// or https://']
+      - label: Order
+        name: order
+        widget: number
+        value_type: int
+        default: 0
+      - label: Body
+        name: body
+        widget: markdown
+        required: false
