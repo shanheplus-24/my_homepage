@@ -140,16 +140,16 @@ Allowed categories are `education`, `fellowship`, `award`, `selected-publication
 
 ## Visitor Analytics
 
-The bottom of every page includes a visible analytics area.
+Visitor analytics run in the background through GoatCounter. No visible traffic widget is rendered on the page.
 
-- For country/source-location statistics, generate a free counter image at `https://flagcounter.com/` and set `PUBLIC_FLAG_COUNTER_URL`.
-- For page analytics, set `PUBLIC_PLAUSIBLE_DOMAIN` if using Plausible.
+- Default endpoint: `https://shanheplus.goatcounter.com/count`
+- Optional override: set `PUBLIC_GOATCOUNTER_ENDPOINT` and `PUBLIC_GOATCOUNTER_SRC`.
 
 Local example:
 
 ```powershell
-$env:PUBLIC_FLAG_COUNTER_URL="https://s01.flagcounter.com/count2/YOURCODE/bg_FFFFFF/txt_17202A/border_D9E0E7/columns_4/maxflags_12/viewers_Visitors/labels_1/pageviews_1/flags_0/percent_0/"
-$env:PUBLIC_PLAUSIBLE_DOMAIN="your-domain.com"
+$env:PUBLIC_GOATCOUNTER_ENDPOINT="https://shanheplus.goatcounter.com/count"
+$env:PUBLIC_GOATCOUNTER_SRC="//gc.zgo.at/count.js"
 npm run dev
 ```
 
