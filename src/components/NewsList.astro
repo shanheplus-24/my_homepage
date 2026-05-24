@@ -14,7 +14,6 @@ const getVideoMimeType = (src: string) => {
   if (/\.ogg(?:[?#].*)?$/i.test(src)) return 'video/ogg';
   return 'video/mp4';
 };
-const formatDate = new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', year: 'numeric' });
 ---
 
 <ol class="grid gap-5 lg:grid-cols-3" role="list">
@@ -44,6 +43,7 @@ const formatDate = new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric
                         class="news-media__video"
                         controls
                         preload="metadata"
+                        poster={withBase(embed.poster)}
                         playsinline
                         aria-label={embed.title}
                       >
@@ -66,10 +66,7 @@ const formatDate = new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric
           )}
         </div>
         <div class="news-card__copy">
-          <time class="text-sm font-bold text-accent" datetime={item.data.date.toISOString()}>
-            {formatDate.format(item.data.date)}
-          </time>
-          <h3 class="mt-1 text-base font-bold text-ink">
+          <h3 class="text-base font-bold text-ink">
             {item.data.title}
           </h3>
           {item.data.summary && <p class="mt-1 text-sm leading-6 text-muted">{item.data.summary}</p>}

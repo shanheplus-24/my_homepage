@@ -2,13 +2,15 @@
 import { site } from '@data/site';
 
 const contactHref = `mailto:${site.email}`;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const withBase = (href: string) => `${base}${href}`;
 ---
 
 <section class="maintenance-page" aria-labelledby="maintenance-title">
   <div class="maintenance-page__shell">
     <img
       class="maintenance-page__logo"
-      src="/assets/generated/site-logo-nexus-white-512.png"
+      src={withBase('/assets/generated/site-logo-nexus-white-512.png')}
       alt={site.name}
       loading="eager"
     />
@@ -23,4 +25,3 @@ const contactHref = `mailto:${site.email}`;
     </p>
   </div>
 </section>
-

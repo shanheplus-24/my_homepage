@@ -23,6 +23,16 @@ const referenceId = (reference: string | { id: string }) => typeof reference ===
 const resolveItems = <T,>(references: Array<string | { id: string }>, itemMap: Map<string, T>) =>
   references.map((reference) => itemMap.get(referenceId(reference))).filter((item): item is T => Boolean(item));
 const heroLineModifiers = ['hero-title__line--white', 'hero-title__line--nexus', 'hero-title__line--accent'];
+const makeSequentialTitleWords = (heading: string, highlight?: string) => {
+  let charIndex = 0;
+  return [
+    ...heading.split(' ').map((word) => ({ word, highlight: false })),
+    ...(highlight ? highlight.split(' ').map((word) => ({ word, highlight: true })) : []),
+  ].map((part) => ({
+    ...part,
+    chars: [...part.word].map((char) => ({ char, index: charIndex++ })),
+  }));
+};
 const sections = home.data.sections;
 ---
 
@@ -195,13 +205,25 @@ const sections = home.data.sections;
             >
               <div class="surface grid gap-7 rounded-[34px] p-8 md:grid-cols-[1fr_auto] md:items-center md:p-10">
                 <div>
-                  <h2 class="cta-title">
-                    {section.heading}{' '}
-                    {section.headingHighlight && (
-                      <span class="cta-title__highlight">
-                        {section.headingHighlight}
-                      </span>
-                    )}
+                  <h2
+                    class="cta-title cta-title--sequence reveal"
+                    aria-label={`${section.heading}${section.headingHighlight ? ` ${section.headingHighlight}` : ''}`}
+                  >
+                    <span aria-hidden="true">
+                      {
+                        makeSequentialTitleWords(section.heading, section.headingHighlight).map((part) => (
+                          <span class:list={['cta-title__word', part.highlight && 'cta-title__highlight']}>
+                            {
+                              part.chars.map(({ char, index }) => (
+                                <span class="cta-title__char" style={`--char-index: ${index}`}>
+                                  {char}
+                                </span>
+                              ))
+                            }
+                          </span>
+                        ))
+                      }
+                    </span>
                   </h2>
                   <p class="mt-4 max-w-3xl text-xl leading-8 text-muted">
                     {section.body}

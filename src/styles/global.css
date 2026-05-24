@@ -337,11 +337,13 @@ body::after {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 3.05rem;
+  height: 3.05rem;
   overflow: hidden;
   border-radius: 0.5rem;
   border: 0;
   background: rgba(255, 255, 255, 0.1);
-  padding: 0.45rem;
+  padding: 0.15rem;
   box-shadow: none;
   color: #ffffff;
   transition:
@@ -363,8 +365,8 @@ body::after {
 
 .site-brand__mark img {
   display: block;
-  width: 2.15rem;
-  height: 2.15rem;
+  width: 2.55rem;
+  height: 2.55rem;
   object-fit: contain;
 }
 
@@ -372,7 +374,7 @@ body::after {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.35rem;
+  padding: 0;
   cursor: pointer;
   user-select: none;
 }
@@ -983,8 +985,8 @@ body::after {
 
 .research-intro-copy {
   display: grid;
-  width: min(100%, 63rem);
-  max-width: 63rem;
+  width: 100%;
+  max-width: none;
   gap: 1rem;
   margin-top: 1.65rem;
   color: #aab5c6;
@@ -1342,11 +1344,11 @@ body::after {
 .news-card {
   align-self: stretch;
   height: 100%;
-  min-height: 400px;
+  min-height: 330px;
 }
 
 .news-card__media-stack {
-  margin-bottom: 2rem;
+  margin-bottom: 1.35rem;
 }
 
 .news-card__copy {
@@ -1504,7 +1506,7 @@ body::after {
 
 .education-venue,
 .education-description {
-  max-width: calc(100% - clamp(8.6rem, 10vw, 10.8rem));
+  max-width: 100%;
 }
 
 .education-date {
@@ -1544,7 +1546,7 @@ body::after {
   align-items: center;
   flex-wrap: wrap;
   gap: 0.5rem;
-  max-width: calc(100% - clamp(8.6rem, 10vw, 10.8rem));
+  max-width: 100%;
   min-width: 0;
 }
 
@@ -1759,6 +1761,39 @@ body::after {
   text-wrap: balance;
 }
 
+.cta-title--sequence {
+  overflow: visible;
+}
+
+.cta-title--sequence > span {
+  display: block;
+}
+
+.cta-title__word {
+  display: inline-block;
+  margin-right: 0.22em;
+  white-space: nowrap;
+}
+
+.cta-title__char {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(8px);
+  transform: translateY(0.34em);
+}
+
+html:not(.js-enabled) .cta-title__char {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+
+.cta-title--sequence.is-visible .cta-title__char,
+.js-enabled .cta-title--sequence.is-visible .cta-title__char {
+  animation: cta-char-reveal 680ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(var(--char-index) * 34ms);
+}
+
 .cta-title__highlight {
   color: #93c5fd;
   text-shadow: 0 0 32px rgba(96, 165, 250, 0.48);
@@ -1811,6 +1846,14 @@ body::after {
   }
   50% {
     transform: translate3d(0, -0.28rem, 0);
+  }
+}
+
+@keyframes cta-char-reveal {
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0);
   }
 }
 
@@ -2142,11 +2185,13 @@ body::after {
 @media (max-width: 767px) {
   .site-brand__mark {
     border-radius: 0.5rem;
+    width: 2.7rem;
+    height: 2.7rem;
   }
 
   .site-brand__mark img {
-    width: 1.75rem;
-    height: 1.75rem;
+    width: 2.25rem;
+    height: 2.25rem;
   }
 
   .site-brand__name {
@@ -2451,6 +2496,13 @@ body::after {
     opacity: 1;
     filter: none;
     transform: none;
+  }
+
+  .cta-title__char {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    animation: none !important;
   }
 
   .js-enabled .hero-title__line,

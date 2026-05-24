@@ -24,6 +24,7 @@ const formatMetaLine = (organization: string, location?: string, description?: s
 const displayOrganization = (item: CollectionEntry<'academicInfo'>) => item.data.organization;
 const displayOrganizationZh = (item: CollectionEntry<'academicInfo'>) => item.data.organizationZh ?? item.data.organization;
 const shouldShowDate = (_item: CollectionEntry<'academicInfo'>) => true;
+const showEducationAdvisorLinks = false;
 const splitAdvisor = (description?: string) => {
   if (!description) return { detail: '', advisor: '' };
   const match = description.match(/\s+(Advisors?:\s.+)$/);
@@ -115,7 +116,7 @@ const splitAdvisor = (description?: string) => {
                       </div>
                     )
                   }
-                  {item.data.links.length > 0 && (
+                  {showEducationAdvisorLinks && item.data.links.length > 0 && (
                     <div class="education-link-group" aria-label={`Advisor links for ${item.data.title}`}>
                       <span class="education-link-label">Advisor</span>
                       <ul class="education-links" role="list">
