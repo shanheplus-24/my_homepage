@@ -30,7 +30,7 @@ npm run build:site
 在 EdgeOne Pages 项目设置的环境变量中设置：
 
 ```text
-PUBLIC_MAINTENANCE_MODE=true
+PUBLIC_SITE_STATUS=maintenance
 ```
 
 然后重新部署 Production，线上会进入维护模式。
@@ -38,7 +38,7 @@ PUBLIC_MAINTENANCE_MODE=true
 恢复正式站点时删除这个环境变量，或把值改成：
 
 ```text
-false
+live
 ```
 
 然后重新部署 Production。不要改 Cloudflare DNS，也不要删除自定义域名绑定。

@@ -17,8 +17,9 @@ const env = {
 };
 
 if (mode === 'maintenance') {
-  env.PUBLIC_MAINTENANCE_MODE = 'true';
+  env.PUBLIC_SITE_STATUS = 'maintenance';
 } else {
+  env.PUBLIC_SITE_STATUS = 'live';
   delete env.PUBLIC_MAINTENANCE_MODE;
 }
 
