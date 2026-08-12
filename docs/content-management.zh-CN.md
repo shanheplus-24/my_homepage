@@ -128,17 +128,13 @@ GitHub Pages 已配置：
 .github/workflows/deploy.yml
 ```
 
-Vercel 已配置：
+腾讯云 EdgeOne Pages 项目根目录选择：
 
 ```text
-vercel.json
+[Program]/academic-website-v3
 ```
 
-如果用 Vercel，项目根目录选择：
-
-```text
-[Program]/academic-website
-```
+构建命令为 `npm run build`，输出目录为 `dist`，正式站点环境变量使用 `PUBLIC_SITE_STATUS=live`。
 
 ## 更新前检查清单
 

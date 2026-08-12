@@ -165,34 +165,12 @@ npm run validate
 
 ## Deploy
 
-### Cloudflare Pages
+### EdgeOne Pages
 
-Use this when serving the site from the apex domain `shanheplus.com`.
-
-Cloudflare Pages project settings:
-
-```text
-Project name: shanheplus-personal-page
-Production branch: main
-Framework preset: Astro
-Build command: npm run build
-Build output directory: dist
-Root directory: /
-Environment variable: SITE_URL=https://shanheplus.com
-```
-
-After the first successful Pages deployment, add `shanheplus.com` in the Pages project under **Custom domains**. Because the domain is already managed by Cloudflare nameservers, Cloudflare should create the required apex CNAME record automatically. Add `www.shanheplus.com` only if you also want the `www` hostname, then redirect it to the apex domain using a Cloudflare Bulk Redirect.
-
-Detailed Chinese steps:
-
-```text
-docs/cloudflare-pages-domain.zh-CN.md
-```
+The custom domain is deployed through Tencent Cloud EdgeOne Pages. Use `npm run build`, output directory `dist`, and keep `PUBLIC_SITE_STATUS=live` for the normal site. See `docs/maintenance-mode.zh-CN.md` for maintenance switching.
 
 ### GitHub Pages
 
 Commit the project and push to `main`. The workflow in `.github/workflows/deploy.yml` builds from this nested app folder and publishes `dist`.
 
-### Vercel
-
-Set the Vercel project root to `[Program]/academic-website-v3`. The included `vercel.json` uses `npm run build` and outputs `dist`.
+Migration and recovery instructions live in `docs/migration.zh-CN.md`. The cleanup evidence and retained/deleted scope are recorded in `docs/cleanup-audit.zh-CN.md`.

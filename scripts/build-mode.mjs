@@ -2,7 +2,6 @@ import { spawnSync } from 'node:child_process';
 
 const args = process.argv.slice(2);
 const mode = args[0] || 'site';
-const shouldDeploy = args.includes('--deploy');
 const allowedModes = new Set(['site', 'maintenance']);
 
 if (!allowedModes.has(mode)) {
@@ -41,16 +40,3 @@ const run = (command, commandArgs) => {
 };
 
 run(process.execPath, ['./node_modules/astro/bin/astro.mjs', 'build']);
-
-if (shouldDeploy) {
-  run(process.execPath, [
-    './node_modules/wrangler/bin/wrangler.js',
-    'pages',
-    'deploy',
-    'dist',
-    '--project-name',
-    'shanheplus-personal-page',
-    '--branch',
-    'main',
-  ]);
-}
