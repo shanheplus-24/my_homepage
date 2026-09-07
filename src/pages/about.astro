@@ -81,7 +81,7 @@ const withBase = (src: string) => src.startsWith('/') ? `${base}${src}` : src;
         groups.map((group) => {
           const categories = group.categories as readonly string[];
           const groupItems = items
-            .filter((item) => categories.includes(item.data.category) && item.id !== 'education-stanford-energy-fellow')
+            .filter((item) => categories.includes(item.data.category))
             .sort((a, b) => {
               if (group.title !== 'Fellowships') return 0;
               const categoryRank = (category: string) => category === 'fellowship' ? 0 : 1;
@@ -93,4 +93,3 @@ const withBase = (src: string) => src.startsWith('/') ? `${base}${src}` : src;
     </div>
   </section>
 </BaseLayout>
-
