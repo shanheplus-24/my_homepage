@@ -1931,6 +1931,19 @@ html:not(.js-enabled) .cta-title__char {
   justify-content: center;
 }
 
+.about-profile-link {
+  color: #93c5fd;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 180ms ease;
+}
+
+.about-profile-link:hover,
+.about-profile-link:focus-visible {
+  color: #bfdbfe;
+}
+
 .about-contact-link {
   display: inline-flex;
   align-items: center;
