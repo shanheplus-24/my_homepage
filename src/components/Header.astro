@@ -1,5 +1,6 @@
 ---
 import { navigation, site } from '@data/site';
+import ThemePicker from './ThemePicker.astro';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const withBase = (href: string) => `${base}${href}`;
@@ -40,10 +41,13 @@ const brandLogo = withBase('/assets/generated/site-logo-nexus-white-512.png');
         }
       </ul>
 
-      <button class="site-menu-button" type="button" aria-label="Open navigation menu" aria-expanded="false" data-menu-button>
-        <span class="site-menu-button__line"></span>
-        <span class="site-menu-button__line"></span>
-      </button>
+      <div class="site-header__actions">
+        <ThemePicker />
+        <button class="site-menu-button" type="button" aria-label="Open navigation menu" aria-expanded="false" data-menu-button>
+          <span class="site-menu-button__line"></span>
+          <span class="site-menu-button__line"></span>
+        </button>
+      </div>
     </div>
 
     <div class="site-nav-mobile" data-mobile-menu>

@@ -5,6 +5,7 @@ import AnalyticsFooter from '@components/AnalyticsFooter.astro';
 import MaintenancePage from '@components/MaintenancePage.astro';
 import { site } from '@data/site';
 import globalStyles from '@styles/global.css?inline';
+import themeScript from '@scripts/theme.js?raw';
 
 interface Props {
   title: string;
@@ -27,6 +28,8 @@ const pageDescription = maintenanceMode
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#030305" />
+    <script is:inline set:html={themeScript}></script>
     <meta name="description" content={pageDescription} />
     {maintenanceMode && <meta name="robots" content="noindex, nofollow" />}
     <meta name="generator" content={Astro.generator} />
