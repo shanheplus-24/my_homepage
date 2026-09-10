@@ -2,6 +2,7 @@
 import { site } from '@data/site';
 
 const configPath = './config.yml';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 
 <!doctype html>
@@ -11,7 +12,7 @@ const configPath = './config.yml';
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
     <title>{`内容后台 | ${site.name}`}</title>
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
     <link href={configPath} type="text/yaml" rel="cms-config-url" />
     <style>
       html,
@@ -28,6 +29,20 @@ const configPath = './config.yml';
     </style>
   </head>
   <body>
-    <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
+    <div style="padding:12px 24px;background:#eaf1fb;font:14px Arial,sans-serif"><a href={`${base}/admin/publications/`}>论文维护总览 · 待核对 / 分类 / 摘要图</a></div>
+    <p id="cms-status" role="status" style="margin:0;padding:10px 24px;font:14px/1.6 Arial,sans-serif"></p>
+    <script is:inline>window.CMS_MANUAL_INIT = true;</script>
+    <script is:inline src="https://unpkg.com/decap-cms@3.10.0/dist/decap-cms.js"></script>
+    <script is:inline src={`${base}/admin/publications.js`}></script>
+    <script is:inline>
+      const local = ['localhost', '127.0.0.1'].includes(location.hostname);
+      const basePath = location.pathname.replace(/\/admin\/?$/, '');
+      const status = document.querySelector('#cms-status');
+      if (local) status.textContent = '本地编辑：保存后写入本机文件。请同时保持内容服务运行。';
+      else fetch('https://www.shanheplus.com/api/cms/status', { cache: 'no-store' }).then((r) => r.ok ? r.json() : { ready: false }).then(({ ready }) => {
+        status.textContent = ready ? '通过 GitHub 登录后可保存修改。保存会触发网站更新。' : '在线登录服务尚未就绪；当前可查看论文维护总览，也可使用本地编辑窗口。';
+      }).catch(() => { status.textContent = '暂时无法连接登录服务；可使用本地编辑窗口。'; });
+      window.CMS.init({ config: { local_backend: local ? { url: 'http://127.0.0.1:8082/api/v1' } : false, logo_url: `${basePath}/assets/generated/site-logo-nexus-white-512.png` } });
+    </script>
   </body>
 </html>

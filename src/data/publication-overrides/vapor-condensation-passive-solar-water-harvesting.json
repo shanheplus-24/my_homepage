@@ -1,0 +1,82 @@
+{
+  "id": "vapor-condensation-passive-solar-water-harvesting",
+  "title": "Vapor condensation enhancement in passive solar water harvesting",
+  "venue": "Cell Reports Physical Science",
+  "year": 2026,
+  "doi": "",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "Renpeng Li",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "He Shan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Siyang Zheng",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Jie Yu",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Jintong Gao",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Jinfang You",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Xiuliang Liu",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Zhenyuan Xu",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Water"
+  ],
+  "methods": [
+    "Devices"
+  ],
+  "image": {
+    "src": "/assets/publications/2026-cell-reports-physical-science-vapor-condensation.png",
+    "alt": "Graphical overview of vapor condensation enhancement in passive solar water harvesting"
+  },
+  "sortOrder": 1,
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

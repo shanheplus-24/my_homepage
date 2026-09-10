@@ -1,0 +1,51 @@
+{
+  "id": "droplet-electricity-generator",
+  "title": "Quick evaluation and regulation of the maximum instantaneous power and matching resistance for droplet-based electricity generators",
+  "venue": "Nano Research",
+  "year": 2024,
+  "doi": "10.1007/s12274-024-6893-x",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "Zhifeng Hu",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Huamei Zhong",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "He Shan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Energy"
+  ],
+  "methods": [
+    "Models"
+  ],
+  "image": {
+    "src": "/assets/shanheplus/26-publications-28.png",
+    "alt": "Graphical abstract for droplet-based electricity generators"
+  },
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

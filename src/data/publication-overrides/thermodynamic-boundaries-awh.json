@@ -1,0 +1,69 @@
+{
+  "id": "thermodynamic-boundaries-awh",
+  "title": "Approaching thermodynamic boundaries and targeting market players for commercial atmospheric water harvesting",
+  "venue": "Joule",
+  "year": 2025,
+  "doi": "10.1016/j.joule.2025.102132",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "He Shan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Zhihui Chen",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Jiaqi Yu",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Yixiu Dong",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Shuai Du",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Tianshu Ge",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Water"
+  ],
+  "methods": [
+    "Models"
+  ],
+  "image": {
+    "src": "/assets/shanheplus/13-publications-01.png",
+    "alt": "Graphical abstract for commercial atmospheric water harvesting thermodynamic boundaries"
+  },
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

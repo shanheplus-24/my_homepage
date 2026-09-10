@@ -1,0 +1,81 @@
+{
+  "id": "switchable-multicyclic-awh",
+  "title": "Switchable multicyclic adsorption-based atmospheric water harvesting with solar and radiative sky cooling thermal concentration and heat pumps",
+  "venue": "Energy",
+  "year": 2025,
+  "doi": "10.1016/j.energy.2025.137255",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "Primoz Poredos",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "He Shan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Zhao Shao",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Fangfang Deng",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Eva Zavrl",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Tej Zizak",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Ciril Arkar",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Pero Gataric",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Water"
+  ],
+  "methods": [
+    "Devices"
+  ],
+  "image": {
+    "src": "/assets/shanheplus/15-publications-05.png",
+    "alt": "Graphical abstract for switchable multicyclic adsorption-based atmospheric water harvesting"
+  },
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

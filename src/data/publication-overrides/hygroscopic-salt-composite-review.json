@@ -1,0 +1,75 @@
+{
+  "id": "hygroscopic-salt-composite-review",
+  "title": "Hygroscopic salt-embedded composite materials for sorption-based atmospheric water harvesting",
+  "venue": "Nature Reviews Materials",
+  "year": 2024,
+  "doi": "10.1038/s41578-024-00721-x",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "He Shan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Primoz Poredos",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Zhihui Chen",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Xinge Yang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Zhanyu Ye",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Zhifeng Hu",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Swee Ching Tan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Water"
+  ],
+  "methods": [
+    "Materials"
+  ],
+  "image": {
+    "src": "/assets/shanheplus/20-publications-16.png",
+    "alt": "Review figure for hygroscopic salt-embedded composite materials"
+  },
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

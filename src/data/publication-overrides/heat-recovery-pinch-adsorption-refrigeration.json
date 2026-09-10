@@ -1,0 +1,51 @@
+{
+  "id": "heat-recovery-pinch-adsorption-refrigeration",
+  "title": "Heat recovery for adsorption refrigeration system via pinch technology",
+  "venue": "Journal of Thermal Science",
+  "year": 2022,
+  "doi": "10.1007/s11630-022-1535-7",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "Quanwen Pan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "He Shan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Zacharie Tamainot-Telto",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Energy"
+  ],
+  "methods": [
+    "Models"
+  ],
+  "image": {
+    "src": "/assets/shanheplus/37-publications-52.png",
+    "alt": "Schematic for heat recovery in adsorption refrigeration via pinch technology"
+  },
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

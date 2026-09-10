@@ -1,0 +1,94 @@
+name: Sync publications
+
+on:
+  schedule:
+    - cron: '23 10 * * *'
+  workflow_dispatch:
+    inputs:
+      refresh:
+        description: Refresh cached papers
+        type: boolean
+        default: false
+  push:
+    branches: [main]
+    paths: ['src/data/publication-imports/**', 'src/data/publication-identity.json']
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: publications-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Validate synchronization rules
+        run: npm run publications:test
+      - name: Discover and enrich publications
+        id: sync
+        continue-on-error: true
+        env:
+          REFRESH: ${{ inputs.refresh }}
+          OPENALEX_API_KEY: ${{ secrets.OPENALEX_API_KEY }}
+          SEMANTIC_SCHOLAR_API_KEY: ${{ secrets.SEMANTIC_SCHOLAR_API_KEY }}
+        run: |
+          if [ "$REFRESH" = "true" ]; then
+            npm run publications:sync -- --write --refresh
+          else
+            npm run publications:sync -- --write
+          fi
+      - name: Validate resulting website
+        run: npm run validate
+      - name: Generate full publication list
+        run: npm run publications:report
+      - name: Store synchronization report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: publication-sync-report
+          path: |
+            Output/publication-sync-report.json
+            Output/publication-enrichment-list.zh-CN.md
+          if-no-files-found: warn
+      - name: Commit only publication data
+        id: commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/publications-auto.json src/data/publication-overrides
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "Update publications from verified sources"
+            git fetch origin main
+            if [ "$(git rev-parse HEAD^)" != "$(git rev-parse origin/main)" ]; then
+              git rebase origin/main
+              npm ci
+              npm run publications:test
+              npm run validate
+            fi
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Explicitly trigger GitHub Pages deployment
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy.yml --ref main
+      - name: Report incomplete sources
+        if: steps.sync.outcome == 'failure'
+        run: |
+          echo 'Some publication sources failed. Previous records were preserved; inspect the report artifact.' >> "$GITHUB_STEP_SUMMARY"
+          exit 1

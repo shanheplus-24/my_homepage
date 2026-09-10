@@ -1,0 +1,81 @@
+{
+  "id": "portable-water-harvester-semi-arid",
+  "title": "Exceptional water production yield enabled by batch-processed portable water harvester in semi-arid climate",
+  "venue": "Nature Communications",
+  "year": 2022,
+  "doi": "10.1038/s41467-022-33062-w",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "He Shan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Chunfeng Li",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Zhihui Chen",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Wenjun Ying",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Primoz Poredos",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Zhanyu Ye",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Quanwen Pan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Jiayun Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Water"
+  ],
+  "methods": [
+    "Devices"
+  ],
+  "image": {
+    "src": "/assets/shanheplus/34-publications-46.jpg",
+    "alt": "Graphical abstract for portable atmospheric water harvester in semi-arid climate"
+  },
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

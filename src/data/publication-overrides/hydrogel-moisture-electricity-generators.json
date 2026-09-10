@@ -1,0 +1,118 @@
+{
+  "id": "hydrogel-moisture-electricity-generators",
+  "title": "Hydrogel-based moisture electricity generators: materials, mechanisms, and sustainable device design",
+  "venue": "Energy & Environmental Science",
+  "year": 2026,
+  "doi": "10.1039/d6ee01584k",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "Chengyuan Zhang",
+      "coFirst": true,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Zhihua Yu",
+      "coFirst": true,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Zhibin Sun",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Chengjing Ding",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Qing Xu",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Bingnan Xuan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Dong Liu",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Jiangang Qu",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "He Shan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Mohammad Alamgir Hossain",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Mingzheng Ge",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Zhijie Liang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Jianying Huang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Yuekun Lai",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Hui Liu",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Energy"
+  ],
+  "methods": [
+    "Materials"
+  ],
+  "image": {
+    "src": "/assets/publications/2026-energy-environmental-science-hydrogel-moisture-electricity.png",
+    "alt": "Design framework and applications of hydrogel-based moisture electricity generators"
+  },
+  "sortOrder": 6,
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

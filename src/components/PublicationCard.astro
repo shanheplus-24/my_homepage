@@ -9,55 +9,16 @@ interface Props {
 const { publication, compact = false } = Astro.props;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const withBase = (src?: string) => src && src.startsWith('/') ? `${base}${src}` : src;
-const labels = {
-  paper: 'Paper',
-  doi: 'DOI',
-};
-const methodOverrides = {
-  'macroporous-zwitterionic-hydrogel-sponge': 'Models',
-  'fewer-temperature-ties': 'Models',
-  'pinn-latent-heat-storage': 'Devices',
-  'water-electricity-cogeneration': 'Devices',
-  'solar-membrane-distillation-waste-heat': 'Devices',
-  'multistage-solar-membrane-distillation': 'Devices',
-  'pv-passive-cooling-backplate': 'Devices',
-  'sorption-thermal-battery-gel': 'Devices',
-  'airflow-restructuring-3d-vapor-generator': 'Devices',
-  'urban-microenvironment-sustainability': 'Models',
-  'solid-sorbent-dehumidification': 'Materials',
-  'grand-challenges-continuous-awh': 'Models',
-  'vapor-compression-adsorption-ev-thermal': 'Devices',
-} as const;
-
-const links = Object.entries(publication.data.links ?? {}).filter(([, href]) => Boolean(href)) as [
-  keyof typeof labels,
-  string,
-][];
-const visibleLinks = links.filter(([key]) => key !== 'doi' && key !== 'paper');
-const titleHref = publication.data.links?.doi;
-const domainRules = [
-  ['Food', /food|agriculture|rooftop|urban/i],
-  ['Water', /water|atmospheric|hygroscopic|sorbent|humidity|freshwater|dehumidification|evaporation|distillation/i],
-  ['Energy', /energy|thermal|heat|cooling|refrigeration|radiative|temperature|photovoltaic|power|electricity/i],
-] as const;
-const methodRules = [
-  ['AI', /\bAI\b|machine learning/i],
-  ['Models', /model|thermodynamic|boundary|framework|physics-informed|prediction|estimation|pinch|evaluation|regulation/i],
-  ['Materials', /material|hydrogel|sponge|sorbent|salt|composite|fiber|membrane|poly|phase change|pcm/i],
-  ['Devices', /device|harvester|generator|panel|system|backplate|battery|distillation|evaporator|refrigeration|air conditioning/i],
-] as const;
-const tagSource = `${publication.data.title} ${publication.data.venue}`;
-const domainTag = domainRules.find(([, pattern]) => pattern.test(tagSource))?.[0] ?? 'Energy';
-const methodTag = methodOverrides[publication.id as keyof typeof methodOverrides]
-  ?? methodRules.find(([, pattern]) => pattern.test(tagSource))?.[0]
-  ?? 'Devices';
+const titleHref = publication.data.links?.doi || publication.data.links?.paper;
+const domainTags = publication.data.domains;
+const methodTags = publication.data.methods;
 const searchable = [
   publication.data.title,
   publication.data.authors.join(' '),
   publication.data.venue,
   publication.data.year,
-  domainTag,
-  methodTag,
+  ...domainTags,
+  ...methodTags,
 ].join(' ').toLowerCase();
 ---
 
@@ -68,29 +29,31 @@ const searchable = [
       : 'publication-card interactive-card grid gap-5 rounded-[28px] p-3 md:grid-cols-[230px_1fr] md:items-center md:p-4',
   ]}
   data-pub-card
+  data-review={publication.data.confirmation.pending ? 'pending' : 'confirmed'}
   data-year={publication.data.year}
-  data-domain={domainTag}
-  data-method={methodTag}
-  data-tags={`${domainTag}|${methodTag}`}
+  data-domain={domainTags.join('|')}
+  data-method={methodTags.join('|')}
+  data-tags={[...domainTags, ...methodTags].join('|')}
   data-search={searchable}
 >
   <div class:list={[
     'publication-card__media flex w-full items-center justify-center overflow-hidden rounded-[20px]',
     compact ? 'aspect-[4/3]' : 'aspect-[4/3] md:min-h-40',
   ]}>
-    <div class="publication-card__image-panel">
+    {publication.data.image ? <div class="publication-card__image-panel">
       <img
         src={withBase(publication.data.image.src)}
         alt={publication.data.image.alt}
         loading="lazy"
         class="size-full object-contain"
       />
-    </div>
+    </div> : <span class="publication-image-placeholder" aria-label="Graphical abstract not yet available">Graphical abstract<br />coming soon</span>}
   </div>
   <div class="flex min-w-0 flex-1 flex-col">
     <div class="mb-3 flex flex-wrap gap-2 text-xs font-bold">
-      <span class="publication-tag publication-tag--domain">{domainTag}</span>
-      <span class="publication-tag publication-tag--method">{methodTag}</span>
+      {publication.data.confirmation.pending && <a class="publication-review-badge" data-review-badge href={`${base}/admin/publications/?q=${encodeURIComponent(publication.data.title)}`} title="查看并确认本次自动更新 · Review automatically updated details">Pending review <span lang="zh-Hans">· 待人工确认</span></a>}
+      {domainTags.map((tag) => <span class="publication-tag publication-tag--domain">{tag}</span>)}
+      {methodTags.map((tag) => <span class="publication-tag publication-tag--method">{tag}</span>)}
     </div>
     <h3 class:list={[compact ? 'text-base' : 'text-xl', 'font-bold leading-snug text-ink']}>
       {
@@ -105,11 +68,11 @@ const searchable = [
     </h3>
     {!compact && (
       <p class="mt-2 text-sm leading-6 text-muted" aria-label="Authors">
-        {publication.data.authors.map((author, index) => (
+        {publication.data.authorDetails.map((author, index) => (
           <>
             {index > 0 && ', '}
-            <span class:list={['publication-author', author.replace(/[†*]/g, '').trim() === 'He Shan' && 'publication-author--primary']}>
-              {author}
+            <span class:list={['publication-author', author.isSelf && 'publication-author--primary']}>
+              {author.name}{author.coFirst && <sup title="Equal contribution / co-first author">†</sup>}{author.corresponding && <sup title="Corresponding author">*</sup>}
             </span>
           </>
         ))}
@@ -118,21 +81,15 @@ const searchable = [
     <p class:list={[compact ? 'publication-venue publication-venue--compact' : 'publication-venue', 'mt-2 font-bold leading-6 text-ink']}>
       {compact ? publication.data.venue : `${publication.data.venue} | ${publication.data.year}`}
     </p>
-    {!compact && visibleLinks.length > 0 && (
-      <ul class="mt-3 flex flex-wrap gap-2" role="list" aria-label={`Links for ${publication.data.title}`}>
-        {
-          visibleLinks.map(([key, href]) => (
-            <li>
-              <a
-                class="rounded-full border border-line bg-white/5 px-3 py-2 text-sm font-bold text-accent transition hover:border-accent hover:bg-white/10"
-                href={href}
-              >
-                {labels[key]}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    )}
+    {!compact && publication.data.authorDetails.some((author) => author.coFirst) && <p class="mt-1 text-xs text-muted">† Equal contribution</p>}
+    {!compact && publication.data.authorDetails.some((author) => author.corresponding) && <p class="mt-1 text-xs text-muted">* Corresponding author</p>}
   </div>
 </article>
+
+<style>
+.publication-review-badge { display: inline-flex; flex-wrap: wrap; gap: .25rem; align-items: center; padding: .3rem .65rem; border: 1px solid #b7791f; border-radius: 999px; background: #fff4d6; color: #754600; font-size: .7rem; line-height: 1.5; }
+.publication-review-badge:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+:global([data-theme="dark"]) .publication-review-badge { background: #382a13; color: #ffda8b; border-color: #967337; }
+.publication-image-placeholder { display: grid; place-content: center; min-height: 10rem; text-align: center; color: var(--color-muted, #718096); font-size: 0.8rem; line-height: 1.6; }
+sup { margin-left: 0.1em; }
+</style>

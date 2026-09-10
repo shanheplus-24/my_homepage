@@ -1,0 +1,57 @@
+{
+  "id": "continuous-awh-scalable-gel",
+  "title": "Enhanced continuous atmospheric water harvesting with scalable hygroscopic gel driven by natural sunlight and wind",
+  "venue": "Nature Communications [Highlighted]",
+  "year": 2024,
+  "doi": "10.1038/s41467-024-52137-4",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "Xinge Yang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Zhihui Chen",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Chengjie Xiang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "He Shan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Water"
+  ],
+  "methods": [
+    "Devices"
+  ],
+  "image": {
+    "src": "/assets/shanheplus/25-publications-26.png",
+    "alt": "Graphical abstract for continuous atmospheric water harvesting gel"
+  },
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

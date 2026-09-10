@@ -1,0 +1,45 @@
+{
+  "id": "water-electricity-cogeneration",
+  "title": "Sustainable water-electricity cogeneration from atmospheric water",
+  "venue": "National Science Review [Invited]",
+  "year": 2025,
+  "doi": "10.1093/nsr/nwaf115",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "Zhifeng Hu",
+      "coFirst": true,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "He Shan",
+      "coFirst": true,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Water"
+  ],
+  "methods": [
+    "Devices"
+  ],
+  "image": {
+    "src": "/assets/shanheplus/14-publications-03.jpg",
+    "alt": "Graphical abstract for sustainable water-electricity cogeneration from atmospheric water"
+  },
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

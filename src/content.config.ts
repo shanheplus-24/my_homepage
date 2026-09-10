@@ -1,6 +1,7 @@
 import { defineCollection, reference } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
+import { loadPublicationEntries } from '../scripts/publications/store.mjs';
 
 const urlSchema = z.url();
 
@@ -76,17 +77,42 @@ const homeSectionsSchema = z.discriminatedUnion('type', [
 ]);
 
 const publications = defineCollection({
-  loader: glob({ base: './src/content/publications', pattern: '**/*.{md,mdx}' }),
+  loader: {
+    name: 'publications-with-editor-overrides',
+    load: async ({ store, parseData, generateDigest, watcher }) => {
+      const reload = async () => {
+        const entries = await loadPublicationEntries(process.cwd());
+        const parsed = await Promise.all(entries.map(async (entry) => ({ id: entry.id, data: await parseData({ id: entry.id, data: entry }) })));
+        store.clear();
+        for (const entry of parsed) store.set({ ...entry, digest: generateDigest(entry.data) });
+      };
+      await reload();
+      if (watcher) {
+        watcher.add(['src/content/publications', 'src/data/publication-overrides', 'src/data/publications-auto.json']);
+        watcher.on('all', (_event, path) => {
+          if (/publications|publication-overrides/.test(path.replaceAll('\\', '/'))) void reload();
+        });
+      }
+    },
+  },
   schema: z.object({
-    image: imageSchema,
+    image: imageSchema.nullable(),
     title: z.string().min(1),
     authors: z.array(z.string().min(1)).min(1),
+    authorDetails: z.array(z.object({
+      name: z.string().min(1), coFirst: z.boolean().default(false),
+      corresponding: z.boolean().default(false), isSelf: z.boolean().default(false),
+      given: z.string().optional(), family: z.string().optional(), orcid: z.string().optional(),
+    })).min(1),
+    domains: z.array(z.enum(['Water', 'Energy', 'Food'])).default([]),
+    methods: z.array(z.enum(['Models', 'Materials', 'Devices', 'AI'])).default([]),
     venue: z.string().min(1),
     year: z.number().int().min(1900).max(2100),
     sortOrder: z.number().int().optional(),
     type: z.enum(['journal', 'conference', 'preprint', 'workshop', 'book-chapter', 'thesis']).default('journal'),
     status: z.enum(['published', 'accepted', 'in-review', 'working-paper', 'forthcoming']).default('published'),
     selected: z.boolean().default(false),
+    confirmation: z.object({ pending: z.boolean(), revision: z.string() }),
     links: linkSchema.default({}),
   }),
 });

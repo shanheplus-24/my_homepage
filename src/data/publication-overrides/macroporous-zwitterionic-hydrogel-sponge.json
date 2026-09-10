@@ -1,0 +1,52 @@
+{
+  "id": "macroporous-zwitterionic-hydrogel-sponge",
+  "title": "Macroporous zwitterionic hydrogel sponge with enhanced kinetics by in-situ UV cryogelation for efficient water production",
+  "venue": "Advanced Functional Materials",
+  "year": 2026,
+  "doi": "10.1002/adfm.202520072",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "Xinge Yang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "He Shan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Zhihui Chen",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Water"
+  ],
+  "methods": [
+    "Models"
+  ],
+  "image": {
+    "src": "/assets/publications/2026-afm-zwitterionic-hydrogel-sponge.png",
+    "alt": "Graphical abstract for macroporous zwitterionic hydrogel sponge atmospheric water harvesting"
+  },
+  "sortOrder": 4,
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

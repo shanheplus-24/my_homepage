@@ -1,0 +1,63 @@
+{
+  "id": "fewer-temperature-ties",
+  "title": "Fewer temperature ties: scalable integration and broad selection of phase change materials for both heating and cooling",
+  "venue": "Energy & Environmental Science",
+  "year": 2025,
+  "doi": "10.1039/d4ee04223a",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "Xiaoxue Kou",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Jiatong Jiang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Baoshan Xie",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "He Shan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Primoz Poredos",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Energy"
+  ],
+  "methods": [
+    "Models"
+  ],
+  "image": {
+    "src": "/assets/shanheplus/16-publications-07.jpg",
+    "alt": "Graphical abstract for phase change materials heating and cooling study"
+  },
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

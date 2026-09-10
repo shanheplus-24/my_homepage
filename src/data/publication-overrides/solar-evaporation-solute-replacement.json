@@ -1,0 +1,69 @@
+{
+  "id": "solar-evaporation-solute-replacement",
+  "title": "Solar evaporation with solute replacement towards real-world applications",
+  "venue": "Energy & Environmental Science",
+  "year": 2023,
+  "doi": "10.1039/d3ee02592f",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "Zhenyuan Xu",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Jie Yu",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "He Shan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Jiebing Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Jintong Gao",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Zhanyu Ye",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Water"
+  ],
+  "methods": [
+    "Devices"
+  ],
+  "image": {
+    "src": "/assets/shanheplus/32-publications-41.png",
+    "alt": "Graphical abstract for solar evaporation with solute replacement"
+  },
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

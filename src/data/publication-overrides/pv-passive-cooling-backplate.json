@@ -1,0 +1,63 @@
+{
+  "id": "pv-passive-cooling-backplate",
+  "title": "A hygroscopic composite backplate enabling passive cooling of photovoltaic panels",
+  "venue": "ACS Energy Letters",
+  "year": 2023,
+  "doi": "10.1021/acsenergylett.3c00196",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "Zhenpeng Li",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Tao Ma",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Fan Ji",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "He Shan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Yanjun Dai",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Water"
+  ],
+  "methods": [
+    "Devices"
+  ],
+  "image": {
+    "src": "/assets/shanheplus/31-publications-39.png",
+    "alt": "Graphical abstract for hygroscopic composite backplate photovoltaic cooling"
+  },
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

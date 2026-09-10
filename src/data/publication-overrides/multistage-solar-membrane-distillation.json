@@ -1,0 +1,69 @@
+{
+  "id": "multistage-solar-membrane-distillation",
+  "title": "Ultra-high freshwater production in multistage solar membrane distillation via waste heat injection to condenser",
+  "venue": "Nature Communications",
+  "year": 2024,
+  "doi": "10.1038/s41467-024-51880-y",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "Primoz Poredos",
+      "coFirst": true,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Jintong Gao",
+      "coFirst": true,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "He Shan",
+      "coFirst": true,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Jie Yu",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Zhao Shao",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Zhenyuan Xu",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Water"
+  ],
+  "methods": [
+    "Devices"
+  ],
+  "image": {
+    "src": "/assets/shanheplus/22-publications-20.png",
+    "alt": "Graphical abstract for multistage solar membrane distillation"
+  },
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

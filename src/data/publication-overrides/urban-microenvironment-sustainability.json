@@ -1,0 +1,57 @@
+{
+  "id": "urban-microenvironment-sustainability",
+  "title": "Perspectives for urban microenvironment sustainability enabled by decentralized water-energy-food harvesting",
+  "venue": "Energy",
+  "year": 2023,
+  "doi": "10.1016/j.energy.2023.129009",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "He Shan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Primoz Poredos",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Hao Zou",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Haotian Lv",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Food"
+  ],
+  "methods": [
+    "Models"
+  ],
+  "image": {
+    "src": "/assets/shanheplus/30-publications-37.jpg",
+    "alt": "Graphical abstract for decentralized water-energy-food harvesting in buildings"
+  },
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

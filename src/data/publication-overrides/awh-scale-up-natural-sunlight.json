@@ -1,0 +1,69 @@
+{
+  "id": "awh-scale-up-natural-sunlight",
+  "title": "Atmospheric water harvesting with scale-up potentials using natural sunlight and passive cooling",
+  "venue": "Natural Sciences",
+  "year": 2023,
+  "doi": "10.1002/ntls.20220038",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "Chunfeng Li",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Quanwen Pan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Wenjun Ying",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "He Shan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Hua Zhang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Jiayun Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Water"
+  ],
+  "methods": [
+    "Devices"
+  ],
+  "image": {
+    "src": "/assets/shanheplus/33-publications-43.png",
+    "alt": "Graphical abstract for atmospheric water harvesting with natural sunlight and passive cooling"
+  },
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

@@ -2,17 +2,16 @@ backend:
   name: github
   repo: shanheplus-24/my_homepage
   branch: main
-
+  base_url: https://www.shanheplus.com
+  auth_endpoint: api/cms/auth
+  auth_scope: public_repo
 local_backend: true
-
 media_folder: public/assets/cms
 public_folder: /assets/cms
-
 site_url: /
 display_url: /
-logo_url: /assets/generated/site-logo-nexus-flat-v2.svg
+logo_url: /assets/generated/site-logo-nexus-white-512.png
 locale: zh_Hans
-
 collections:
   - name: settings
     label: 站点设置
@@ -89,7 +88,6 @@ collections:
               - label: 链接
                 name: href
                 widget: string
-
   - name: pages
     label: 页面
     files:
@@ -171,9 +169,12 @@ collections:
                     widget: relation
                     collection: research
                     multiple: true
-                    search_fields: [title, summary]
+                    search_fields:
+                      - title
+                      - summary
                     value_field: "{{slug}}"
-                    display_fields: [title]
+                    display_fields:
+                      - title
               - label: 首页精选论文
                 name: selected_publications
                 widget: object
@@ -189,9 +190,14 @@ collections:
                     widget: relation
                     collection: publications
                     multiple: true
-                    search_fields: [title, venue, year]
+                    search_fields:
+                      - title
+                      - venue
+                      - year
                     value_field: "{{slug}}"
-                    display_fields: [title, year]
+                    display_fields:
+                      - title
+                      - year
                   - label: 查看全部按钮
                     name: allItemsCta
                     widget: object
@@ -217,9 +223,14 @@ collections:
                     widget: relation
                     collection: news
                     multiple: true
-                    search_fields: [title, summary, date]
+                    search_fields:
+                      - title
+                      - summary
+                      - date
                     value_field: "{{slug}}"
-                    display_fields: [title, date]
+                    display_fields:
+                      - title
+                      - date
               - label: 合作联系模块
                 name: collaboration_cta
                 widget: object
@@ -254,71 +265,214 @@ collections:
                       - label: 链接
                         name: href
                         widget: string
-
   - name: publications
-    label: 论文
+    label: 论文 · 分类与摘要图
     label_singular: 论文
-    folder: src/content/publications
-    create: true
-    extension: mdx
-    format: frontmatter
+    folder: src/data/publication-overrides
+    create: false
+    extension: json
+    format: json
     slug: "{{slug}}"
     identifier_field: title
     summary: "{{year}} - {{title}}"
-    sortable_fields: [year, sortOrder, title, venue]
+    sortable_fields:
+      - year
+      - title
+      - venue
     fields:
-      - label: 标题
-        name: title
-        widget: string
-      - label: 论文图片
-        name: image
+      - name: id
+        widget: hidden
+        label: 论文标识
+      - name: visibility
+        label: 收录状态
+        widget: select
+        options:
+          - label: 自动收录
+            value: auto
+          - label: 确认发布
+            value: published
+          - label: 隐藏（继续同步）
+            value: hidden
+          - label: 排除（停止再次收录）
+            value: excluded
+        default: auto
+      - name: assistant
+        label: 自动信息与识别依据
+        widget: publication-assistant
+        required: false
+      - name: reviewedAutomaticRevision
+        label: 人工确认自动更新
+        widget: publication-review
+        required: false
+      - name: taxonomyMode
+        label: 分类维护方式
+        widget: select
+        options:
+          - label: 自动（跟随同步结果）
+            value: auto
+          - label: 手动（保留下面填写的值）
+            value: manual
+        default: auto
+      - name: domains
+        label: 研究领域
+        widget: select
+        multiple: true
+        required: false
+        options:
+          - Water
+          - Energy
+          - Food
+      - name: methods
+        label: 研究方法
+        widget: select
+        multiple: true
+        required: false
+        options:
+          - Models
+          - Materials
+          - Devices
+          - AI
+      - name: imageMode
+        label: 摘要图维护方式
+        widget: select
+        options:
+          - label: 自动（跟随同步结果）
+            value: auto
+          - label: 手动（保留下面填写的值）
+            value: manual
+        default: auto
+      - name: image
+        label: 摘要图（手动模式下留空可移除）
         widget: object
-        collapsed: false
+        required: false
         fields:
-          - label: 图片
-            name: src
+          - name: src
+            label: 上传／选择图片
             widget: image
-          - label: 替代文本
-            name: alt
+            required: false
+          - name: alt
+            label: 图片说明
             widget: string
-      - label: 作者
-        name: authors
+            required: false
+      - name: authorsMode
+        label: 作者维护方式
+        widget: select
+        options:
+          - label: 自动（跟随同步结果）
+            value: auto
+          - label: 手动（保留下面填写的值）
+            value: manual
+        default: auto
+      - name: authorDetails
+        label: 作者全名与贡献（拖动可排序）
         widget: list
-        field:
-          label: 作者
-          name: author
-          widget: string
-      - label: 期刊 / 会议
-        name: venue
+        summary: "{{fields.name}}"
+        fields:
+          - name: name
+            label: 作者全名
+            widget: string
+            required: true
+          - name: coFirst
+            label: 共同第一作者
+            widget: boolean
+            default: false
+          - name: corresponding
+            label: 通讯作者
+            widget: boolean
+            default: false
+          - name: isSelf
+            label: 这是我（高亮）
+            widget: boolean
+            default: false
+          - name: orcid
+            label: 作者 ORCID URL
+            widget: string
+            required: false
+      - name: metadataMode
+        label: 书目信息维护方式
+        widget: select
+        options:
+          - label: 自动（跟随同步结果）
+            value: auto
+          - label: 手动（保留下面填写的值）
+            value: manual
+        default: auto
+      - name: title
+        label: 标题
         widget: string
-      - label: 年份
-        name: year
+        required: true
+      - name: venue
+        label: 期刊
+        widget: string
+        required: true
+      - name: year
+        label: 年份
         widget: number
         value_type: int
         min: 1900
         max: 2100
-      - label: 手动排序
-        name: sortOrder
+      - name: doiMode
+        label: DOI 维护方式
+        widget: select
+        options:
+          - label: 自动（更新 DOI / 发表状态）
+            value: auto
+          - label: 手动（锁定）
+            value: manual
+        default: auto
+      - name: doi
+        label: DOI
+        widget: string
+        required: false
+      - name: statusMode
+        label: 发表状态维护方式
+        widget: select
+        options:
+          - label: 自动（更新 DOI / 发表状态）
+            value: auto
+          - label: 手动（锁定）
+            value: manual
+        default: auto
+      - name: status
+        label: 发表状态
+        widget: select
+        options:
+          - published
+          - accepted
+          - in-review
+          - working-paper
+          - forthcoming
+        default: published
+      - name: sortOrder
+        label: 同年手动排序（数字越小越靠前）
         widget: number
         value_type: int
         required: false
-      - label: 可见链接
-        name: links
-        widget: object
+    delete: false
+  - name: publication_imports
+    label: 添加论文 · DOI
+    label_singular: DOI 导入
+    folder: src/data/publication-imports
+    create: true
+    extension: json
+    format: json
+    identifier_field: doi
+    slug: "{{slug}}"
+    summary: "{{doi}}"
+    fields:
+      - name: doi
+        label: DOI 或 DOI 链接
+        widget: string
+        required: true
+      - name: confirmAuthorship
+        label: 我确认自己是这篇论文的作者
+        hint: 仅在数据库暂时无法核验身份时作为人工确认依据；仍会检查书目信息。
+        widget: boolean
+        default: false
+      - name: note
+        label: 备注
+        widget: text
         required: false
-        collapsed: true
-        fields:
-          - label: DOI 链接
-            name: doi
-            widget: string
-            required: false
-            pattern: ['^https?://.+', 'Use a full DOI URL such as https://doi.org/...']
-          - label: 论文链接
-            name: paper
-            widget: string
-            required: false
-            pattern: ['^https?://.+', 'Use a full URL starting with http:// or https://']
-
   - name: research
     label: 研究项目
     label_singular: 研究项目
@@ -329,7 +483,8 @@ collections:
     slug: "{{slug}}"
     identifier_field: title
     summary: "{{title}}"
-    sortable_fields: [title]
+    sortable_fields:
+      - title
     fields:
       - label: 标题
         name: title
@@ -354,14 +509,18 @@ collections:
         collection: publications
         multiple: true
         required: false
-        search_fields: [title, venue, year]
+        search_fields:
+          - title
+          - venue
+          - year
         value_field: "{{slug}}"
-        display_fields: [title, year]
+        display_fields:
+          - title
+          - year
       - label: 正文
         name: body
         widget: markdown
         required: false
-
   - name: news
     label: 动态
     label_singular: 动态
@@ -372,7 +531,9 @@ collections:
     slug: "{{year}}-{{month}}-{{slug}}"
     identifier_field: title
     summary: "{{date}} - {{title}}"
-    sortable_fields: [date, title]
+    sortable_fields:
+      - date
+      - title
     fields:
       - label: 标题
         name: title
@@ -409,8 +570,9 @@ collections:
           - label: 视频链接
             name: src
             widget: string
-            pattern: ['^https?://.+', 'Use a full URL starting with http:// or https://']
-
+            pattern:
+              - ^https?://.+
+              - Use a full URL starting with http:// or https://
   - name: academic-info
     label: 关于 / 简历条目
     label_singular: 关于 / 简历条目
@@ -421,7 +583,11 @@ collections:
     slug: "{{slug}}"
     identifier_field: title
     summary: "{{category}} - {{date}} - {{title}}"
-    sortable_fields: [category, date, order, title]
+    sortable_fields:
+      - category
+      - date
+      - order
+      - title
     view_groups:
       - label: 分类
         field: category
@@ -429,7 +595,12 @@ collections:
       - label: Category
         name: category
         widget: select
-        options: [education, fellowship, award, selected-publication, talk]
+        options:
+          - education
+          - fellowship
+          - award
+          - selected-publication
+          - talk
       - label: 英文标题
         name: title
         widget: string
@@ -517,7 +688,9 @@ collections:
           - label: 链接
             name: href
             widget: string
-            pattern: ['^https?://.+', 'Use a full URL starting with http:// or https://']
+            pattern:
+              - ^https?://.+
+              - Use a full URL starting with http:// or https://
       - label: 排序
         name: order
         widget: number

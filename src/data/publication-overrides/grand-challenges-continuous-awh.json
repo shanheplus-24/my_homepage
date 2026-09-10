@@ -1,0 +1,57 @@
+{
+  "id": "grand-challenges-continuous-awh",
+  "title": "Sustainable water generation: grand challenges in continuous atmospheric water harvesting",
+  "venue": "Energy & Environmental Science",
+  "year": 2022,
+  "doi": "10.1039/d2ee01234k",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "Primoz Poredos",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "He Shan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Chenxi Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Fangfang Deng",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Water"
+  ],
+  "methods": [
+    "Models"
+  ],
+  "image": {
+    "src": "/assets/shanheplus/36-publications-50.png",
+    "alt": "Review figure for continuous atmospheric water harvesting challenges"
+  },
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

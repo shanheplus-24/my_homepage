@@ -7,6 +7,8 @@ dist/
 !.env.example
 .cache/
 coverage/
+Output/
+Validation/results/
 *.log
 *.local
 *.tsbuildinfo

@@ -1,0 +1,94 @@
+{
+  "id": "field-portable-solar-powered-gel-fabric-awh",
+  "title": "Field-portable, solar-powered, litre-scale atmospheric water harvesting across climates with gel fabric architecture",
+  "venue": "Nature Water",
+  "year": 2026,
+  "doi": "10.1038/s44221-026-00645-6",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "Weixin Guan",
+      "coFirst": true,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Yaxuan Zhao",
+      "coFirst": true,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "He Shan",
+      "coFirst": true,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Yan Zhe Wong",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Chuxin Lei",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Debapriyo Roy",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Yuyang Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Xiaomeng Liu",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Ghim Wei Ho",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Keith P Johnston",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Guihua Yu",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Water"
+  ],
+  "methods": [
+    "Devices"
+  ],
+  "image": {
+    "src": "/assets/publications/2026-nature-water-gel-fabric-architecture.png",
+    "alt": "Field-portable solar-powered atmospheric water harvesting device with gel fabric architecture"
+  },
+  "sortOrder": 2,
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

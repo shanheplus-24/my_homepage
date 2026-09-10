@@ -1,0 +1,58 @@
+{
+  "id": "thermodynamic-stability-boundary-hygroscopic-composites",
+  "title": "Thermodynamic stability boundary of hygroscopic salt-embedded composite materials for atmospheric water harvesting",
+  "venue": "Advanced Materials",
+  "year": 2026,
+  "doi": "10.1002/adma.74364",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "Zhihua Yu",
+      "coFirst": true,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "He Shan",
+      "coFirst": true,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Wei Tang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Zhifeng Hu",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Water"
+  ],
+  "methods": [
+    "Models"
+  ],
+  "image": {
+    "src": "/assets/publications/2026-advanced-materials-thermodynamic-stability-boundary.png",
+    "alt": "Salt leakage limits regeneration of hygroscopic salt-embedded composite materials"
+  },
+  "sortOrder": 9,
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

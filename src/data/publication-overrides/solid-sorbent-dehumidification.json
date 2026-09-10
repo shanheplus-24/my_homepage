@@ -1,0 +1,45 @@
+{
+  "id": "solid-sorbent-dehumidification",
+  "title": "Dehumidification with solid hygroscopic sorbents for low-carbon air conditioning",
+  "venue": "Joule",
+  "year": 2022,
+  "doi": "10.1016/j.joule.2022.06.020",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "Primoz Poredos",
+      "coFirst": true,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "He Shan",
+      "coFirst": true,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Water"
+  ],
+  "methods": [
+    "Materials"
+  ],
+  "image": {
+    "src": "/assets/shanheplus/35-publications-48.jpg",
+    "alt": "Review figure for solid hygroscopic sorbent dehumidification"
+  },
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

@@ -1,0 +1,75 @@
+{
+  "id": "high-yield-solar-driven-awh",
+  "title": "High-yield solar-driven atmospheric water harvesting with ultra-high salt content composites encapsulated in porous membrane",
+  "venue": "Cell Reports Physical Science",
+  "year": 2021,
+  "doi": "10.1016/j.xcrp.2021.100664",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "He Shan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Quanwen Pan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Chengjie Xiang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Primoz Poredos",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Qiuming Ma",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Zhanyu Ye",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Guodong Hou",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Water"
+  ],
+  "methods": [
+    "Materials"
+  ],
+  "image": {
+    "src": "/assets/shanheplus/39-publications-57.jpg",
+    "alt": "Graphical abstract for high-yield solar-driven atmospheric water harvesting"
+  },
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

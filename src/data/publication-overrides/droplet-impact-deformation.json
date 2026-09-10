@@ -1,0 +1,63 @@
+{
+  "id": "droplet-impact-deformation",
+  "title": "Reconsideration on the maximum deformation of droplets impacting on solid surfaces",
+  "venue": "Droplet [Cover]",
+  "year": 2025,
+  "doi": "10.1002/dro2.163",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "Zhifeng Hu",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Haojiang Ran",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "He Shan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Fuqiang Chu",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Zuankai Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Energy"
+  ],
+  "methods": [
+    "Devices"
+  ],
+  "image": {
+    "src": "/assets/shanheplus/17-publications-09.jpg",
+    "alt": "Cover image for droplet impact deformation study"
+  },
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

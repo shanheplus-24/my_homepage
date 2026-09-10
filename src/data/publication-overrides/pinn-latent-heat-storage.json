@@ -1,0 +1,57 @@
+{
+  "id": "pinn-latent-heat-storage",
+  "title": "A physics-informed neural network framework for state estimation of latent heat thermal energy storage: temperature reconstruction and state-of-charge prediction",
+  "venue": "Energy Conversion and Management",
+  "year": 2026,
+  "doi": "10.1016/j.enconman.2026.121051",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "Tianhao Zhao",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Junzhuo Wei",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Shuai Du",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "He Shan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Energy"
+  ],
+  "methods": [
+    "Devices"
+  ],
+  "image": {
+    "src": "/assets/shanheplus/12-publications-00.png",
+    "alt": "Graphical abstract for physics-informed neural network latent heat storage study"
+  },
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

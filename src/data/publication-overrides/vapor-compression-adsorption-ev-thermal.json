@@ -1,0 +1,51 @@
+{
+  "id": "vapor-compression-adsorption-ev-thermal",
+  "title": "A vapor compression-adsorption thermal management system for electric vehicle: Concept and working fluid pairs",
+  "venue": "Energy Conversion and Management",
+  "year": 2021,
+  "doi": "10.1016/j.enconman.2021.114168",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "Quanwen Pan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "He Shan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Haoran Liu",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Energy"
+  ],
+  "methods": [
+    "Devices"
+  ],
+  "image": {
+    "src": "/assets/shanheplus/40-publications-59.png",
+    "alt": "Schematic for vapor compression-adsorption thermal management system"
+  },
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

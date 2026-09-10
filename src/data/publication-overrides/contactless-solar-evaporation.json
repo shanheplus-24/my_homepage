@@ -1,0 +1,63 @@
+{
+  "id": "contactless-solar-evaporation",
+  "title": "High-performance and scalable contactless solar evaporation with 3D structure",
+  "venue": "Science Bulletin",
+  "year": 2025,
+  "doi": "10.1016/j.scib.2024.11.051",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "Siyang Zheng",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Jie Yu",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "He Shan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Jintong Gao",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Zhenyuan Xu",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Water"
+  ],
+  "methods": [
+    "Devices"
+  ],
+  "image": {
+    "src": "/assets/shanheplus/18-publications-11.png",
+    "alt": "Graphical abstract for contactless solar evaporation with 3D structure"
+  },
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

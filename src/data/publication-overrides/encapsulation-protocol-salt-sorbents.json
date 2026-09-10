@@ -1,0 +1,51 @@
+{
+  "id": "encapsulation-protocol-salt-sorbents",
+  "title": "An encapsulation protocol of salt-based composite sorbents for atmospheric water harvesting",
+  "venue": "STAR Protocols",
+  "year": 2022,
+  "doi": "10.1016/j.xpro.2022.101255",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "He Shan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Quanwen Pan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Chunfeng Li",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Water"
+  ],
+  "methods": [
+    "Materials"
+  ],
+  "image": {
+    "src": "/assets/shanheplus/38-publications-54.png",
+    "alt": "Protocol schematic for encapsulating salt-based composite sorbents"
+  },
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

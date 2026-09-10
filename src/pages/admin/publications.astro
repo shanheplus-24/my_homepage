@@ -1,0 +1,54 @@
+---
+import { loadPublicationEntries, loadStore } from '../../../scripts/publications/store.mjs';
+const entries = (await loadPublicationEntries(process.cwd(), true)).sort((a, b) => b.year - a.year || a.title.localeCompare(b.title));
+const { automatic, imports: rawImports } = await loadStore(process.cwd());
+const imports = rawImports as Record<string, { doi: string }>;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const admin = `${base}/admin/`;
+const checks = (entry: typeof entries[number]) => [entry.confirmation.pending ? 'confirmation' : '', !entry.visible ? 'pending' : '', entry.review.classification ? 'classification' : '', entry.review.authorship ? 'authors' : '', entry.review.missingImage ? 'image' : ''].filter(Boolean);
+---
+<!doctype html>
+<html lang="zh-Hans">
+  <head><meta charset="utf-8" /><meta name="viewport" content="width=device-width" /><meta name="robots" content="noindex,nofollow" /><title>论文维护 | He Shan</title></head>
+  <body>
+    <main>
+      <nav><a href={admin}>内容后台</a><a href={`${base}/publications/`}>查看公开论文页</a></nav>
+      <header><div><p class="eyebrow">PUBLICATIONS</p><h1>论文维护</h1><p>自动收录与人工修正。修改分类、作者和摘要图后，将对应维护方式设为「手动」。</p></div><a class="button" href={`${admin}#/collections/publication_imports/new`}>＋ 粘贴 DOI 添加</a></header>
+      <div class="filters"><label>搜索论文<input type="search" id="search" placeholder="标题、作者、年份" /></label><label>需要处理<select id="filter"><option value="all">全部 {entries.length} 篇</option><option value="confirmation">自动更新待人工确认</option><option value="pending">待核对收录</option><option value="classification">待分类</option><option value="authors">共同一作待核对</option><option value="image">缺摘要图</option></select></label></div>
+      <p id="count" aria-live="polite">共 {entries.length} 篇，公开 {entries.filter((entry) => entry.visible).length} 篇</p>
+      {Object.keys(imports).length > 0 && <details><summary>DOI 导入队列</summary><ul>{Object.entries(imports).map(([id, entry]) => <li>{entry.doi} — {automatic.imports[id]?.status === 'complete' ? '已处理' : automatic.imports[id]?.message ?? '等待下一次同步'}</li>)}</ul></details>}
+      <div class="list">{entries.map((entry) => <article data-entry data-search={`${entry.title} ${entry.authors.join(' ')} ${entry.year}`.toLowerCase()} data-checks={checks(entry).join('|')}>
+        <div class="image">{entry.image ? <img src={entry.image.src.startsWith('/') ? `${base}${entry.image.src}` : entry.image.src} alt={entry.image.alt} loading="lazy" /> : <span>待添加摘要图</span>}</div>
+        <div class="details"><p class="meta">{entry.year} · {entry.venue} · {entry.visible ? '已公开' : '未公开'}</p><h2>{entry.title}</h2><p class="authors">{entry.authors.join(', ')}</p><div class="tags">{entry.confirmation.pending && <span class="pending">自动更新待人工确认</span>}{[...entry.domains, ...entry.methods].map((tag) => <span>{tag}</span>)}{entry.review.missingImage && <span class="pending">缺摘要图</span>}{entry.review.authorship && <span class="pending">共同一作待核对</span>}</div>
+        <p class="reason">身份核验：{automatic.papers[entry.id]?.identity?.verified ? automatic.papers[entry.id].identity.reason : '待确认，暂停公开收录'}{automatic.papers[entry.id]?.identity?.source && <> · <a href={automatic.papers[entry.id].identity.source} target="_blank" rel="noopener noreferrer">查看依据</a></>}</p>
+        {entry.review.reasons.length > 0 && <p class="reason">{entry.review.reasons.join('；')}</p>}
+        <a class="edit" href={`${admin}#/collections/publications/entries/${encodeURIComponent(entry.id)}`}>编辑分类 / 作者 / 摘要图 →</a>
+        {entry.visible && entry.confirmation.pending && <details class="review-action"><summary>确认本次自动更新</summary><p>核对本篇信息后，复制确认码并在 GitHub 的 Run workflow 中粘贴。需要仓库写权限，确认后自动更新网页标记。</p><button type="button" data-copy-review={`${automatic.papers[entry.id].metadata.doi}#${entry.confirmation.revision}`}>复制确认码</button> <a href="https://github.com/shanheplus-24/my_homepage/actions/workflows/review-publication.yml" target="_blank" rel="noopener noreferrer">在 GitHub 确认 →</a><p data-copy-status aria-live="polite"></p></details>}
+        </div>
+      </article>)}</div>
+      <p class="note">此页展示最近一次构建的数据。DOI 保存后将在下次同步处理；本地可运行 npm run publications:sync -- --write。在线可在 GitHub Actions 手动运行 Sync publications。</p>
+    </main>
+    <script>
+      const search = document.querySelector<HTMLInputElement>('#search')!;
+      const filter = document.querySelector<HTMLSelectElement>('#filter')!;
+      const cards = [...document.querySelectorAll<HTMLElement>('[data-entry]')];
+      const apply = () => {
+        let count = 0;
+        for (const card of cards) { card.hidden = !(card.dataset.search!.includes(search.value.trim().toLowerCase()) && (filter.value === 'all' || card.dataset.checks!.split('|').includes(filter.value))); if (!card.hidden) count++; }
+        document.querySelector('#count')!.textContent = `显示 ${count} 篇`;
+      };
+      document.querySelectorAll<HTMLButtonElement>('[data-copy-review]').forEach((button) => button.addEventListener('click', async () => {
+        const status = button.parentElement!.querySelector('[data-copy-status]')!;
+        try { await navigator.clipboard.writeText(button.dataset.copyReview!); status.textContent = '已复制。打开 GitHub，点击 Run workflow 并粘贴到 review 字段。'; }
+        catch { status.textContent = '请手动复制：' + button.dataset.copyReview; }
+      }));
+      search.addEventListener('input', apply); filter.addEventListener('change', apply);
+      search.value = new URLSearchParams(location.search).get('q') ?? '';
+      if (search.value) apply();
+    </script>
+  </body>
+</html>
+<style>
+  .review-action{margin-top:12px;font-size:13px;overflow-wrap:anywhere}.review-action summary{cursor:pointer;color:#175cab}.review-action button{font:inherit;padding:7px 12px;border:1px solid #cbd3df;border-radius:8px;background:#edf3fd;cursor:pointer}
+  :global(*){box-sizing:border-box} :global(body){margin:0;background:#f4f6fa;color:#17283e;font:15px/1.65 Arial,sans-serif} main{max-width:1180px;margin:auto;padding:32px 24px 70px} nav{display:flex;gap:24px} a{color:#175cab;text-decoration:none} header{display:flex;align-items:center;justify-content:space-between;gap:30px;margin:35px 0} h1{font-size:32px;line-height:1.2;margin:8px 0} header p{margin:10px 0;color:#5b687b}.eyebrow{letter-spacing:.15em;font-size:12px}.button{background:#175cab;color:#fff;padding:13px 20px;border-radius:10px;white-space:nowrap}.filters{display:grid;grid-template-columns:2fr 1fr;gap:20px;padding:20px;background:#fff;border-radius:16px} label{font-weight:bold} input,select{display:block;width:100%;font:inherit;padding:10px 12px;margin-top:8px;border:1px solid #cbd3df;border-radius:8px;background:#fff} article{display:grid;grid-template-columns:190px 1fr;gap:24px;padding:22px;border:1px solid #dfe5ee;border-radius:16px;background:#fff;margin:15px 0} article[hidden]{display:none}.image{height:155px;display:flex;align-items:center;justify-content:center;background:#f3f5f8;border-radius:12px;overflow:hidden;color:#68748a}.image img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;background:#fff} h2{font-size:18px;line-height:1.45;margin:6px 0}.meta{font-size:13px;color:#596980;margin:0}.authors{font-size:13px;color:#5b687b}.tags{display:flex;flex-wrap:wrap;gap:7px}.tags span{background:#eaf1fb;padding:2px 9px;border-radius:5px;font-size:12px}.tags .pending{background:#fff3dc;color:#885517}.edit{display:inline-block;margin-top:14px;font-weight:bold}.reason,.note{font-size:13px;color:#697587}.reason{overflow-wrap:anywhere}.note{margin-top:30px}a:focus-visible{outline:3px solid #6ba1df;outline-offset:3px}@media(max-width:650px){main{padding:20px 16px}header{align-items:flex-start;flex-direction:column;gap:15px}.filters{grid-template-columns:1fr}article{grid-template-columns:1fr;gap:15px}.image{height:200px}h1{font-size:28px}}
+</style>

@@ -1,0 +1,731 @@
+{
+  "10.1016/j.device.2023.100065": {
+    "verified": true,
+    "title": "Improving solar water harvesting via airflow restructuring using 3D vapor generator",
+    "authors": [
+      "He Shan",
+      "Zhanyu Ye",
+      "Jie Yu",
+      "Ruzhu Wang",
+      "Zhenyuan Xu"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1016%2Fj.device.2023.100065"
+    ],
+    "checkedAt": "2026-09-10T18:53:37.567Z"
+  },
+  "10.1002/ntls.20220038": {
+    "verified": true,
+    "title": "Atmospheric water harvesting with scale-up potentials using natural sunlight and passive cooling",
+    "authors": [
+      "Chunfeng Li",
+      "Quanwen Pan",
+      "Wenjun Ying",
+      "He Shan",
+      "Ruzhu Wang",
+      "Hua Zhang",
+      "Jiayun Wang"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1002%2Fntls.20220038"
+    ],
+    "checkedAt": "2026-09-10T18:53:37.570Z"
+  },
+  "10.1016/j.scib.2024.11.051": {
+    "verified": true,
+    "title": "High-performance and scalable contactless solar evaporation with 3D structure",
+    "authors": [
+      "Siyang Zheng",
+      "Jie Yu",
+      "He Shan",
+      "Jintong Gao",
+      "Ruzhu Wang",
+      "Zhenyuan Xu"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1016%2Fj.scib.2024.11.051"
+    ],
+    "checkedAt": "2026-09-10T18:53:37.664Z"
+  },
+  "10.1038/s41467-024-52137-4": {
+    "verified": true,
+    "title": "Enhanced continuous atmospheric water harvesting with scalable hygroscopic gel driven by natural sunlight and wind",
+    "authors": [
+      "Xinge Yang",
+      "Zhihui Chen",
+      "Chengjie Xiang",
+      "He Shan",
+      "Ruzhu Wang"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1038%2Fs41467-024-52137-4"
+    ],
+    "checkedAt": "2026-09-10T18:53:37.663Z"
+  },
+  "10.1007/s12274-024-6893-x": {
+    "verified": true,
+    "title": "Quick evaluation and regulation of the maximum instantaneous power and matching resistance for droplet-based electricity generators",
+    "authors": [
+      "Zhifeng Hu",
+      "Huamei Zhong",
+      "He Shan",
+      "Ruzhu Wang"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1007%2Fs12274-024-6893-x"
+    ],
+    "checkedAt": "2026-09-10T18:53:37.758Z"
+  },
+  "10.1002/dro2.163": {
+    "verified": true,
+    "title": "Reconsideration on the maximum deformation of droplets impacting on solid surfaces",
+    "authors": [
+      "Zhifeng Hu",
+      "Haojiang Ran",
+      "He Shan",
+      "Fuqiang Chu",
+      "Zuankai Wang",
+      "Ruzhu Wang"
+    ],
+    "reason": "本人旧个人主页 + Crossref DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://sites.google.com/view/shanheplus/publications",
+      "https://api.crossref.org/works/10.1002%2Fdro2.163"
+    ],
+    "checkedAt": "2026-09-10T18:53:37.757Z"
+  },
+  "10.1002/adma.202310177": {
+    "verified": true,
+    "title": "Understanding and utilizing droplet impact on superhydrophobic surfaces: phenomena, mechanisms, regulations, applications, and beyond",
+    "authors": [
+      "Zhifeng Hu",
+      "Fuqiang Chu",
+      "He Shan",
+      "Xiaomin Wu",
+      "Zhichao Dong",
+      "Ruzhu Wang"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1002%2Fadma.202310177"
+    ],
+    "checkedAt": "2026-09-10T18:53:37.848Z"
+  },
+  "10.1002/adfm.75255": {
+    "verified": true,
+    "title": "Dynamic Multistage Sorption-Based Atmospheric Water Harvesting Device With Redistributed Water Content",
+    "authors": [
+      "Mengyue Zeng",
+      "Jie Yu",
+      "He Shan",
+      "Fengyue Wang",
+      "Yan Song",
+      "Tianqi Wei",
+      "Jinlei Li",
+      "Xueyang Wang",
+      "Guoliang Liu",
+      "Zhenyuan Xu",
+      "Ruzhu Wang",
+      "Jia Zhu",
+      "Ning Xu"
+    ],
+    "reason": "出版社作者单位人工复核：He Shan：上海交通大学制冷研究所；与已核实的 Jie Yu、Zhenyuan Xu、Ruzhu Wang 合作。",
+    "sources": [
+      "https://advanced.onlinelibrary.wiley.com/doi/10.1002/adfm.75255",
+      "https://api.crossref.org/works/10.1002%2Fadfm.75255"
+    ],
+    "checkedAt": "2026-09-10T18:53:37.849Z"
+  },
+  "10.1016/j.xpro.2022.101255": {
+    "verified": true,
+    "title": "An encapsulation protocol of salt-based composite sorbents for atmospheric water harvesting",
+    "authors": [
+      "He Shan",
+      "Quanwen Pan",
+      "Chunfeng Li",
+      "Ruzhu Wang"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1016%2Fj.xpro.2022.101255"
+    ],
+    "checkedAt": "2026-09-10T18:53:37.934Z"
+  },
+  "10.1039/d4ee04223a": {
+    "verified": true,
+    "title": "Fewer temperature ties: scalable integration and broad selection of phase change materials for both heating and cooling",
+    "authors": [
+      "Xiaoxue Kou",
+      "Jiatong Jiang",
+      "Baoshan Xie",
+      "He Shan",
+      "Primož Poredoš",
+      "Ruzhu Wang"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1039%2Fd4ee04223a"
+    ],
+    "checkedAt": "2026-09-10T18:53:37.935Z"
+  },
+  "10.1038/s44221-026-00645-6": {
+    "verified": true,
+    "title": "Field-portable, solar-powered, litre-scale atmospheric water harvesting across climates with gel fabric architecture",
+    "authors": [
+      "Weixin Guan",
+      "Yaxuan Zhao",
+      "He Shan",
+      "Yan Zhe Wong",
+      "Chuxin Lei",
+      "Debapriyo Roy",
+      "Yuyang Wang",
+      "Xiaomeng Liu",
+      "Ghim Wei Ho",
+      "Keith P. Johnston",
+      "Guihua Yu"
+    ],
+    "reason": "出版社作者单位人工复核：He Shan：新加坡国立大学电气与计算机工程系及材料科学与工程系；与 Ghim Wei Ho 同单位。",
+    "sources": [
+      "https://www.nature.com/articles/s44221-026-00645-6",
+      "https://api.crossref.org/works/10.1038%2Fs44221-026-00645-6"
+    ],
+    "checkedAt": "2026-09-10T18:53:38.021Z"
+  },
+  "10.1039/d2ee01234k": {
+    "verified": true,
+    "title": "Sustainable water generation: grand challenges in continuous atmospheric water harvesting",
+    "authors": [
+      "Primož Poredoš",
+      "He Shan",
+      "Chenxi Wang",
+      "Fangfang Deng",
+      "Ruzhu Wang"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1039%2Fd2ee01234k"
+    ],
+    "checkedAt": "2026-09-10T18:53:38.019Z"
+  },
+  "10.1007/s11630-022-1535-7": {
+    "verified": true,
+    "title": "Heat recovery for adsorption refrigeration system via pinch technology",
+    "authors": [
+      "Quanwen Pan",
+      "He Shan",
+      "Zacharie Tamainot-Telto",
+      "Ruzhu Wang"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1007%2Fs11630-022-1535-7"
+    ],
+    "checkedAt": "2026-09-10T18:53:38.104Z"
+  },
+  "10.1016/j.xcrp.2021.100664": {
+    "verified": true,
+    "title": "High-yield solar-driven atmospheric water harvesting with ultra-high salt content composites encapsulated in porous membrane",
+    "authors": [
+      "He Shan",
+      "Quanwen Pan",
+      "Chengjie Xiang",
+      "Primož Poredoš",
+      "Qiuming Ma",
+      "Zhanyu Ye",
+      "Guodong Hou",
+      "Ruzhu Wang"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1016%2Fj.xcrp.2021.100664"
+    ],
+    "checkedAt": "2026-09-10T18:53:39.195Z"
+  },
+  "10.1039/d6ee01584k": {
+    "verified": true,
+    "title": "Hydrogel-based moisture electricity generators: materials, mechanisms, and sustainable device design",
+    "authors": [
+      "Chengyuan Zhang",
+      "Zhihua Yu",
+      "Zhibin Sun",
+      "Chengjing Ding",
+      "Qing Xu",
+      "Bingnan Xuan",
+      "Dong Liu",
+      "Jiangang Qu",
+      "He Shan",
+      "Mohammad Alamgir Hossain",
+      "Mingzheng Ge",
+      "Zhijie Liang",
+      "Jianying Huang",
+      "Yuekun Lai",
+      "Hui Liu"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1039%2Fd6ee01584k"
+    ],
+    "checkedAt": "2026-09-10T18:53:38.193Z"
+  },
+  "10.1038/s41578-024-00721-x": {
+    "verified": true,
+    "title": "Hygroscopic salt-embedded composite materials for sorption-based atmospheric water harvesting",
+    "authors": [
+      "He Shan",
+      "Primož Poredoš",
+      "Zhihui Chen",
+      "Xinge Yang",
+      "Zhanyu Ye",
+      "Zhifeng Hu",
+      "Ruzhu Wang",
+      "Swee Ching Tan"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1038%2Fs41578-024-00721-x"
+    ],
+    "checkedAt": "2026-09-10T18:53:38.287Z"
+  },
+  "10.1038/s41467-026-72723-y": {
+    "verified": true,
+    "title": "Hygroscopic wood sponge with dual phase change function for enhanced all-weather atmospheric water harvesting",
+    "authors": [
+      "Xinyao Ji",
+      "He Shan",
+      "Jiazuo Zhou",
+      "Chengyu Wang",
+      "Yifan Liu",
+      "Fangmiao Wang",
+      "Lei Qiao",
+      "Zimeng Liu",
+      "Meichen Li",
+      "Kai Zhang",
+      "Yudong Li",
+      "Wenbo Zhang",
+      "Haiyue Yang",
+      "Ruzhu Wang"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1038%2Fs41467-026-72723-y"
+    ],
+    "checkedAt": "2026-09-10T18:53:39.457Z"
+  },
+  "10.1002/adfm.202520072": {
+    "verified": true,
+    "title": "Macroporous zwitterionic hydrogel sponge with enhanced kinetics by in-situ UV cryogelation for efficient water production",
+    "authors": [
+      "Xinge Yang",
+      "He Shan",
+      "Zhihui Chen",
+      "Ruzhu Wang"
+    ],
+    "reason": "出版社作者单位人工复核：He Shan：上海交通大学制冷研究所；其他作者 Xinge Yang、Zhihui Chen、Ruzhu Wang。",
+    "sources": [
+      "https://advanced.onlinelibrary.wiley.com/doi/10.1002/adfm.202520072",
+      "https://api.crossref.org/works/10.1002%2Fadfm.202520072"
+    ],
+    "checkedAt": "2026-09-10T18:53:39.384Z"
+  },
+  "10.1002/adma.202302038": {
+    "verified": true,
+    "title": "All-day multicyclic atmospheric water harvesting enabled by polyelectrolyte hydrogel with hybrid desorption mode",
+    "authors": [
+      "He Shan",
+      "Primož Poredoš",
+      "Zhanyu Ye",
+      "Hao Qu",
+      "Yaoxin Zhang",
+      "Mengjuan Zhou",
+      "Ruzhu Wang",
+      "Swee Ching Tan"
+    ],
+    "reason": "本人旧个人主页 + Crossref DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://sites.google.com/view/shanheplus/publications",
+      "https://api.crossref.org/works/10.1002%2Fadma.202302038"
+    ],
+    "checkedAt": "2026-09-10T18:53:39.469Z"
+  },
+  "10.1038/s41467-024-51880-y": {
+    "verified": true,
+    "title": "Ultra-high freshwater production in multistage solar membrane distillation via waste heat injection to condenser",
+    "authors": [
+      "Primož Poredoš",
+      "Jintong Gao",
+      "He Shan",
+      "Jie Yu",
+      "Zhao Shao",
+      "Zhenyuan Xu",
+      "Ruzhu Wang"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1038%2Fs41467-024-51880-y"
+    ],
+    "checkedAt": "2026-09-10T18:53:39.544Z"
+  },
+  "10.1007/s42765-026-00715-0": {
+    "verified": true,
+    "title": "Natural fibers enable textile-based composite sorbent for all-day atmospheric water harvesting",
+    "authors": [
+      "Jiang Wang",
+      "Qianqian Shi",
+      "He Shan",
+      "Qingqing Zhang",
+      "Shiyi Du",
+      "Yuze Zhang",
+      "Hao Qu",
+      "Zechang Wei",
+      "Yongchun Zeng",
+      "Jun Wang",
+      "Swee Ching Tan"
+    ],
+    "reason": "出版社作者单位人工复核：He Shan：新加坡国立大学材料科学与工程系；与 Swee Ching Tan 同单位。",
+    "sources": [
+      "https://link.springer.com/article/10.1007/s42765-026-00715-0",
+      "https://api.crossref.org/works/10.1007%2Fs42765-026-00715-0"
+    ],
+    "checkedAt": "2026-09-10T18:53:39.555Z"
+  },
+  "10.1016/j.enconman.2026.121051": {
+    "verified": true,
+    "title": "A physics-informed neural network framework for state estimation of latent heat thermal energy storage: temperature reconstruction and state-of-charge prediction",
+    "authors": [
+      "Tianhao Zhao",
+      "Junzhuo Wei",
+      "Shuai Du",
+      "He Shan",
+      "Ruzhu Wang"
+    ],
+    "reason": "本人旧个人主页 + Crossref DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://sites.google.com/view/shanheplus/publications",
+      "https://api.crossref.org/works/10.1016%2Fj.enconman.2026.121051"
+    ],
+    "checkedAt": "2026-09-10T18:53:39.628Z"
+  },
+  "10.1038/s41467-022-33062-w": {
+    "verified": true,
+    "title": "Exceptional water production yield enabled by batch-processed portable water harvester in semi-arid climate",
+    "authors": [
+      "He Shan",
+      "Chunfeng Li",
+      "Zhihui Chen",
+      "Wenjun Ying",
+      "Primož Poredoš",
+      "Zhanyu Ye",
+      "Quanwen Pan",
+      "Jiayun Wang",
+      "Ruzhu Wang"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1038%2Fs41467-022-33062-w"
+    ],
+    "checkedAt": "2026-09-10T18:53:39.641Z"
+  },
+  "10.1021/acsenergylett.3c00196": {
+    "verified": true,
+    "title": "A hygroscopic composite backplate enabling passive cooling of photovoltaic panels",
+    "authors": [
+      "Zhenpeng Li",
+      "Tao Ma",
+      "Fan Ji",
+      "He Shan",
+      "Yanjun Dai",
+      "Ruzhu Wang"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1021%2Facsenergylett.3c00196"
+    ],
+    "checkedAt": "2026-09-10T18:53:39.712Z"
+  },
+  "10.1039/d3ee03214k": {
+    "verified": true,
+    "title": "Radiative sky cooling thermal concentration with cooling power exceeding one kw per square meter",
+    "authors": [
+      "Primož Poredoš",
+      "He Shan",
+      "Chenxi Wang",
+      "Zhihui Chen",
+      "Zhao Shao",
+      "Fangfang Deng",
+      "Haoran Liu",
+      "Jiaqi Yu",
+      "Ruzhu Wang"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1039%2Fd3ee03214k"
+    ],
+    "checkedAt": "2026-09-10T18:53:39.727Z"
+  },
+  "10.1002/adfm.202402839": {
+    "verified": true,
+    "title": "Integrating rooftop agriculture and atmospheric water harvesting for water-food production based on hygroscopic manganese complex",
+    "authors": [
+      "He Shan",
+      "Primož Poredoš",
+      "Hao Qu",
+      "Xinge Yang",
+      "Mengjuan Zhou",
+      "Lulu Bai",
+      "Jiadong Shi",
+      "Wenshuai Chen",
+      "Ruzhu Wang",
+      "Swee Ching Tan"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1002%2Fadfm.202402839"
+    ],
+    "checkedAt": "2026-09-10T18:53:39.797Z"
+  },
+  "10.1002/adma.73439": {
+    "verified": true,
+    "title": "Simultaneous Passive Water and Electricity Generation in Arid Regions via Fe³⁺/Li⁺ Cross-Linked Hygroscopic Hydrogels",
+    "authors": [
+      "Yujie DU",
+      "He SHAN",
+      "Yongliang ZHENG",
+      "Shujing ZHAO",
+      "Bin XIE",
+      "Yue HAN",
+      "Lin YANG",
+      "Ruzhu WANG"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1002%2Fadma.73439"
+    ],
+    "checkedAt": "2026-09-10T18:53:39.816Z"
+  },
+  "10.1039/d3ee02592f": {
+    "verified": true,
+    "title": "Solar evaporation with solute replacement towards real-world applications",
+    "authors": [
+      "Zhenyuan Xu",
+      "Jie Yu",
+      "He Shan",
+      "Jiebing Wang",
+      "Jintong Gao",
+      "Zhanyu Ye",
+      "Ruzhu Wang"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1039%2Fd3ee02592f"
+    ],
+    "checkedAt": "2026-09-10T18:53:39.888Z"
+  },
+  "10.1016/j.enconman.2025.119977": {
+    "verified": true,
+    "title": "The potential of waste heat utilization in solar multistage membrane distillation: An alternative to PV + RO systems?",
+    "authors": [
+      "Primož Poredoš",
+      "Jintong Gao",
+      "Abdallah Y.M. Ali",
+      "He Shan",
+      "Zhenyuan Xu",
+      "Eva Zavrl",
+      "Tej Žižak",
+      "Dejan J. Trajkovski",
+      "Ciril Arkar",
+      "Ruzhu Wang"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1016%2Fj.enconman.2025.119977"
+    ],
+    "checkedAt": "2026-09-10T18:53:39.943Z"
+  },
+  "10.1016/j.joule.2022.06.020": {
+    "verified": true,
+    "title": "Dehumidification with solid hygroscopic sorbents for low-carbon air conditioning",
+    "authors": [
+      "Primož Poredoš",
+      "He Shan",
+      "Ruzhu Wang"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1016%2Fj.joule.2022.06.020"
+    ],
+    "checkedAt": "2026-09-10T18:53:39.974Z"
+  },
+  "10.1021/acsenergylett.3c01836": {
+    "verified": true,
+    "title": "Harvesting thermal energy and freshwater from air through sorption thermal battery enabled by polyzwitterionic gel",
+    "authors": [
+      "He Shan",
+      "Ziya Zeng",
+      "Xinge Yang",
+      "Primož Poredoš",
+      "Jie Yu",
+      "Zhihui Chen",
+      "Ruzhu Wang"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1021%2Facsenergylett.3c01836"
+    ],
+    "checkedAt": "2026-09-10T18:53:40.056Z"
+  },
+  "10.1016/j.energy.2025.137255": {
+    "verified": true,
+    "title": "Switchable multicyclic adsorption-based atmospheric water harvesting with solar and radiative sky cooling thermal concentration and heat pumps",
+    "authors": [
+      "Primož Poredoš",
+      "He Shan",
+      "Zhao Shao",
+      "Fangfang Deng",
+      "Eva Zavrl",
+      "Tej Žižak",
+      "Ciril Arkar",
+      "Pero Gatarić",
+      "Ruzhu Wang"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1016%2Fj.energy.2025.137255"
+    ],
+    "checkedAt": "2026-09-10T18:53:40.060Z"
+  },
+  "10.1016/j.joule.2025.102132": {
+    "verified": true,
+    "title": "Approaching thermodynamic boundaries and targeting market players for commercial atmospheric water harvesting",
+    "authors": [
+      "He Shan",
+      "Zhihui Chen",
+      "Jiaqi Yu",
+      "Yixiu Dong",
+      "Shuai Du",
+      "Tianshu Ge",
+      "Ruzhu Wang"
+    ],
+    "reason": "本人旧个人主页 + Crossref DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://sites.google.com/view/shanheplus/publications",
+      "https://api.crossref.org/works/10.1016%2Fj.joule.2025.102132"
+    ],
+    "checkedAt": "2026-09-10T18:53:40.140Z"
+  },
+  "10.1002/adma.74364": {
+    "verified": true,
+    "title": "Thermodynamic stability boundary of hygroscopic salt-embedded composite materials for atmospheric water harvesting",
+    "authors": [
+      "Zhihua Yu",
+      "He Shan",
+      "Wei Tang",
+      "Zhifeng Hu",
+      "Ruzhu Wang"
+    ],
+    "reason": "出版社作者单位人工复核：He Shan：新加坡国立大学电气与计算机工程系；作者还包括 Zhihua Yu、Wei Tang、Zhifeng Hu、Ruzhu Wang。",
+    "sources": [
+      "https://advanced.onlinelibrary.wiley.com/doi/10.1002/adma.74364",
+      "https://api.crossref.org/works/10.1002%2Fadma.74364"
+    ],
+    "checkedAt": "2026-09-10T18:53:40.149Z"
+  },
+  "10.1016/j.energy.2023.129009": {
+    "verified": true,
+    "title": "Perspectives for urban microenvironment sustainability enabled by decentralized water-energy-food harvesting",
+    "authors": [
+      "He Shan",
+      "Primož Poredoš",
+      "Hao Zou",
+      "Haotian Lv",
+      "Ruzhu Wang"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1016%2Fj.energy.2023.129009"
+    ],
+    "checkedAt": "2026-09-10T18:53:40.231Z"
+  },
+  "10.1016/j.enconman.2021.114168": {
+    "verified": true,
+    "title": "A vapor compression-adsorption thermal management system for electric vehicle: Concept and working fluid pairs",
+    "authors": [
+      "Quanwen Pan",
+      "He Shan",
+      "Haoran Liu",
+      "Ruzhu Wang"
+    ],
+    "reason": "ORCID 本人作品记录 + DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://pub.orcid.org/v3.0/0000-0002-9105-3006/works",
+      "https://api.crossref.org/works/10.1016%2Fj.enconman.2021.114168"
+    ],
+    "checkedAt": "2026-09-10T18:53:40.237Z"
+  },
+  "10.1016/j.xcrp.2026.103351": {
+    "verified": false,
+    "title": "Vapor condensation enhancement in passive solar water harvesting",
+    "authors": [
+      "Renpeng Li",
+      "He Shan",
+      "Siyang Zheng",
+      "Jie Yu",
+      "Jintong Gao",
+      "Jinfang You",
+      "Xiuliang Liu",
+      "Ruzhu Wang",
+      "Zhenyuan Xu"
+    ],
+    "reason": "待确认：题名及 9 位作者顺序匹配，尚缺独立作者身份凭据",
+    "sources": [
+      "https://linkinghub.elsevier.com/retrieve/pii/S2666386426002572",
+      "https://api.crossref.org/works/10.1016%2Fj.xcrp.2026.103351"
+    ],
+    "checkedAt": "2026-09-10T18:53:41.412Z"
+  },
+  "10.1093/nsr/nwaf115": {
+    "verified": true,
+    "title": "Sustainable water-electricity cogeneration from atmospheric water",
+    "authors": [
+      "Zhifeng Hu",
+      "He Shan",
+      "Ruzhu Wang"
+    ],
+    "reason": "本人旧个人主页 + Crossref DOI、题名、完整作者顺序复核",
+    "sources": [
+      "https://sites.google.com/view/shanheplus/publications",
+      "https://api.crossref.org/works/10.1093%2Fnsr%2Fnwaf115"
+    ],
+    "checkedAt": "2026-09-10T18:53:41.415Z"
+  }
+}

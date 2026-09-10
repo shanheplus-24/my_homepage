@@ -1,0 +1,75 @@
+{
+  "id": "multicyclic-polyelectrolyte-hydrogel",
+  "title": "All-day multicyclic atmospheric water harvesting enabled by polyelectrolyte hydrogel with hybrid desorption mode",
+  "venue": "Advanced Materials",
+  "year": 2023,
+  "doi": "10.1002/adma.202302038",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "He Shan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Primoz Poredos",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Zhanyu Ye",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Hao Qu",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Yaoxin Zhang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Mengjuan Zhou",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Swee Ching Tan",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Water"
+  ],
+  "methods": [
+    "Materials"
+  ],
+  "image": {
+    "src": "/assets/shanheplus/27-publications-31.png",
+    "alt": "Graphical abstract for multicyclic polyelectrolyte hydrogel atmospheric water harvesting"
+  },
+  "statusMode": "auto",
+  "doiMode": "auto"
+}

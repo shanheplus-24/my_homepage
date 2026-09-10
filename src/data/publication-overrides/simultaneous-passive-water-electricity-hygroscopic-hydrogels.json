@@ -1,0 +1,76 @@
+{
+  "id": "simultaneous-passive-water-electricity-hygroscopic-hydrogels",
+  "title": "Simultaneous Passive Water and Electricity Generation in Arid Regions via Fe³⁺/Li⁺ Cross-Linked Hygroscopic Hydrogels",
+  "venue": "Advanced Materials",
+  "year": 2026,
+  "doi": "10.1002/adma.73439",
+  "status": "published",
+  "visibility": "auto",
+  "metadataMode": "manual",
+  "authorsMode": "manual",
+  "taxonomyMode": "manual",
+  "imageMode": "manual",
+  "authorDetails": [
+    {
+      "name": "Yujie Du",
+      "coFirst": true,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "He Shan",
+      "coFirst": true,
+      "corresponding": false,
+      "isSelf": true
+    },
+    {
+      "name": "Yongliang Zheng",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Shujing Zhao",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Bin Xie",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Yue Han",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Lin Yang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    },
+    {
+      "name": "Ruzhu Wang",
+      "coFirst": false,
+      "corresponding": false,
+      "isSelf": false
+    }
+  ],
+  "domains": [
+    "Water"
+  ],
+  "methods": [
+    "Materials"
+  ],
+  "image": {
+    "src": "/assets/publications/2026-advanced-materials-passive-water-electricity.jpg",
+    "alt": "Hygroscopic hydrogel for simultaneous passive water harvesting and electricity generation"
+  },
+  "sortOrder": 7,
+  "statusMode": "auto",
+  "doiMode": "auto"
+}
