@@ -14,7 +14,7 @@ const results = [];
 try {
   for (const base of ['https://www.shanheplus.com', 'https://shanheplus-24.github.io/my_homepage']) {
     for (const viewport of [{ width: 1440, height: 1000 }, { width: 390, height: 844 }]) {
-      const context = await browser.newContext({ viewport, reducedMotion: 'reduce', extraHTTPHeaders: { 'Cache-Control': 'no-cache' } });
+      const context = await browser.newContext({ viewport, permissions: ['clipboard-read', 'clipboard-write'], reducedMotion: 'reduce', extraHTTPHeaders: { 'Cache-Control': 'no-cache' } });
       const page = await context.newPage();
       const errors = []; page.on('pageerror', (e) => errors.push(e.message));
       const suffix = `?release=${encodeURIComponent(process.env.RELEASE_SHA || 'publication-review')}`;
@@ -43,6 +43,7 @@ try {
       assert.equal(await page.locator('#search').inputValue(), sample.title);
       await page.locator('[data-entry]:visible .review-action summary').click();
       await page.locator('[data-entry]:visible [data-copy-review]').click();
+      await page.locator('[data-entry]:visible [data-copy-status]').filter({ hasText: /已复制|请手动复制/ }).waitFor();
       assert.match(await page.locator('[data-entry]:visible [data-copy-status]').innerText(), /已复制|请手动复制/);
       assert.equal(await page.locator('[data-entry]:visible .review-action a').getAttribute('href'), 'https://github.com/shanheplus-24/my_homepage/actions/workflows/review-publication.yml');
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);

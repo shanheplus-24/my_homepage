@@ -10,11 +10,12 @@ async function sign(payload, secret) {
 }
 const headers = { 'Cache-Control': 'no-store, private', 'Referrer-Policy': 'no-referrer', 'X-Content-Type-Options': 'nosniff' };
 const fail = (status, message) => new Response(message, { status, headers });
-export async function handleOAuth(request, env, fetcher = fetch) {
+export async function handleOAuth(request, env = {}, fetcher = fetch) {
+  env ??= {};
   const { CMS_GITHUB_CLIENT_ID: clientId, CMS_GITHUB_CLIENT_SECRET: clientSecret, CMS_OAUTH_STATE_SECRET: stateSecret, CMS_OAUTH_ORIGIN: origin } = env;
   if (request.method === 'GET' && new URL(request.url).pathname === '/api/cms/status') {
     const ready = Boolean(clientId && clientSecret && stateSecret?.length >= 32 && /^https:\/\/[^/]+$/.test(origin ?? ''));
-    return Response.json({ ready }, { headers: { ...headers, 'Access-Control-Allow-Origin': '*' } });
+    return new Response(JSON.stringify({ ready }), { headers: { ...headers, 'Content-Type': 'application/json; charset=utf-8', 'Access-Control-Allow-Origin': '*' } });
   }
   if (!clientId || !clientSecret || !stateSecret || stateSecret.length < 32 || !origin) return fail(503, 'CMS online sign-in is not configured. Use the local editor.');
   const url = new URL(request.url);

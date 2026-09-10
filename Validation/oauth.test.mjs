@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { handleOAuth } from '../scripts/cms/oauth.mjs';
+import { onRequest as readiness } from '../edge-functions/api/cms/status.js';
 const env = { CMS_GITHUB_CLIENT_ID: 'test-client', CMS_GITHUB_CLIENT_SECRET: 'test-secret', CMS_OAUTH_STATE_SECRET: 'test-state-secret-longer-than-32-characters', CMS_OAUTH_ORIGIN: 'https://www.shanheplus.com' };
 const request = (path, cookie) => new Request(`${env.CMS_OAUTH_ORIGIN}${path}`, { headers: cookie ? { cookie } : {} });
 async function begin() {
@@ -10,6 +11,21 @@ async function begin() {
 test('OAuth remains inactive without credentials and rejects arbitrary origins', async () => {
   assert.equal((await handleOAuth(request('/api/cms/auth'), {})).status, 503);
   assert.equal((await handleOAuth(request('/api/cms/auth?provider=github&site_id=evil.example'), env)).status, 400);
+});
+test('status remains readable when the edge runtime omits environment or Response.json', async () => {
+  const original = Response.json;
+  Response.json = undefined;
+  try {
+    for (const missing of [undefined, null, {}]) {
+      const response = await handleOAuth(request('/api/cms/status'), missing);
+      assert.equal(response.status, 200);
+      assert.deepEqual(await response.json(), { ready: false });
+      assert.deepEqual(await readiness({ env: missing }).json(), { ready: false });
+      assert.equal((await handleOAuth(request('/api/cms/auth'), missing)).status, 503);
+    }
+    assert.deepEqual(await (await handleOAuth(request('/api/cms/status'), env)).json(), { ready: true });
+    assert.deepEqual(await readiness({ env }).json(), { ready: true });
+  } finally { Response.json = original; }
 });
 test('authorization uses state, PKCE and secure signed cookie', async () => {
   const { response, location } = await begin();
