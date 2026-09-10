@@ -1,4 +1,4 @@
 ---
-const target = `${import.meta.env.BASE_URL}admin/`;
+const target = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/admin/`;
 ---
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"/><meta name="robots" content="noindex"/><meta http-equiv="refresh" content={`0;url=${target}`}/><title>网站维护</title></head><body><a href={target}>进入网站维护后台</a></body></html>

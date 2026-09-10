@@ -21,6 +21,9 @@ for(const base of ['', '/my_homepage']){
   const page=load(await readFile(resolve(fixture,'dist/publications/index.html'),'utf8'));
   assert.equal(page('[data-review-badge]').length,1);assert.equal(page('[data-review-badge]').text().trim(),'Information Check Needed');assert.ok(page('[data-review-badge]').closest('[data-pub-card]').text().includes(sample.metadata.title));
   const index=load(await readFile(resolve(fixture,'dist/index.html'),'utf8'));assert.equal(index('[data-review-badge]').length,0);
+  const admin=load(await readFile(resolve(fixture,'dist/admin/index.html'),'utf8'));
+  assert.equal(admin('script[src]').attr('src'),base+'/admin/dashboard.js');
+  assert.equal(admin('link[rel=stylesheet]').attr('href'),base+'/admin/dashboard.css');
   assert.ok(index('body').text().includes(sample.metadata.title),'synthetic auto paper must also be exercised in a compact homepage card');
 }
 await writeFile(resolve(output,'new-paper-badge.json'),JSON.stringify({passed:true,fullListBadge:1,homeBadge:0,rootAndSubpath:true,fixture},null,2));
