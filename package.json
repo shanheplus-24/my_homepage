@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev --host 127.0.0.1",
+    "admin:setup": "node scripts/admin/setup.mjs",
+    "admin:test": "node --test Validation/admin.test.mjs",
     "cms:server": "node scripts/cms/local.mjs",
     "cms:local": "node scripts/cms/start.mjs",
     "build": "astro build",

@@ -11,5 +11,6 @@ Output/
 Validation/results/
 *.log
 *.local
+scripts/admin/snapshot.generated.mjs
 *.tsbuildinfo
 .DS_Store

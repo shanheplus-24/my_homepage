@@ -1,0 +1,6 @@
+---
+interface Props { href?: string; }
+const { href } = Astro.props;
+const safeHref = href && /^https:\/\//.test(href) ? href : '#';
+---
+<a class="about-profile-link" href={safeHref} target="_blank" rel="noopener noreferrer"><slot /></a>

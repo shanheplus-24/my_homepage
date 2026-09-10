@@ -14,8 +14,11 @@ const identity = { orcid: '0000-0002-9105-3006', aliases: ['He Shan'], openalexA
 const doi = '10.1000/test';
 const work = { DOI: doi, title: ['Water electricity generator'], 'container-title': ['Test Journal'], type: 'journal-article', published: { 'date-parts': [[2026, 8, 1]] }, author: [{ given: 'He', family: 'Shan' }, { given: 'Jane', family: 'Doe' }] };
 const metadata = crossrefMetadata(work, identity);
-const auto = { metadata, eligible: true, classification: classify(metadata.title), authorship: { status: 'unknown' }, identity: { verified: true, policyVersion: 2 } };
-test('confirmation is explicit and expires only for substantive automatic changes', () => {
+const auto = { origin: 'automatic', metadata, eligible: true, classification: classify(metadata.title), authorship: { status: 'unknown' }, identity: { verified: true, policyVersion: 2 } };
+test('only newly automatic papers need confirmation, which persists after enrichment', () => {
+  assert.equal(resolvePublication('id', { ...metadata, authors: ['He Shan', 'Jane Doe'] }, auto).confirmation.pending, false);
+  assert.equal(resolvePublication('id', null, { ...auto, origin: 'manual' }).confirmation.pending, false);
+  assert.equal(resolvePublication('id', null, { ...auto, origin: undefined }).confirmation.pending, false);
   const revision = automaticRevision(auto);
   assert.equal(resolvePublication('id', null, auto).confirmation.pending, true);
   const manual = { reviewedAutomaticRevision: revision, taxonomyMode: 'manual', domains: ['Food'], methods: [] };
@@ -25,7 +28,7 @@ test('confirmation is explicit and expires only for substantive automatic change
     { ...auto, metadata: { ...metadata, title: 'Revised title' } },
     { ...auto, metadata: { ...metadata, authorDetails: metadata.authorDetails.map((a, i) => ({ ...a, coFirst: i === 0 })) } },
     { ...auto, classification: { ...auto.classification, domains: ['Food'] } },
-  ]) assert.equal(resolvePublication('id', null, changed, manual).confirmation.pending, true);
+  ]) assert.equal(resolvePublication('id', null, changed, manual).confirmation.pending, false);
   assert.equal(resolvePublication('id', null, { ...auto, identity: { verified: false, policyVersion: 2 } }, manual).visible, false);
 });
 test('authenticated confirmation preserves manual fields and rejects stale or ineligible requests', async () => {

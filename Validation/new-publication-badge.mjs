@@ -1,0 +1,27 @@
+import { mkdtemp, cp, symlink, readFile, writeFile, mkdir } from 'node:fs/promises';
+import { resolve } from 'node:path';
+import { spawnSync } from 'node:child_process';
+import assert from 'node:assert/strict';
+import { load } from 'cheerio';
+import { ROOT, loadStore, writeJson } from '../scripts/publications/store.mjs';
+import { createOverride } from '../scripts/publications/model.mjs';
+const output=resolve(ROOT,'Validation/results/admin');await mkdir(output,{recursive:true});
+const fixture=await mkdtemp(resolve(output,'new-paper-'));
+for(const path of ['src','scripts','astro.config.mjs','tsconfig.json','package.json'])await cp(resolve(ROOT,path),resolve(fixture,path),{recursive:true});
+await symlink(resolve(ROOT,'node_modules'),resolve(fixture,'node_modules'),'junction');
+const store=await loadStore(fixture);const sample=structuredClone(Object.values(store.automatic.papers).find(p=>p.eligible));
+sample.origin='automatic';sample.metadata.title='Synthetic future automatic publication';sample.metadata.doi='10.1000/validation-only';sample.metadata.links={doi:'https://doi.org/10.1000/validation-only'};
+const id='synthetic-future-auto';store.automatic.papers[id]=sample;
+await writeJson(resolve(fixture,'src/data/publications-auto.json'),store.automatic);
+await writeJson(resolve(fixture,`src/data/publication-overrides/${id}.json`),createOverride(id,sample.metadata));
+const homePath=resolve(fixture,'src/content/pages/home.mdx');let home=await readFile(homePath,'utf8');home=home.replace(/(type: selected_publications[\s\S]*?items:\s*\n)/,'$1      - '+id+'\n');await writeFile(homePath,home);
+for(const base of ['', '/my_homepage']){
+  const result=spawnSync(process.execPath,[resolve(ROOT,'node_modules/astro/bin/astro.mjs'),'build'],{cwd:fixture,env:{...process.env,BASE_PATH:base},encoding:'utf8',windowsHide:true});
+  await writeFile(resolve(output,`new-paper${base?'-subpath':''}.log`),result.stdout+result.stderr);assert.equal(result.status,0,'isolated build must succeed');
+  const page=load(await readFile(resolve(fixture,'dist/publications/index.html'),'utf8'));
+  assert.equal(page('[data-review-badge]').length,1);assert.equal(page('[data-review-badge]').text().trim(),'Information Check Needed');assert.ok(page('[data-review-badge]').closest('[data-pub-card]').text().includes(sample.metadata.title));
+  const index=load(await readFile(resolve(fixture,'dist/index.html'),'utf8'));assert.equal(index('[data-review-badge]').length,0);
+  assert.ok(index('body').text().includes(sample.metadata.title),'synthetic auto paper must also be exercised in a compact homepage card');
+}
+await writeFile(resolve(output,'new-paper-badge.json'),JSON.stringify({passed:true,fullListBadge:1,homeBadge:0,rootAndSubpath:true,fixture},null,2));
+console.log('Future automatic paper: one Information Check Needed label in full list, none on selected homepage cards, at root and subpath.');

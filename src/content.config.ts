@@ -172,6 +172,7 @@ const pages = defineCollection({
   schema: z.object({
     title: z.string().min(1),
     description: z.string().min(1),
+    image: imageSchema.optional(),
     sections: z.array(homeSectionsSchema).default([]),
   }),
 });

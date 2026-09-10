@@ -124,7 +124,8 @@ export async function sync({ root = ROOT, write = false, refresh = false, limit 
           Object.assign(authorshipData, previous.authorship);
         } else reviewReasons.push('Author list changed; existing contribution evidence needs review');
       }
-      const entry = { metadata, identity: identityResult, classification: classify(metadata.title, metadata.abstract, topics),
+      const origin = store.legacy[id] ? 'legacy' : previous?.origin ?? (discoveries.some((d) => d.source === 'manual-import') ? 'manual' : 'automatic');
+      const entry = { origin, metadata, identity: identityResult, classification: classify(metadata.title, metadata.abstract, topics),
         authorship: authorshipData, eligible: reviewReasons.length === 0, reviewReasons,
         sources: discoveries.filter((d) => d.evidence).map(({ source, evidence }) => ({ source, url: evidence })) };
       // Refresh timestamps only when content changes, so scheduled checks are idempotent.

@@ -83,13 +83,14 @@ export function resolvePublication(id, legacy, auto, manual = {}) {
   else delete links.doi;
   const complete = title && venue && year >= 1900 && year <= 2100 && validAuthors(authorDetails);
   const revision = automaticRevision(auto);
+  const origin = legacy ? 'legacy' : (auto?.origin ?? 'manual');
   return {
     id, title, venue, year, status, type: base.type ?? 'journal',
     authorDetails, authors: authorDetails.map((a) => `${a.name}${a.coFirst ? '†' : ''}${a.corresponding ? '*' : ''}`),
     domains: taxonomy.domains, methods: taxonomy.methods, image: image ? { ...image, alt: image.alt || title } : null,
     sortOrder: manual.sortOrder ?? original.sortOrder,
     links,
-    confirmation: { pending: Boolean(revision && manual.reviewedAutomaticRevision !== revision), revision },
+    confirmation: { origin, pending: Boolean(origin === 'automatic' && !manual.reviewedAutomaticRevision && !manual.informationChecked), revision },
     visible: Boolean(published && complete && doi === normalizeDoi(auto?.metadata?.doi) && !['hidden', 'excluded'].includes(visibility)),
     review: {
       missingImage: !image,

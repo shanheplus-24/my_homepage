@@ -12,31 +12,17 @@ npm run dev
 
 ## Graphical Content Admin
 
-The site now has a Git-based CMS at `/admin/`. It edits the structured content collections through forms, so routine changes do not require hand-editing MDX files.
-
-Local workflow:
+`/admin/` is the unified password-protected content site (username `admin`). It includes site settings, Home, bilingual About text/photo, publications, research, news and CV records.
 
 ```powershell
-Set-Location -LiteralPath "D:\Personal_Webpage\[Program]\academic-website-v3"
-npm run dev
+npm run admin:setup
+# Set a password in the loopback-only setup window, then:
+npm run cms:local
 ```
 
-Open `http://127.0.0.1:4321/admin/`.
+Open `http://127.0.0.1:4321/admin/`. Local saves update local files. Production saves use a repository-scoped server-side GitHub token and trigger deployment. GitHub Pages redirects administrators to the custom domain, which supports server authentication.
 
-To enable local write-back through Decap's proxy server, run this in a second terminal:
-
-```powershell
-Set-Location -LiteralPath "D:\Personal_Webpage\[Program]\academic-website-v3"
-npm run cms:server
-```
-
-CMS configuration lives in `public/admin/config.yml`. Update `backend.repo` there if the deployed GitHub repository is not `shanheplus-24/my_homepage`.
-
-Chinese CMS guide:
-
-```text
-docs/cms-admin.zh-CN.md
-```
+The complete CMS schema is in `scripts/admin/config.mjs`, served only after authentication. There is no public config.yml or publication maintenance snapshot. See [the Chinese administrator guide](docs/cms-admin.zh-CN.md) for credentials and EdgeOne configuration. No default password is shipped.
 
 ## Content Model
 

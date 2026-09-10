@@ -16,7 +16,7 @@ const publications = (await getCollection('publications')).sort((a, b) => {
 const years = [...new Set(publications.map((publication) => publication.data.year))];
 const domainTags = ['Water', 'Energy', 'Food'];
 const methodTags = ['Models', 'Materials', 'Devices', 'AI'];
-const pendingCount = publications.filter((publication) => publication.data.confirmation.pending).length;
+
 ---
 
 <BaseLayout title={`Publications | ${site.name}`} description="Publications with title, authors, venue, year, type, status, and optional paper links.">
@@ -24,14 +24,6 @@ const pendingCount = publications.filter((publication) => publication.data.confi
     <SectionHeading title="Publications" />
     <div class="surface publication-filter-panel mb-8 rounded-[28px] p-5">
       <div class="grid gap-5">
-        <div class="publication-filter-group" aria-label="Publication review status">
-          <p>Review status</p>
-          <div class="publication-filter-tabs">
-            <button class="publication-filter-tabs__button is-active" type="button" data-publication-review="all" aria-pressed="true">All</button>
-            <button class="publication-filter-tabs__button" type="button" data-publication-review="pending" aria-pressed="false">Pending review · 待人工确认 ({pendingCount})</button>
-          </div>
-          <p class="mt-2 text-sm text-muted">Pending review marks automatically updated details awaiting the site owner’s confirmation.</p>
-        </div>
         <div class="publication-filter-row">
           <div class="publication-filter-group" aria-label="Publication research area filters">
             <p>Research Area</p>
@@ -81,8 +73,6 @@ const pendingCount = publications.filter((publication) => publication.data.confi
     const yearSections = Array.from(document.querySelectorAll('[data-publication-year-section]'));
     const domainButtons = Array.from(document.querySelectorAll('[data-publication-domain]'));
     const methodButtons = Array.from(document.querySelectorAll('[data-publication-method]'));
-    const reviewButtons = Array.from(document.querySelectorAll('[data-publication-review]'));
-    let activeReview = new URLSearchParams(location.search).get('review') === 'pending' ? 'pending' : 'all';
     let activeDomain = 'all';
     let activeMethod = 'all';
 
@@ -93,8 +83,7 @@ const pendingCount = publications.filter((publication) => publication.data.confi
         const searchMatch = !query || card.dataset.search.includes(query);
         const domainMatch = activeDomain === 'all' || card.dataset.domain.split('|').includes(activeDomain);
         const methodMatch = activeMethod === 'all' || card.dataset.method.split('|').includes(activeMethod);
-        const reviewMatch = activeReview === 'all' || card.dataset.review === activeReview;
-        const show = searchMatch && domainMatch && methodMatch && reviewMatch;
+        const show = searchMatch && domainMatch && methodMatch;
         card.hidden = !show;
         if (show) visible += 1;
       }
@@ -106,17 +95,6 @@ const pendingCount = publications.filter((publication) => publication.data.confi
     }
 
     searchInput?.addEventListener('input', applyPublicationFilters);
-    function updateReviewButtons() {
-      reviewButtons.forEach((button) => { const selected = button.dataset.publicationReview === activeReview; button.classList.toggle('is-active', selected); button.setAttribute('aria-pressed', String(selected)); });
-    }
-    reviewButtons.forEach((button) => button.addEventListener('click', () => {
-      activeReview = button.dataset.publicationReview;
-      const url = new URL(location.href);
-      if (activeReview === 'pending') url.searchParams.set('review', 'pending'); else url.searchParams.delete('review');
-      history.replaceState(null, '', url);
-      updateReviewButtons(); applyPublicationFilters();
-    }));
-    updateReviewButtons(); applyPublicationFilters();
     domainButtons.forEach((button) => {
       button.addEventListener('click', () => {
         activeDomain = button.dataset.publicationDomain ?? 'all';

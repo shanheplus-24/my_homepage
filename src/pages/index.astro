@@ -14,7 +14,6 @@ if (!home) {
 
 const publications = (await getCollection('publications')).sort((a, b) => b.data.year - a.data.year);
 const publicationsById = new Map(publications.map((publication) => [publication.id, publication]));
-const pendingPublications = publications.filter((publication) => publication.data.confirmation.pending).length;
 const researchById = new Map((await getCollection('research')).map((project) => [project.id, project]));
 const newsById = new Map((await getCollection('news')).map((item) => [item.id, item]));
 
@@ -176,7 +175,6 @@ const sections = home.data.sections;
                   {section.allItemsCta.label}
                 </a>
               </div>
-              {pendingPublications > 0 && <p class="mb-5 text-sm text-muted" data-home-review-notice><a class="publication-title-link font-bold text-ink" href={withBase('/publications/?review=pending')}>{pendingPublications} publications awaiting review <span lang="zh-Hans">· {pendingPublications} 篇自动更新待人工确认 →</span></a></p>}
               <div class="selected-publications-grid grid gap-5 lg:grid-cols-3">
                 {selectedPublications.map((publication) => (
                   <div class="h-full">

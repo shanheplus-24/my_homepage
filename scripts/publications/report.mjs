@@ -14,7 +14,7 @@ const link = doi => `[${doi}](https://doi.org/${doi})`;
 const content = [
   '# 论文身份复核与补全清单', '',
   `复核对象：He Shan，ORCID [0000-0002-9105-3006](https://orcid.org/0000-0002-9105-3006)。生成时间：${new Date().toISOString()}。`, '',
-  `原网页 38 篇全部重查；当前公开 ${visible.length} 篇，待身份确认 ${pending.length} 篇。原记录之外新增公开 ${visible.filter(p => !store.legacy[p.id]).length} 篇；其中 ${visible.filter(p => p.confirmation.pending).length} 篇自动更新待本人确认。`, '',
+  `原网页 38 篇全部重查；当前公开 ${visible.length} 篇，待身份确认 ${pending.length} 篇。原记录之外新增公开 ${visible.filter(p => !store.legacy[p.id]).length} 篇；其中 ${visible.filter(p => p.confirmation.pending).length} 篇自动新增待本人确认。`, '',
   '2026-09-10 初始复核的 38 篇题名、DOI 和完整作者顺序均与当时新获取的 Crossref 元数据匹配。身份依据分为：27 篇出现在本人 ORCID，另外 5 篇出现在本人旧个人主页，5 篇经出版社作者单位人工核对，1 篇尚待确认。单位与合作作者核对属于人工判断，不等同于出版社提供了个人 ORCID。', '',
   '此前 OpenAlex 混合作者档案导致检索误匹配。12 条同名记录及 1 条更正通知已移出论文管理列表；其他误匹配检索结果也已移出用户清单，原始记录仅保存在 Validation/results/identity-reaudit/before-cleanup.json 供技术复查。没有把它们认定为本人论文。', '',
   '自动发现只使用本人公开 ORCID 或手动 DOI 输入；OpenAlex 仅按已确定 DOI 和相同题名补充摘要、分类建议，不再沿作者档案寻找论文，也不能证明身份。原网页收录、相同姓名、合作作者重合均不能单独通过身份校验。', '',
@@ -22,7 +22,7 @@ const content = [
   line('序号','论文','期刊 / 年份','DOI','身份依据','人工确认','补全数据'), line('---','---','---','---','---','---','---'),
   ...visible.map((p,i) => {
     const a=store.automatic.papers[p.id]; const r=reviewed[a.metadata.doi];
-    return line(i+1,p.title,`${p.venue}, ${p.year}`,link(normalizeDoi(p.links.doi)), `${r?.reason ?? a.identity.reason}；[来源](${a.identity.source})`, p.confirmation.pending ? '待人工确认' : '当前自动版本已确认', `作者全名 ${a.metadata.authorDetails.length} 人；${a.metadata.abstract?'已取得摘要':'未取得摘要'}；分类建议 ${[...a.classification.domains,...a.classification.methods].join(' / ')}`);
+    return line(i+1,p.title,`${p.venue}, ${p.year}`,link(normalizeDoi(p.links.doi)), `${r?.reason ?? a.identity.reason}；[来源](${a.identity.source})`, p.confirmation.pending ? '待人工确认' : (p.confirmation.origin === 'automatic' ? '已人工确认' : '原有／手动论文，无需确认'), `作者全名 ${a.metadata.authorDetails.length} 人；${a.metadata.abstract?'已取得摘要':'未取得摘要'}；分类建议 ${[...a.classification.domains,...a.classification.methods].join(' / ')}`);
   }), '',
   '## 单独待确认，暂停公开', '',
   ...(pending.length ? pending.map(p => `- **${p.title}** — ${p.venue}, ${p.year}；${link(normalizeDoi(p.links.doi))}。${store.automatic.papers[p.id].reviewReasons.join('；')}。原文档、作者、摘要图和排序均保留，可在管理窗口处理。`) : ['无。']), '',

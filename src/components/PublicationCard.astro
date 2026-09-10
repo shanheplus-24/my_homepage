@@ -51,7 +51,7 @@ const searchable = [
   </div>
   <div class="flex min-w-0 flex-1 flex-col">
     <div class="mb-3 flex flex-wrap gap-2 text-xs font-bold">
-      {publication.data.confirmation.pending && <a class="publication-review-badge" data-review-badge href={`${base}/admin/publications/?q=${encodeURIComponent(publication.data.title)}`} title="查看并确认本次自动更新 · Review automatically updated details">Pending review <span lang="zh-Hans">· 待人工确认</span></a>}
+      {!compact && publication.data.confirmation.pending && <span class="publication-review-badge" data-review-badge>Information Check Needed</span>}
       {domainTags.map((tag) => <span class="publication-tag publication-tag--domain">{tag}</span>)}
       {methodTags.map((tag) => <span class="publication-tag publication-tag--method">{tag}</span>)}
     </div>

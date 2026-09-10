@@ -18,13 +18,15 @@
 在仓库根目录运行：
 
 ```powershell
+npm run admin:setup
+# 在本机窗口设置账号密码后：
 npm run cms:local
 ```
 
-打开 `http://127.0.0.1:4321/admin/publications/`。一个命令同时启动网页开发服务和绑定本机 `127.0.0.1:8082` 的内容服务。停止时按 Ctrl+C。
+打开 `http://127.0.0.1:4321/admin/`。一个命令同时启动网页开发服务和绑定本机 `127.0.0.1:8082` 的内容服务。停止时按 Ctrl+C。
 
-1. 在维护总览按标题、作者、年份搜索，或筛选待核对、待分类、缺摘要图。
-2. 点击「编辑分类 / 作者 / 摘要图」。本地登录进入编辑器后，可查看自动数据与贡献声明来源。
+1. 在维护总览按标题、作者、年份搜索，或筛选自动新增待核对、身份待核实。
+2. 登录后点击对应论文「编辑」。进入编辑器后，可查看自动数据与贡献声明来源。
 3. 修改领域和方法时，将「分类维护方式」设为「手动」。更换摘要图时将「摘要图维护方式」设为「手动」，上传或选择图片，填写图片说明。两项已经人工维护的旧论文默认是手动。
 4. 作者字段支持全名、排序、共同一作、通讯作者、本人高亮。人工修改后将作者维护方式设为手动。
 5. 点击「发布」→「立即发布」保存。本地保存会写入本机文件；开发页面随文件变化重新加载。Git 提交和推送由用户自己的发布流程处理，本地编辑器不会自动创建提交。
@@ -49,23 +51,9 @@ node "scripts/publications/report.mjs"
 
 此工作流只有在代码推送到远端 main 后才会启用。本地文件存在不能证明线上已启用；以远端 Actions 和网站内容为准。
 
-## 线上 GitHub 登录
+## 统一后台与账号登录
 
-网站 `/admin/` 使用 Decap 3.10.0。线上登录代理代码位于 `edge-functions/api/cms/`，GitHub Pages 子路径站点也使用自定义域名上的代理。需要在 GitHub 创建 OAuth App，并在 EdgeOne 项目服务端配置以下环境变量：
-
-| 项目 | 值 |
-| --- | --- |
-| OAuth App Homepage URL | `https://www.shanheplus.com` |
-| Authorization callback URL | `https://www.shanheplus.com/api/cms/callback` |
-| `CMS_GITHUB_CLIENT_ID` | OAuth App 的 Client ID |
-| `CMS_GITHUB_CLIENT_SECRET` | OAuth App 的 Client Secret，仅保存到服务端环境变量 |
-| `CMS_OAUTH_STATE_SECRET` | 至少 32 字符的随机值，仅保存到服务端环境变量 |
-| `CMS_OAUTH_ORIGIN` | `https://www.shanheplus.com` |
-| `CMS_ALLOWED_ORIGINS` | 可省略，默认允许自定义域名和 `https://shanheplus-24.github.io` |
-
-代理使用 GitHub `public_repo` 权限、PKCE、签名状态 cookie、固定回调域名和目标仓库写权限校验。公开状态接口 `/api/cms/status` 只返回 ready 布尔值。配置缺失时登录返回明确提示；不得把缺失配置的部署当成可用线上登录。不要把 Client Secret、状态签名密钥或 GitHub token 写入仓库、聊天或前端代码。
-
-配置后还需实际完成 GitHub 登录及保存一项可逆修改，核对 Actions 和两个站点部署。OAuth 单元测试不等同于真实账号登录验证。
+网站 `/admin/` 使用用户名和密码登录，账号名为 `admin`。所有维护数据、完整 CMS 配置、编辑窗口和保存 API 均由服务端校验会话。配置与上线步骤见 [后台维护说明](cms-admin.zh-CN.md)。旧 OAuth 适配器不再用于后台登录。
 
 ## 文件和验证
 
@@ -90,14 +78,14 @@ node "scripts/publications/report.mjs"
 
 原网页 38 篇逐篇重新获取 Crossref 数据，题名和作者顺序全匹配。27 篇由本人 ORCID 支持，5 篇由旧 Google Sites 个人主页支持，5 篇由出版社作者单位和合作关系人工复核，1 篇冷凝综述待本人确认并暂停公开。未删除原 MDX。误匹配的 12 条同名论文及 1 条更正通知从编辑列表移出，清理前完整快照保存在本地 `Validation/results/identity-reaudit/before-cleanup.json`。主清单不再展示外部误匹配文章。
 
-## 网页上的人工确认标记
+## 网页上的信息核对标记（当前规则）
 
-所有已有自动信息但尚未记录本人确认的公开论文显示 `Pending review · 待人工确认`。本轮身份核验不等于本人已确认自动更新内容，因此首次上线 37 篇公开论文都带此标记；身份未通过的第 38 篇仍不公开。
+原有 38 篇论文和手动添加的论文无需内容确认。之后由 ORCID 自动发现并新增的论文记录 `origin: automatic`；手动 DOI 导入记录 `origin: manual`，来源一经确定，后续补全不会改变。
 
-首页精选论文区显示待确认总数，点击可进入 `/publications/?review=pending`。精选卡片和完整列表共用标记，完整列表支持与搜索、领域及方法同时筛选。
+只有自动新增且尚未确认的论文，在完整 Publications 列表显示 `Information Check Needed`。首页精选卡片和首页不显示核对标记或待确认汇总。
 
-后台 `人工确认自动更新` 控件可确认或撤销当前版本，保存后生效。确认记录以 `reviewedAutomaticRevision` 保存到该篇人工覆盖中，SHA-256 对应自动题名、期刊、年份、DOI、状态、作者姓名及贡献、摘要、分类和图。重复获取时间、来源顺序、分类置信分变化不会撤销确认；内容变化后旧确认不再适用。
+后台论文编辑表单可确认或撤销。确认保存在人工覆盖 `reviewedAutomaticRevision` 中，今后元数据补全不会重复要求确认。版本摘要仍用于避免通过 GitHub 工作流确认过期内容；它不再决定已确认论文是否重新提示。
 
-在线 CMS OAuth 未配置时，可以直接访问 `/admin/publications/`，在对应论文下展开「确认本次自动更新」，复制确认码，点击「在 GitHub 确认」，以仓库有写权限的账号打开 Run workflow，将确认码粘贴到 review 输入框并运行。`review-publication.yml` 检查 DOI、当前版本及身份，保存确认后自动触发部署；不需要 CMS OAuth。过期确认码会被拒绝，身份排除不会被绕过。工作流仅由拥有权限的 GitHub 用户触发；公开网页没有匿名写入接口。
+当前公开 37 篇，自动新增待信息核对 0 篇。原第 38 篇冷凝综述仍处于独立的身份待核实状态；免除内容确认不等于补充缺失的身份依据。
 
-上线检查需验证每日 Sync publications 工作流为 active、一次实际运行成功，并检查自定义域名和 GitHub Pages 子路径的首页提示、论文标记和后台确认入口。
+浏览器回归使用 `Validation/admin-browser.mjs`，在隔离副本验证登录、完整配置加载、分类、中文图片、站点资料保存和退出；旧 `browser-publications.mjs` 是之前版本的历史验证程序，不适用于当前后台。核心命令为 `npm run publications:test`、`npm run admin:test`、`npm run validate`。

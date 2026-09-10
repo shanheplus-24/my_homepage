@@ -1,5 +1,6 @@
 ﻿---
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
+import AboutLink from '@components/AboutLink.astro';
 import AcademicInfoGroup from '@components/AcademicInfoGroup.astro';
 import BaseLayout from '@layouts/BaseLayout.astro';
 import { site } from '@data/site';
@@ -16,6 +17,11 @@ const groups = [
   { categories: ['talk'], title: 'Conference Participated', titleZh: '学术会议报告' },
 ] as const;
 
+const aboutEn = await getEntry('pages', 'about-en');
+const aboutZh = await getEntry('pages', 'about-zh');
+if (!aboutEn || !aboutZh) throw new Error('Missing About content');
+const { Content: AboutEn } = await render(aboutEn);
+const { Content: AboutZh } = await render(aboutZh);
 const linkedIn = site.links.find((link) => link.id === 'linkedin')?.href ?? '#';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const withBase = (src: string) => src.startsWith('/') ? `${base}${src}` : src;
@@ -26,8 +32,8 @@ const withBase = (src: string) => src.startsWith('/') ? `${base}${src}` : src;
     <div class="about-intro mb-10 grid gap-7 lg:grid-cols-[minmax(280px,460px)_1fr] lg:items-stretch">
       <aside class="about-contact-card interactive-card overflow-hidden rounded-[28px]" aria-label="Contact information">
         <img
-          src={withBase('/assets/generated/about-campus-greenery.png')}
-          alt="Green campus avenue in Singapore with modern buildings"
+          src={withBase(aboutEn.data.image?.src ?? '/assets/generated/about-campus-greenery.png')}
+          alt={aboutEn.data.image?.alt ?? "Campus photograph"}
           loading="eager"
           class="about-contact-card__image"
         />
@@ -59,19 +65,9 @@ const withBase = (src: string) => src.startsWith('/') ? `${base}${src}` : src;
           <span data-lang="en">He Shan</span>
           <span data-lang="zh" hidden>何山</span>
         </h1>
-        <div class="about-profile-copy mt-7 space-y-5 text-lg leading-8">
-          <p data-lang="en">
-            Hi, I am He Shan. I am a <a class="about-profile-link" href="https://energypostdoc.stanford.edu/" target="_blank" rel="noopener noreferrer">Stanford Energy Postdoctoral Fellow</a> in the Department of Energy Science and Engineering at the Stanford Doerr School of Sustainability, working under the supervision of <a class="about-profile-link" href="https://profiles.stanford.edu/carlos-diaz-marin" target="_blank" rel="noopener noreferrer">Prof. Carlos Diaz-Marin</a>, <a class="about-profile-link" href="https://profiles.stanford.edu/mauter" target="_blank" rel="noopener noreferrer">Prof. Meagan Mauter</a>, and <a class="about-profile-link" href="https://profiles.stanford.edu/ilenia-battiato" target="_blank" rel="noopener noreferrer">Prof. Ilenia Battiato</a>. I received my joint PhD from Shanghai Jiao Tong University and the National University of Singapore. My research lies at the intersection of materials science, thermal engineering, and transport phenomena. I develop tailored materials and integrated systems for water-energy-food nexus applications, including atmospheric water harvesting, thermal management, controlled-environment agriculture, catalysis, and energy efficiency.
-          </p>
-          <p data-lang="en">
-            My work combines thermodynamic modeling, physics-based simulation, and heat and mass transfer analysis to understand hydrogel materials and related thermal systems. I am also expanding into physics-guided machine learning for accelerated materials discovery, device optimization, and performance prediction. I welcome collaborations in water harvesting, sustainable soft materials, thermal energy systems, and AI for materials and systems.
-          </p>
-          <p data-lang="zh" hidden>
-            你好，我是何山。我现为斯坦福大学 Doerr 可持续发展学院能源科学与工程系的<a class="about-profile-link" href="https://energypostdoc.stanford.edu/" target="_blank" rel="noopener noreferrer">斯坦福能源博士后学者</a>，在 <a class="about-profile-link" href="https://profiles.stanford.edu/carlos-diaz-marin" target="_blank" rel="noopener noreferrer">Carlos Diaz-Marin 教授</a>、<a class="about-profile-link" href="https://profiles.stanford.edu/mauter" target="_blank" rel="noopener noreferrer">Meagan Mauter 教授</a>和 <a class="about-profile-link" href="https://profiles.stanford.edu/ilenia-battiato" target="_blank" rel="noopener noreferrer">Ilenia Battiato 教授</a>的共同指导下开展研究。我的研究聚焦空气-水-能源-食物交叉系统中的可持续技术，包括大气集水、电子热管理、城市农业和建筑节能。
-          </p>
-          <p data-lang="zh" hidden>
-            我擅长热力学建模和物理模型仿真，尤其关注水凝胶体系中的传热传质机理理解。欢迎围绕大气集水、可持续软材料、能源系统和机器学习应用开展合作。
-          </p>
+        <div class="about-profile-copy mt-7 text-lg leading-8">
+          <div data-lang="en" class="space-y-5"><AboutEn components={{ a: AboutLink }} /></div>
+          <div data-lang="zh" class="space-y-5" hidden><AboutZh components={{ a: AboutLink }} /></div>
         </div>
       </article>
     </div>

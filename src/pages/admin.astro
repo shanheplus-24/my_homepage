@@ -1,48 +1,20 @@
 ---
-import { site } from '@data/site';
-
-const configPath = './config.yml';
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const base = import.meta.env.BASE_URL;
 ---
-
 <!doctype html>
-<html lang="zh-Hans">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="robots" content="noindex" />
-    <title>{`内容后台 | ${site.name}`}</title>
-    <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
-    <link href={configPath} type="text/yaml" rel="cms-config-url" />
-    <style>
-      html,
-      body,
-      #nc-root {
-        min-height: 100%;
-        margin: 0;
-        background: #f6f8fb;
-      }
-
-      body {
-        font-family: Arial, sans-serif;
-      }
-    </style>
-  </head>
+<html lang="zh-CN">
+  <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="robots" content="noindex,nofollow"/><title>网站维护 · He Shan</title><link rel="stylesheet" href={`${base}admin/dashboard.css`}/></head>
   <body>
-    <div style="padding:12px 24px;background:#eaf1fb;font:14px Arial,sans-serif"><a href={`${base}/admin/publications/`}>论文维护总览 · 待核对 / 分类 / 摘要图</a></div>
-    <p id="cms-status" role="status" style="margin:0;padding:10px 24px;font:14px/1.6 Arial,sans-serif"></p>
-    <script is:inline>window.CMS_MANUAL_INIT = true;</script>
-    <script is:inline src="https://unpkg.com/decap-cms@3.10.0/dist/decap-cms.js"></script>
-    <script is:inline src={`${base}/admin/publications.js`}></script>
-    <script is:inline>
-      const local = ['localhost', '127.0.0.1'].includes(location.hostname);
-      const basePath = location.pathname.replace(/\/admin\/?$/, '');
-      const status = document.querySelector('#cms-status');
-      if (local) status.textContent = '本地编辑：保存后写入本机文件。请同时保持内容服务运行。';
-      else fetch('https://www.shanheplus.com/api/cms/status', { cache: 'no-store' }).then((r) => r.ok ? r.json() : { ready: false }).then(({ ready }) => {
-        status.textContent = ready ? '通过 GitHub 登录后可保存修改。保存会触发网站更新。' : '在线登录服务尚未就绪；当前可查看论文维护总览，也可使用本地编辑窗口。';
-      }).catch(() => { status.textContent = '暂时无法连接登录服务；可使用本地编辑窗口。'; });
-      window.CMS.init({ config: { local_backend: local ? { url: 'http://127.0.0.1:8082/api/v1' } : false, logo_url: `${basePath}/assets/generated/site-logo-nexus-white-512.png` } });
-    </script>
+    <main id="login-panel" class="login-panel">
+      <a class="brand" href={base}>HE SHAN <span>网站维护</span></a>
+      <h1>管理员登录</h1><p>登录后管理网站内容、论文分类与摘要图。</p>
+      <form id="login-form"><label>账号<input name="username" value="admin" autocomplete="username" required maxlength="64"/></label><label>密码<input name="password" type="password" autocomplete="current-password" required maxlength="256"/></label><button type="submit">登录后台</button></form>
+      <p id="login-message" role="status"></p><a href={base}>返回网站</a>
+    </main>
+    <div id="workspace" hidden>
+      <header><a class="brand" href={base} target="_blank" rel="noopener">HE SHAN <span>网站维护</span></a><span id="save-status" role="status"></span><button id="logout" class="secondary">退出登录</button></header>
+      <div class="layout"><nav id="navigation" aria-label="维护栏目"></nav><main class="content"><section id="overview"><h1>维护总览</h1><p>统一管理站点资料和各栏目。保存后自动发布；论文的人工分类、作者与摘要图会优先保留。</p><div id="stats" class="stats"></div><div class="toolbar"><label>搜索论文<input id="paper-search" type="search" placeholder="题名、作者、DOI"/></label><label>范围<select id="paper-filter"><option value="all">全部论文</option><option value="pending">自动新增 · 待核对</option><option value="identity">身份待核实</option></select></label></div><div id="papers"></div></section><iframe id="editor" title="内容编辑窗口" hidden></iframe></main></div>
+    </div>
+    <script is:inline src={`${base}admin/dashboard.js`}></script>
   </body>
 </html>

@@ -1,12 +1,12 @@
 /* global CMS, createClass, h */
 (() => {
   let database = null;
-  const dataReady = fetch('./publication-data.json', { cache: 'no-store' }).then((r) => { if (!r.ok) throw new Error('无法读取自动数据'); return r.json(); }).then((data) => { database = data; return data; });
+  const dataReady = fetch('/api/admin/data', { cache: 'no-store' }).then((r) => { if (!r.ok) throw new Error('无法读取自动数据'); return r.json(); }).then((data) => { database = data; return data; });
   dataReady.catch(() => {}); // Editors mounted later provide the visible error state.
   const editorId = () => decodeURIComponent(location.hash.split('/entries/')[1]?.split('?')[0] ?? '');
   const panelStyle = { padding: '16px', background: '#f0f5fb', borderRadius: '8px', fontSize: '13px', lineHeight: 1.7, overflowWrap: 'anywhere' };
   const safeLink = (url) => /^https:\/\//.test(url ?? '') ? url : '#';
-  const basePath = location.pathname.replace(/\/admin\/?$/, '');
+  const basePath = '';
   // Decap's stock controls display repository-root media URLs. Adapt the DOM only:
   // saved values must remain independent of the deployment's /my_homepage prefix.
   if (basePath) {
@@ -45,7 +45,7 @@
         ...record.authorship.evidence.map((item, i) => h('p', { key: i }, item.quote, ' ', h('a', { href: safeLink(item.source), target: '_blank', rel: 'noopener noreferrer' }, '查看来源'))),
         h('p', {}, `身份核验：${record.identity.verified ? '通过' : '待核对'} · ${record.identity.reason}`),
         record.reviewReasons.length ? h('p', {}, record.reviewReasons.join('；')) : null,
-        h('a', { href: './publications/', target: '_blank', rel: 'noopener' }, '打开论文维护总览'),
+        h('a', { href: '/admin/', target: '_blank', rel: 'noopener' }, '打开论文维护总览'),
         h('p', {}, '修改字段后请选择「手动」以锁定；选择「自动」会使用上方同步值。'));
     },
   });
@@ -57,10 +57,11 @@
     render() {
       const entry = database?.entries?.find((item) => item.id === editorId());
       const revision = entry?.confirmation?.revision;
-      const confirmed = Boolean(revision && this.props.value === revision);
+      const confirmed = Boolean(this.props.value);
+      if (entry?.confirmation?.origin !== 'automatic') return h('div', { style: panelStyle }, '原有论文及手动添加的论文不需要信息核对。');
       return h('div', { style: panelStyle },
-        h('strong', {}, confirmed ? '本次自动更新已人工确认' : '本次自动更新待人工确认'),
-        h('p', {}, this.state.error || '请先核对作者、题名、期刊、分类和图片，再确认本次更新。保存后网页标记消失；实质内容再次更新时重新提示，重复同步不影响确认。'),
+        h('strong', {}, confirmed ? '自动新增论文已确认' : '自动新增论文待信息核对'),
+        h('p', {}, this.state.error || '请核对作者、题名、期刊、分类和图片。确认并保存后，Information Check Needed 标记消失；后续信息补全不会重复要求确认。'),
         h('button', { type: 'button', disabled: !revision || entry?.review?.identity, onClick: () => this.props.onChange(confirmed ? '' : revision), style: { padding: '9px 14px', cursor: 'pointer' } }, confirmed ? '撤销本次确认' : '我已核对，确认本次更新'),
         entry?.review?.identity ? h('p', {}, '此论文身份尚未通过，请先在 DOI 导入入口核实作者身份。') : null);
     },
@@ -80,9 +81,9 @@
       const tags = data.taxonomyMode === 'manual' ? [...(data.domains ?? []), ...(data.methods ?? [])] : [...(auto?.classification.domains ?? []), ...(auto?.classification.methods ?? [])];
       const image = data.imageMode === 'manual' ? data.image : base.image;
       let src = image?.src ? String(this.props.getAsset(image.src)) : '';
-      if (src.startsWith('/assets/')) src = location.pathname.replace(/\/admin\/?$/, '') + src;
+      if (src.startsWith('/assets/')) src = src;
       return h('article', { style: { fontFamily: 'Arial, sans-serif', padding: '28px', color: '#18324d', lineHeight: 1.7 } },
-        database?.entries?.find((item) => item.id === data.id)?.confirmation?.revision !== data.reviewedAutomaticRevision ? h('p', { style: { color: '#754600', background: '#fff4d6', padding: '8px' } }, 'Pending review · 待人工确认') : null,
+        database?.entries?.find((item) => item.id === data.id)?.confirmation?.origin === 'automatic' && !data.reviewedAutomaticRevision ? h('p', { style: { color: '#754600', background: '#fff4d6', padding: '8px' } }, 'Information Check Needed') : null,
         h('p', {}, '论文卡片预览 · ' + (data.visibility === 'excluded' || data.visibility === 'hidden' ? '当前隐藏' : '保存后生效')),
         h('div', { style: { height: '220px', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '16px', background: '#edf2f8' } }, src ? h('img', { src, alt: image.alt ?? '', style: { maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', background: '#fff' } }) : '待添加摘要图'),
         h('p', {}, tags.join(' · ')), h('h2', {}, meta.title),
