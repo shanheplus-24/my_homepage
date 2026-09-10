@@ -1,9 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { handleOAuth } from '../scripts/cms/oauth.mjs';
-import { onRequest as readiness } from '../edge-functions/api/cms/status.js';
+import defaultReadiness, { onRequest as readiness } from '../edge-functions/api/cms/status.js';
+import defaultAuth from '../edge-functions/api/cms/auth.js';
+import defaultCallback from '../edge-functions/api/cms/callback.js';
 const env = { CMS_GITHUB_CLIENT_ID: 'test-client', CMS_GITHUB_CLIENT_SECRET: 'test-secret', CMS_OAUTH_STATE_SECRET: 'test-state-secret-longer-than-32-characters', CMS_OAUTH_ORIGIN: 'https://www.shanheplus.com' };
 const request = (path, cookie) => new Request(`${env.CMS_OAUTH_ORIGIN}${path}`, { headers: cookie ? { cookie } : {} });
+test('EdgeOne default entrypoints expose safe behavior without configuration', async () => {
+  assert.equal(defaultReadiness, readiness);
+  assert.deepEqual(await defaultReadiness({}).json(), { ready: false });
+  assert.equal((await defaultAuth({ request: request('/api/cms/auth') })).status, 503);
+  assert.equal((await defaultCallback({ request: request('/api/cms/callback') })).status, 503);
+});
 async function begin() {
   const response = await handleOAuth(request('/api/cms/auth?provider=github&site_id=www.shanheplus.com'), env);
   return { response, location: new URL(response.headers.get('location')), cookie: response.headers.get('set-cookie').split(';')[0] };
