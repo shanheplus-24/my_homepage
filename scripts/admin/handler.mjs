@@ -9,10 +9,17 @@ async function body(request, limit) {
   const reader = request.body?.getReader();
   if (!reader) throw fail(400,'缺少提交内容。');
   const chunks = []; let size = 0;
-  for (;;) { const {done,value} = await reader.read(); if (done) break; size += value.length; if (size > limit) { await reader.cancel(); throw fail(413,'提交内容过大。'); } chunks.push(value); }
+  for (;;) {
+    const {done,value} = await reader.read(); if (done) break;
+    // EdgeOne may deliver ArrayBuffer chunks instead of Uint8Array chunks.
+    const chunk = typeof value === 'string' ? new TextEncoder().encode(value) : value instanceof Uint8Array ? value : new Uint8Array(value);
+    size += chunk.byteLength;
+    if (size > limit) { await reader.cancel(); throw fail(413,'提交内容过大。'); }
+    chunks.push(chunk);
+  }
   const bytes = new Uint8Array(size); let offset = 0;
   for (const chunk of chunks) { bytes.set(chunk,offset); offset += chunk.length; }
-  try { return JSON.parse(new TextDecoder().decode(bytes)); } catch { throw fail(400,'提交格式无效。'); }
+  try { return JSON.parse(new TextDecoder().decode(bytes.buffer)); } catch { throw fail(400,'提交格式无效。'); }
 }
 const editor = `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>内容编辑</title><style>body{margin:0;font-family:Arial,sans-serif}img{object-fit:contain!important}#error{padding:30px;color:#8d271b}</style></head><body><div id="error" role="alert"></div><script>window.CMS_MANUAL_INIT=true;</script><script src="https://unpkg.com/decap-cms@3.10.0/dist/decap-cms.js"></script><script src="/admin/backend.js"></script><script src="/admin/publications.js"></script><script src="/admin/editor.js"></script></body></html>`;
 export async function handleAdmin(request, env = {}, dependencies = {}) {

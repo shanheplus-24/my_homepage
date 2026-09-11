@@ -30,7 +30,7 @@ export async function getSession(request, env) {
     if (!raw || raw.length > 2048) return null;
     const [payload, signature, extra] = raw.split('.');
     if (extra || !signature || !equal(signature, await mac(payload, env))) return null;
-    const session = JSON.parse(new TextDecoder().decode(decode(payload)));
+    const session = JSON.parse(new TextDecoder().decode(decode(payload).buffer));
     if (session.user !== env.ADMIN_USERNAME || session.exp <= Date.now() || session.exp > Date.now() + ttl * 1000 || session.version !== env.ADMIN_PASSWORD_HASH.slice(-43)) return null;
     return { user: session.user, expiresAt: session.exp };
   } catch { return null; }

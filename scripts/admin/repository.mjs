@@ -62,7 +62,7 @@ export class GithubRepository {
     const blob = await this.api('git/blobs/' + item.sha);
     const content = blob.content.replace(/\s/g, '');
     const file = {path, id:item.sha, name:path.split('/').at(-1)};
-    return binary ? {...file, content, encoding:'base64'} : {file, data:new TextDecoder().decode(Uint8Array.from(atob(content), c => c.charCodeAt(0)))};
+    return binary ? {...file, content, encoding:'base64'} : {file, data:new TextDecoder().decode(Uint8Array.from(atob(content), c => c.charCodeAt(0)).buffer)};
   }
   async write(changes, expected, deleting = false) {
     const files = await this.tree();

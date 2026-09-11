@@ -39,6 +39,13 @@ test('cross-origin, non-JSON and oversized requests are rejected',async()=>{
   assert.equal((await handleAdmin(plain,env)).status,403);
   assert.equal((await handleAdmin(request('login',{password:'x'.repeat(5000)}),env)).status,413);
 });
+test('edge runtime ArrayBuffer request chunks parse without dropping the body',async()=>{
+  const standard=request('login',{username:'admin',password});
+  const bytes=new TextEncoder().encode(JSON.stringify({username:'admin',password,note:'中文兼容验证'}));
+  const chunks=[bytes.slice(0,17).buffer,bytes.slice(17).buffer];
+  const edge={url:standard.url,method:'POST',headers:standard.headers,body:{getReader:()=>({read:async()=>chunks.length?{done:false,value:chunks.shift()}:{done:true},cancel:async()=>{}})}};
+  assert.equal((await handleAdmin(edge,env)).status,200);
+});
 test('write allowlist blocks credentials, workflow code, traversal, malformed metadata and disguised uploads',()=>{
   for(const path of ['.env.admin.local','.github/workflows/deploy.yml','scripts/admin/auth.mjs','src/data/../site.json','src/data\\site.json','public/assets/cms/test.html','public/assets/cms/test.svg'])assert.throws(()=>validateChange({path,raw:'{}'}));
   assert.throws(()=>validateChange({path:'src/data/site.json',raw:'not json'}));
