@@ -6,9 +6,10 @@ import snapshot from '../../../scripts/admin/snapshot.generated.mjs';
 export const onRequest = async ({ request, env }) => {
   // Cloud Functions may expose an internal HTTP URL after TLS termination.
   // Use the site's fixed public origin, never a client-supplied forwarded host.
-  const publicUrl = new URL(request.url);
-  publicUrl.protocol = 'https:';
-  publicUrl.host = 'www.shanheplus.com';
+  const internalUrl = new URL(request.url);
+  const publicUrl = new URL('https://www.shanheplus.com');
+  publicUrl.pathname = internalUrl.pathname;
+  publicUrl.search = internalUrl.search;
   const publicRequest = new Request(publicUrl, {
     method: request.method, headers: request.headers,
     ...(['GET', 'HEAD'].includes(request.method) ? {} : { body: request.body, duplex: 'half' }),
