@@ -7,17 +7,32 @@ const headers = {'Cache-Control':'private, no-store, max-age=0','Pragma':'no-cac
 const json = (data, status = 200, extra = {}) => new Response(JSON.stringify(data),{status,headers:{...headers,'Content-Type':'application/json; charset=utf-8',...extra}});
 async function body(request, limit) {
   if (Number(request.headers.get('content-length')) > limit) throw fail(413,'提交内容过大。');
-  const reader = request.body?.getReader();
-  if (!reader) throw fail(400,'缺少提交内容。');
   const chunks = []; let size = 0;
-  for (;;) {
-    const {done,value} = await reader.read(); if (done) break;
-    // EdgeOne may deliver ArrayBuffer chunks instead of Uint8Array chunks.
-    const chunk = typeof value === 'string' ? new TextEncoder().encode(value) : value instanceof Uint8Array ? value : new Uint8Array(value);
+  const append = value => {
+    const chunk = typeof value === 'string' ? new TextEncoder().encode(value)
+      : ArrayBuffer.isView(value) ? new Uint8Array(value.buffer, value.byteOffset, value.byteLength)
+      : value?.type === 'Buffer' && Array.isArray(value.data) ? Uint8Array.from(value.data)
+      : new Uint8Array(value);
     size += chunk.byteLength;
-    if (size > limit) { await reader.cancel(); throw fail(413,'提交内容过大。'); }
+    if (size > limit) throw fail(413,'提交内容过大。');
     chunks.push(chunk);
-  }
+  };
+  const source = request.body;
+  if (typeof source?.getReader === 'function') {
+    const reader = source.getReader();
+    try { for (;;) { const {done,value} = await reader.read(); if (done) break; append(value); } }
+    catch (error) { await reader.cancel(); throw error; }
+  } else if (source?.[Symbol.asyncIterator]) {
+    for await (const chunk of source) append(chunk);
+  } else if (typeof source === 'string' || ArrayBuffer.isView(source) || source instanceof ArrayBuffer || source?.type === 'Buffer') {
+    append(source);
+  } else if (typeof request.text === 'function') {
+    append(await request.text());
+  } else if (typeof request.json === 'function') {
+    append(JSON.stringify(await request.json()));
+  } else if (source && Object.prototype.toString.call(source) === '[object Object]') {
+    append(JSON.stringify(source));
+  } else throw fail(400,'无法读取提交内容。');
   const bytes = new Uint8Array(size); let offset = 0;
   for (const chunk of chunks) { bytes.set(chunk,offset); offset += chunk.length; }
   try { return JSON.parse(new TextDecoder().decode(bytes.buffer)); } catch { throw fail(400,'提交格式无效。'); }

@@ -15,6 +15,8 @@ export const onRequest = async ({ request, env }) => {
   const publicRequest = {
     url: publicUrl.href, method: request.method,
     headers: request.headers, body: request.body,
+    text: typeof request.text === 'function' ? request.text.bind(request) : undefined,
+    json: typeof request.json === 'function' ? request.json.bind(request) : undefined,
   };
   const response = await handleAdmin(publicRequest, { ...process.env, ...(env ?? {}) }, { snapshot: () => snapshot });
   response.headers.set('X-Admin-Runtime', 'node');

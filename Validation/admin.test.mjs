@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtemp, mkdir, writeFile, readFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
+import { Readable } from 'node:stream';
 import { join } from 'node:path';
 import { passwordHash, randomSecret, getSession } from '../scripts/admin/auth.mjs';
 import { handleAdmin } from '../scripts/admin/handler.mjs';
@@ -56,6 +57,11 @@ test('Cloud Functions adapter accepts owner credentials and protects maintenance
   assert.equal((await onRequest({request:request('data',undefined,cookie),env})).status,200);
   const internal=new Request('http://internal-runtime:9000/api/admin/login',{method:'POST',headers:{origin:'https://www.shanheplus.com','content-type':'application/json'},body:JSON.stringify({username:'admin',password})});
   const proxied=await onRequest({request:internal,env});assert.equal(proxied.status,200);assert.match(proxied.headers.get('set-cookie'),/__Host-site-admin/);
+  const raw=JSON.stringify({username:'admin',password});
+  for(const body of [raw,Buffer.from(raw),Readable.from([Buffer.from(raw)]),JSON.parse(raw)]){
+    const platform={url:internal.url,method:'POST',headers:internal.headers,body};
+    assert.equal((await onRequest({request:platform,env})).status,200);
+  }
   assert.equal((await onRequest({request:request('login',{username:'admin',password},undefined,'https://attacker.example'),env})).status,403);
 });
 test('write allowlist blocks credentials, workflow code, traversal, malformed metadata and disguised uploads',()=>{
