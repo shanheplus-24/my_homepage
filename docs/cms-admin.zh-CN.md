@@ -55,3 +55,6 @@
 完整配置 `scripts/admin/config.mjs` 在登录后返回；初始化显式禁用隐式配置文件加载，避免仅传少量覆盖项导致必填配置丢失。Decap 使用自定义后端调用受保护 API。参考 [Decap 自定义控件](https://decapcms.org/docs/custom-widgets/) 和 [EdgeOne Edge Functions](https://pages.edgeone.ai/document/edge-functions)。
 
 `scripts/admin/snapshot.generated.mjs` 在构建时生成，仅供服务端返回维护总览，不进入静态站点目录。总览反映最近成功部署的数据；编辑表单直接读取仓库当前版本。本地总览实时读取本地文件。
+
+
+生产后台 API 使用 `cloud-functions/api/admin/[action].js`，运行于 EdgeOne 的 Node.js 云函数。网址和环境变量名称不变。边缘函数实际运行时的 PBKDF2 密钥导入不可用，且有 200 ms CPU 限制；后台迁至完整 Node.js 运行时，保留原来的 PBKDF2-SHA256 600000 次校验与密码配置。参见 [Node.js 云函数文档](https://pages.edgeone.ai/document/node-functions)。

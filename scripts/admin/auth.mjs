@@ -1,3 +1,4 @@
+import { webcrypto as crypto } from 'node:crypto';
 const encoder = new TextEncoder();
 const bytesBuffer = value => ArrayBuffer.isView(value) ? value.buffer.slice(value.byteOffset, value.byteOffset + value.byteLength) : value;
 async function derivePassword(password, salt, iterations) {
