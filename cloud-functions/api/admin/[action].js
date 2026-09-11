@@ -10,10 +10,12 @@ export const onRequest = async ({ request, env }) => {
   const publicUrl = new URL('https://www.shanheplus.com');
   publicUrl.pathname = internalUrl.pathname;
   publicUrl.search = internalUrl.search;
-  const publicRequest = new Request(publicUrl, {
-    method: request.method, headers: request.headers,
-    ...(['GET', 'HEAD'].includes(request.method) ? {} : { body: request.body, duplex: 'half' }),
-  });
+  // Preserve the platform's body stream; reconstructing its Request can coerce
+  // a stream implementation into text instead of forwarding the original bytes.
+  const publicRequest = {
+    url: publicUrl.href, method: request.method,
+    headers: request.headers, body: request.body,
+  };
   const response = await handleAdmin(publicRequest, { ...process.env, ...(env ?? {}) }, { snapshot: () => snapshot });
   response.headers.set('X-Admin-Runtime', 'node');
   return response;

@@ -1,3 +1,4 @@
+import { TextDecoder } from 'node:util';
 import config from './config.mjs';
 import { parse } from 'yaml';
 

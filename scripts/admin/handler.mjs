@@ -1,3 +1,4 @@
+import { TextEncoder, TextDecoder } from 'node:util';
 import config from './config.mjs';
 import { configured, getSession, login, sameOrigin, sessionCookie } from './auth.mjs';
 import { fail, GithubRepository, proxyAction } from './repository.mjs';
