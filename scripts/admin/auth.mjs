@@ -1,4 +1,15 @@
 const encoder = new TextEncoder();
+const bytesBuffer = value => ArrayBuffer.isView(value) ? value.buffer.slice(value.byteOffset, value.byteOffset + value.byteLength) : value;
+async function derivePassword(password, salt, iterations) {
+  let stage = 'import';
+  try {
+    const key = await crypto.subtle.importKey('raw', bytesBuffer(encoder.encode(password)), { name: 'PBKDF2' }, false, ['deriveBits']);
+    stage = 'derive';
+    return new Uint8Array(await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: { name: 'SHA-256' }, salt: bytesBuffer(salt), iterations }, key, 256));
+  } catch (error) {
+    throw Object.assign(new Error('密码校验组件暂时不可用，请稍后再试。'), { status: 503, code: 'password-' + stage + '-' + (error.name ?? 'Error') });
+  }
+}
 const encode = (bytes) => btoa(String.fromCharCode(...bytes)).replaceAll('+', '-').replaceAll('/', '_').replace(/=+$/, '');
 const decode = (text) => Uint8Array.from(atob(text.replaceAll('-', '+').replaceAll('_', '/')), (c) => c.charCodeAt(0));
 const ttl = 3600;
@@ -9,15 +20,13 @@ export function configured(env) {
 export async function passwordHash(password) {
   if (typeof password !== 'string' || password.length < 14 || password.length > 256) throw new Error('密码请使用 14–256 个字符。');
   const salt = crypto.getRandomValues(new Uint8Array(18));
-  const key = await crypto.subtle.importKey('raw', encoder.encode(password), 'PBKDF2', false, ['deriveBits']);
-  const bits = await crypto.subtle.deriveBits({ name: 'PBKDF2', hash: 'SHA-256', salt, iterations: 600000 }, key, 256);
-  return `pbkdf2-sha256$600000$${encode(salt)}$${encode(new Uint8Array(bits))}`;
+  return `pbkdf2-sha256$600000$${encode(salt)}$${encode(await derivePassword(password, salt, 600000))}`;
 }
 export const randomSecret = () => encode(crypto.getRandomValues(new Uint8Array(32)));
 const equal = (a, b) => { if (a.length !== b.length) return false; let diff = 0; for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i); return diff === 0; };
 async function mac(value, env) {
-  const key = await crypto.subtle.importKey('raw', encoder.encode(env.ADMIN_SESSION_SECRET), {name:'HMAC',hash:'SHA-256'}, false, ['sign']);
-  return encode(new Uint8Array(await crypto.subtle.sign('HMAC', key, encoder.encode(value))));
+  const key = await crypto.subtle.importKey('raw', bytesBuffer(encoder.encode(env.ADMIN_SESSION_SECRET)), {name:'HMAC',hash:'SHA-256'}, false, ['sign']);
+  return encode(new Uint8Array(await crypto.subtle.sign('HMAC', key, bytesBuffer(encoder.encode(value)))));
 }
 function cookieName(request) { return new URL(request.url).protocol === 'https:' ? '__Host-site-admin' : 'site-admin-local'; }
 export function sessionCookie(request, value, clear = false) {
@@ -45,8 +54,7 @@ export async function login(request, env, username, password) {
   attempt.count++; failures.set(ip, attempt);
   if (typeof username !== 'string' || typeof password !== 'string' || password.length > 256) return {status:401,error:'账号或密码不正确。'};
   const [, iterations, salt, expected] = env.ADMIN_PASSWORD_HASH.split('$');
-  const key = await crypto.subtle.importKey('raw', encoder.encode(password), 'PBKDF2', false, ['deriveBits']);
-  const actual = encode(new Uint8Array(await crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt:decode(salt),iterations:Number(iterations)},key,256)));
+  const actual = encode(await derivePassword(password, decode(salt), Number(iterations)));
   if (!equal(actual, expected) || !equal(username, env.ADMIN_USERNAME)) return {status:401,error:'账号或密码不正确。'};
   failures.delete(ip);
   const payload = encode(encoder.encode(JSON.stringify({user:username,exp:Date.now()+ttl*1000,version:expected,nonce:randomSecret()})));

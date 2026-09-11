@@ -46,5 +46,5 @@ export async function handleAdmin(request, env = {}, dependencies = {}) {
       return json(await proxyAction(repo,input.action,input.params));
     }
     return json({error:'找不到此功能。'},404);
-  } catch (error) { return json({error:error.status ? error.message : '后台服务暂时不可用，请稍后重试。'},error.status ?? 500); }
+  } catch (error) { return json({error:error.status ? error.message : '后台服务暂时不可用，请稍后重试。', ...(error.code?.startsWith('password-') ? {code:error.code} : {})},error.status ?? 500); }
 }

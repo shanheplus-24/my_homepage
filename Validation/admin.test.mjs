@@ -46,6 +46,18 @@ test('edge runtime ArrayBuffer request chunks parse without dropping the body',a
   const edge={url:standard.url,method:'POST',headers:standard.headers,body:{getReader:()=>({read:async()=>chunks.length?{done:false,value:chunks.shift()}:{done:true},cancel:async()=>{}})}};
   assert.equal((await handleAdmin(edge,env)).status,200);
 });
+test('password and session crypto accept runtimes requiring explicit algorithm objects and ArrayBuffers',async()=>{
+  const descriptor=Object.getOwnPropertyDescriptor(globalThis,'crypto');const native=crypto;
+  const subtle=new Proxy(native.subtle,{get(target,name){return (...args)=>{
+    if(name==='importKey'){assert.ok(args[1] instanceof ArrayBuffer);assert.equal(typeof args[2],'object');}
+    if(name==='deriveBits'){assert.ok(args[0].salt instanceof ArrayBuffer);assert.equal(typeof args[0].hash,'object');}
+    if(name==='sign')assert.ok(args[2] instanceof ArrayBuffer);
+    return target[name](...args);
+  };}});
+  Object.defineProperty(globalThis,'crypto',{configurable:true,value:{subtle,getRandomValues:native.getRandomValues.bind(native)}});
+  try{const r=await handleAdmin(request('login',{username:'admin',password}),env);assert.equal(r.status,200);assert.ok(await getSession(request('session',undefined,r.headers.get('set-cookie').split(';')[0]),env));}
+  finally{Object.defineProperty(globalThis,'crypto',descriptor);}
+});
 test('write allowlist blocks credentials, workflow code, traversal, malformed metadata and disguised uploads',()=>{
   for(const path of ['.env.admin.local','.github/workflows/deploy.yml','scripts/admin/auth.mjs','src/data/../site.json','src/data\\site.json','public/assets/cms/test.html','public/assets/cms/test.svg'])assert.throws(()=>validateChange({path,raw:'{}'}));
   assert.throws(()=>validateChange({path:'src/data/site.json',raw:'not json'}));
