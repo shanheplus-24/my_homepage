@@ -54,6 +54,9 @@ test('Cloud Functions adapter accepts owner credentials and protects maintenance
   assert.equal(response.status,200);
   const cookie=response.headers.get('set-cookie').split(';')[0];
   assert.equal((await onRequest({request:request('data',undefined,cookie),env})).status,200);
+  const internal=new Request('http://internal-runtime:9000/api/admin/login',{method:'POST',headers:{origin:'https://www.shanheplus.com','content-type':'application/json'},body:JSON.stringify({username:'admin',password})});
+  const proxied=await onRequest({request:internal,env});assert.equal(proxied.status,200);assert.match(proxied.headers.get('set-cookie'),/__Host-site-admin/);
+  assert.equal((await onRequest({request:request('login',{username:'admin',password},undefined,'https://attacker.example'),env})).status,403);
 });
 test('write allowlist blocks credentials, workflow code, traversal, malformed metadata and disguised uploads',()=>{
   for(const path of ['.env.admin.local','.github/workflows/deploy.yml','scripts/admin/auth.mjs','src/data/../site.json','src/data\\site.json','public/assets/cms/test.html','public/assets/cms/test.svg'])assert.throws(()=>validateChange({path,raw:'{}'}));

@@ -3,5 +3,18 @@ import snapshot from '../../../scripts/admin/snapshot.generated.mjs';
 
 // Password derivation and repository writes require the complete Node runtime.
 // EdgeOne Cloud Functions preserve the existing /api/admin/* URLs and variables.
-export const onRequest = ({ request, env }) => handleAdmin(request, { ...process.env, ...(env ?? {}) }, { snapshot: () => snapshot });
+export const onRequest = async ({ request, env }) => {
+  // Cloud Functions may expose an internal HTTP URL after TLS termination.
+  // Use the site's fixed public origin, never a client-supplied forwarded host.
+  const publicUrl = new URL(request.url);
+  publicUrl.protocol = 'https:';
+  publicUrl.host = 'www.shanheplus.com';
+  const publicRequest = new Request(publicUrl, {
+    method: request.method, headers: request.headers,
+    ...(['GET', 'HEAD'].includes(request.method) ? {} : { body: request.body, duplex: 'half' }),
+  });
+  const response = await handleAdmin(publicRequest, { ...process.env, ...(env ?? {}) }, { snapshot: () => snapshot });
+  response.headers.set('X-Admin-Runtime', 'node');
+  return response;
+};
 export default onRequest;
